@@ -1,0 +1,25 @@
+{
+  "name": "St. Joseph's Catechism Midalam - Tour 2026",
+  "short_name": "Midalam Tour",
+  "description": "Official Coach Maskara Booking, ID Card & QR Scanner Portal for St. Joseph's Catechism Midalam Tour 2026",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "https://wsrv.nl/?url=i.pinimg.com/736x/c1/9f/8e/c19f8e6b1b49f07b9904e38da3b50ecd.jpg&w=192&h=192&fit=cover&a=top&output=png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://wsrv.nl/?url=i.pinimg.com/736x/c1/9f/8e/c19f8e6b1b49f07b9904e38da3b50ecd.jpg&w=512&h=512&fit=cover&a=top&output=png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
