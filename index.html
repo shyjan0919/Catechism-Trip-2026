@@ -804,7 +804,7 @@
     <!-- TAB 8: MANIFEST -->
     <div id="manifestTab" class="tab-content">
       <div class="card">
-        <div class="card-title">📋 Passenger Booking Manifest & ID Card Pass</div>
+        <div class="card-title">📋 Passenger Booking Manifest & Window/Aisle Seating</div>
         <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px;">Sorted chronologically by coach seat number (01 to 60). Once Admin approves your payment, tap <strong>"🪪 ID Pass"</strong> to view and save your official ID Card!</p>
         
         <div class="seat-search-wrapper" style="margin-bottom: 16px;">
@@ -884,7 +884,7 @@
 
         <div id="adminPanel" style="display: none;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span style="font-size: 0.82rem; font-weight: 700; color: var(--success);">● Coordinator Session Active</span>
+            <span style="font-size: 0.82rem; font-weight: 700; color: var(--success);">● Coordinator Session Active (Auto-Locks in 5m idle)</span>
             <button onclick="adminLogout()" style="background: none; border: none; color: var(--danger); font-weight: 700; font-size: 0.82rem; cursor: pointer;">Logout</button>
           </div>
 
@@ -892,6 +892,7 @@
             <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
               <div>
                 <div style="font-size:0.9rem; font-weight:800; color:#b45309;">🔔 <span id="pendingBannerCount">0</span> Booking(s) Awaiting Your Verification!</div>
+                <div style="font-size:0.72rem; color:#92400e; font-weight:600; margin-top:2px;">Verify payment below and click "✏️ Approve" to lock their seat.</div>
               </div>
               <button class="btn btn-accent" style="width:auto; padding:8px 14px; font-size:0.75rem;" onclick="setFilterCategory('PENDING', document.getElementById('pillPendingBtn'))">Filter Pending</button>
             </div>
@@ -900,10 +901,21 @@
           <!-- 1-CLICK SWAP TWO SEATS TOOL -->
           <div style="background: #f8fafc; border: 1.5px solid var(--border-glow); border-radius: 16px; padding: 14px 16px; margin-bottom: 18px;">
             <label style="color: var(--primary-deep); margin-bottom: 4px;">🔄 1-Click Swap Two Seats (Buddy Matcher Tool)</label>
+            <p style="font-size: 0.68rem; color: var(--text-muted); margin-bottom: 10px;">Select any two booked seats below to swap their passengers immediately:</p>
             <div style="display:grid; grid-template-columns: 1fr 1fr auto; gap:8px; align-items:center;">
               <select id="swapSeatA" style="padding:9px; font-size:0.78rem; background:white;"></select>
               <select id="swapSeatB" style="padding:9px; font-size:0.78rem; background:white;"></select>
               <button type="button" class="btn btn-primary" style="width:auto; padding:10px 16px; font-size:0.78rem;" onclick="swapTwoSeats()">🔄 Swap</button>
+            </div>
+          </div>
+
+          <!-- PERMANENT CLOUD SEAL LOCK -->
+          <div style="background: #fffdf5; border: 1.5px solid var(--accent-gold); border-radius: 16px; padding: 14px 16px; margin-bottom: 18px;">
+            <label style="color: var(--primary-deep); margin-bottom: 4px;">⚜️ Permanent Cloud Seal Photo (Saves Directly to Firebase)</label>
+            <p style="font-size: 0.68rem; color: var(--text-muted); margin-bottom: 10px;">Your St. Joseph & Child Jesus photo is auto-cached as Base64 so ID card downloads always include the logo! You can also upload any custom image here:</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+              <input type="file" accept="image/*" onchange="uploadCustomSealLogo(event)" style="flex:1; padding:8px; background:white; font-size:0.75rem;">
+              <button type="button" class="btn btn-secondary" style="width:auto; padding:10px 14px; font-size:0.72rem;" onclick="resetDefaultSealLogo()">Reset Default Link</button>
             </div>
           </div>
 
@@ -913,6 +925,21 @@
               <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600;" id="boardingSwitchStatusDesc">Status: Locked for public</span>
             </div>
             <button class="btn btn-accent" style="width: auto; padding: 10px 18px; font-size: 0.78rem;" id="boardingSwitchBtn" onclick="toggleBoardingMasterSwitch()">Enable Boarding</button>
+          </div>
+
+          <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 18px;">
+            <label style="color:var(--primary-deep); margin-bottom:4px;">📢 Automated Teacher Roll-Call Broadcast</label>
+            <button class="btn btn-accent" style="margin-top:6px;" onclick="broadcastRollCallWhatsApp()">📲 Send Roll-Call Summary to WhatsApp</button>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <button class="btn btn-primary" style="padding: 12px; font-size: 0.82rem;" onclick="openScannerModal()">📷 Fast QR Scan</button>
+            <button class="btn btn-accent" style="padding: 12px; font-size: 0.82rem;" onclick="openHeadcountModal()">📋 Headcount List</button>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px;">
+            <button class="btn btn-secondary" style="padding: 10px; font-size: 0.75rem;" onclick="exportCSV()">📥 CSV</button>
+            <button class="btn btn-primary" style="padding: 10px; font-size: 0.75rem;" onclick="printSeatManifest()">🖨️ Seat Manifest</button>
+            <button class="btn btn-accent" style="padding: 10px; font-size: 0.75rem;" onclick="printAllBoardingPasses()">🖨️ All ID Cards</button>
           </div>
 
           <div class="filter-wrapper">
@@ -933,22 +960,24 @@
     </div>
   </div>
 
-  <!-- DUPLICATE SCAN MODAL -->
+  <!-- DUPLICATE SCAN / ALREADY BOARDED POPUP ALERT MODAL -->
   <div class="modal-overlay" id="duplicateScanModal" style="align-items:center; justify-content:center; padding:20px; z-index:3000;">
     <div class="modal-card" style="text-align:center; border:3px solid #dc2626; background:#fff5f5; max-width:380px;">
       <div style="width:68px; height:68px; border-radius:50%; background:#fee2e2; color:#dc2626; font-size:2.4rem; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; border:2px solid #dc2626;">⚠️</div>
       <h3 style="font-size:1.25rem; font-weight:800; color:#b91c1c; font-family:'Cinzel',serif;">ALREADY BOARDED!</h3>
       <p style="font-size:0.88rem; color:#7f1d1d; font-weight:800; margin-top:6px;" id="dupScanPaxName">-</p>
       <div style="background:white; border:1px solid #fca5a5; border-radius:12px; padding:10px; margin:12px 0; font-size:0.78rem; color:#0f172a; font-weight:700;" id="dupScanPaxMeta">Seat #00</div>
+      <p style="font-size:0.74rem; color:#991b1b; margin-bottom:16px;">This QR pass was already scanned and marked present for this roll-call.</p>
       <button class="btn btn-danger" onclick="closeDuplicateScanModal()">OK — Continue Scanning</button>
     </div>
   </div>
 
-  <!-- EMERGENCY MODAL -->
+  <!-- EMERGENCY LOST & FOUND / MEDICAL RECOVERY MODAL -->
   <div class="modal-overlay" id="lostFoundModal" style="z-index:2600;">
     <div class="modal-card" style="text-align: center; border: 2.5px solid #dc2626;">
       <div class="sheet-handle"></div>
       <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--danger); margin-bottom: 6px; font-family:'Cinzel',serif;">🚨 Pilgrim Emergency & Medical Card</h3>
+      <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 14px;">Registered pilgrim on St. Joseph's Catechism Midalam Tour 2026.</p>
       <div style="background:#fff5f5; padding:16px; border-radius:16px; text-align:left; border:1px solid #fca5a5; margin-bottom:16px;">
         <div style="font-size:0.95rem; font-weight:800; color:var(--primary-deep); margin-bottom:4px;" id="lfName">-</div>
         <div style="font-size:0.78rem; color:var(--text-muted); font-weight:700; margin-bottom:6px;" id="lfClass">-</div>
@@ -963,16 +992,16 @@
     </div>
   </div>
 
-  <!-- LIGHTBOX -->
+  <!-- LIGHTBOX MODAL -->
   <div class="modal-overlay" id="lightboxModal" onclick="closeLightbox()" style="align-items: center; justify-content: center; padding: 20px;">
     <div style="position: relative; max-width: 90vw; max-height: 90vh;" onclick="event.stopPropagation()">
-      <button onclick="closeLightbox()" style="position: absolute; top: -14px; right: -14px; background: #0f172a; color: white; border: 2px solid var(--accent-gold); width: 36px; height: 36px; border-radius: 50%; font-weight: 700; cursor: pointer; z-index: 10;">✕</button>
-      <img id="lightboxImg" src="" alt="Photo" style="max-width: 100%; max-height: 85vh; border-radius: 16px; border: 3px solid var(--accent-gold); object-fit: contain; display: block; margin: 0 auto;">
+      <button onclick="closeLightbox()" style="position: absolute; top: -14px; right: -14px; background: #0f172a; color: white; border: 2px solid var(--accent-gold); width: 36px; height: 36px; border-radius: 50%; font-size: 1.1rem; font-weight: 700; cursor: pointer; z-index: 10;">✕</button>
+      <img id="lightboxImg" src="" alt="Full Size Photo" style="max-width: 100%; max-height: 85vh; border-radius: 16px; border: 3px solid var(--accent-gold); object-fit: contain; display: block; margin: 0 auto;">
       <div id="lightboxCaption" style="color: white; text-align: center; font-weight: 700; font-size: 0.95rem; margin-top: 12px;"></div>
     </div>
   </div>
 
-  <!-- ID CARD MODAL -->
+  <!-- VERTICAL LANYARD ID-CARD BOARDING PASS MODAL -->
   <div class="modal-overlay" id="ticketModal">
     <div class="modal-card">
       <div class="sheet-handle"></div>
@@ -981,16 +1010,23 @@
         <button onclick="closeTicketModal()" style="border:none;background:none;font-size:1.4rem;cursor:pointer;color:var(--text-muted);">✕</button>
       </div>
 
+      <!-- VERTICAL ID CARD -->
       <div class="id-card-pass" id="ticketPrintArea">
         <div class="id-card-top">
           <div class="id-lanyard-slot"></div>
           <div class="id-seal-wrapper">
             <div class="seal-photo-container">
-              <img class="seal-photo-img st-joseph-live-photo" id="idCardSealImg" crossorigin="anonymous" src="https://wsrv.nl/?url=i.pinimg.com/736x/c1/9f/8e/c19f8e6b1b49f07b9904e38da3b50ecd.jpg&w=300&h=300&fit=cover&a=top" alt="St. Joseph">
+              <img class="seal-photo-img st-joseph-live-photo"
+                   id="idCardSealImg"
+                   crossorigin="anonymous"
+                   src="https://wsrv.nl/?url=i.pinimg.com/736x/c1/9f/8e/c19f8e6b1b49f07b9904e38da3b50ecd.jpg&w=300&h=300&fit=cover&a=top"
+                   alt="St. Joseph with Child Jesus">
               <svg class="seal-ring-svg" viewBox="0 0 240 240">
                 <defs>
                   <linearGradient id="idGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#fef08a"/><stop offset="50%" stop-color="#d4af37"/><stop offset="100%" stop-color="#a16207"/>
+                    <stop offset="0%" stop-color="#fef08a"/>
+                    <stop offset="50%" stop-color="#d4af37"/>
+                    <stop offset="100%" stop-color="#a16207"/>
                   </linearGradient>
                   <path id="idTopArc" d="M 22,120 A 98,98 0 1,1 218,120" />
                   <path id="idBotArc" d="M 218,120 A 98,98 0 1,1 22,120" />
@@ -998,8 +1034,12 @@
                 <circle cx="120" cy="120" r="99" fill="none" stroke="#0f172a" stroke-width="38"/>
                 <circle cx="120" cy="120" r="116" fill="none" stroke="url(#idGoldGrad)" stroke-width="4"/>
                 <circle cx="120" cy="120" r="80" fill="none" stroke="url(#idGoldGrad)" stroke-width="3"/>
-                <text fill="#fef08a" font-size="12.5" font-weight="800" letter-spacing="1.4" font-family="'Cinzel', serif"><textPath href="#idTopArc" startOffset="50%" text-anchor="middle">• ST. JOSEPH'S CATECHISM •</textPath></text>
-                <text fill="#d4af37" font-size="11.8" font-weight="800" letter-spacing="2.2" font-family="'Plus Jakarta Sans', sans-serif"><textPath href="#idBotArc" startOffset="50%" text-anchor="middle">★ MIDALAM • TOUR 2026 ★</textPath></text>
+                <text fill="#fef08a" font-size="12.5" font-weight="800" letter-spacing="1.4" font-family="'Cinzel', serif">
+                  <textPath href="#idTopArc" startOffset="50%" text-anchor="middle">• ST. JOSEPH'S CATECHISM •</textPath>
+                </text>
+                <text fill="#d4af37" font-size="11.8" font-weight="800" letter-spacing="2.2" font-family="'Plus Jakarta Sans', sans-serif">
+                  <textPath href="#idBotArc" startOffset="50%" text-anchor="middle">★ MIDALAM • TOUR 2026 ★</textPath>
+                </text>
               </svg>
             </div>
           </div>
@@ -1012,26 +1052,87 @@
           <div class="id-pax-role" id="tPassStandard">-</div>
 
           <div class="id-data-grid">
-            <div class="id-data-cell"><div class="id-cell-lbl">Coach Seat & Type</div><div class="id-cell-val" id="tPassSeat" style="color:#a16207;">-</div></div>
-            <div class="id-data-cell"><div class="id-cell-lbl">Pass ID</div><div class="id-cell-val" id="tPassId" style="font-family:'JetBrains Mono',monospace;">-</div></div>
+            <div class="id-data-cell">
+              <div class="id-cell-lbl">Coach Seat</div>
+              <div class="id-cell-val" id="tPassSeat" style="color:#a16207;">-</div>
+            </div>
+            <div class="id-data-cell">
+              <div class="id-cell-lbl">Pass ID</div>
+              <div class="id-cell-val" id="tPassId" style="font-family:'JetBrains Mono',monospace;">-</div>
+            </div>
+            <div class="id-data-cell">
+              <div class="id-cell-lbl">Route</div>
+              <div class="id-cell-val" style="font-size:0.72rem;">MIDALAM ➔ KERALA</div>
+            </div>
+            <div class="id-data-cell">
+              <div class="id-cell-lbl">Status / Assembly</div>
+              <div class="id-cell-val" id="tPassBoardingTime" style="font-size:0.72rem; color:var(--success);">05:30 AM, OCT 19</div>
+            </div>
           </div>
 
           <div class="id-qr-section">
             <div id="qrcode"></div>
             <div style="text-align:left; flex:1;">
-              <div style="display:inline-block; background:#dcfce7; color:#15803d; font-size:0.55rem; font-weight:800; padding:3px 8px; border-radius:8px; margin-bottom:4px;">🔒 VERIFIED PASS</div>
+              <div style="display:inline-block; background:#dcfce7; color:#15803d; font-size:0.55rem; font-weight:800; padding:3px 8px; border-radius:8px; margin-bottom:4px;">🔒 ADMIN VERIFIED SEAT</div>
               <div style="font-size:0.7rem; font-weight:800; color:#0f172a;">COACH MASKARA</div>
+              <div style="font-size:0.58rem; color:#64748b; font-weight:600; margin-top:2px;">Scan QR at bus entry & pit-stops for live attendance</div>
             </div>
           </div>
         </div>
+
         <div class="id-card-footer">
-          <div class="id-coord-title">⚜️ Tour Coordinators</div>
-          <div class="id-coord-Row"><span>DENSON: 9486472814</span><span>BENSIGAR: 9486270230</span></div>
+          <div class="id-coord-title">⚜️ Tour Coordinators & Emergency Contact</div>
+          <div class="id-coord-Row">
+            <span>DENSON: +91 9486472814</span>
+            <span>BENSIGAR: +91 9486270230</span>
+          </div>
         </div>
       </div>
+
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         <button class="btn btn-accent" id="dlPassBtn" onclick="downloadTicketImage()">💾 Download ID Card</button>
         <button class="btn btn-secondary" onclick="shareWhatsApp()">💬 Share WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR SCANNER MODAL -->
+  <div class="modal-overlay" id="scannerModal">
+    <div class="modal-card" style="text-align: center;">
+      <div class="sheet-handle"></div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--primary-deep);">📷 Instant Coach QR Scanner</h3>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button type="button" onclick="toggleCameraTorch('modal')" id="modalTorchBtn" style="border:1px solid var(--accent-gold); background:#fffdf5; color:#0f172a; font-size:0.72rem; font-weight:800; padding:5px 10px; border-radius:8px; cursor:pointer;">🔦 Torch</button>
+          <button onclick="closeScannerModal()" style="border:none;background:none;font-size:1.4rem;cursor:pointer;color:var(--text-muted);">✕</button>
+        </div>
+      </div>
+      <div id="qr-scanner-box" style="border-radius:16px; overflow:hidden; border:2px solid var(--accent-gold);">
+        <div id="scannerTarget" style="width: 100%;"></div>
+      </div>
+      <div id="scannerResult" style="font-size: 0.9rem; font-weight: 800; min-height: 38px; display:flex; align-items:center; justify-content:center; text-align: center; margin-top: 12px; color: var(--text-muted); border-radius:12px; padding:8px;">Camera active...</div>
+    </div>
+  </div>
+
+  <!-- HEADCOUNT MODAL -->
+  <div class="modal-overlay" id="headcountModal">
+    <div class="modal-card">
+      <div class="sheet-handle"></div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--primary-deep);">📋 Pit-Stop Roll-Call (Seat Order)</h3>
+        <button onclick="closeHeadcountModal()" style="border:none;background:none;font-size:1.4rem;cursor:pointer;color:var(--text-muted);">✕</button>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <div style="font-size: 0.85rem; font-weight: 800; color: var(--success);" id="hcCountDisplay">Onboard: 0 / 0</div>
+        <div style="display:flex; gap:6px;">
+          <button type="button" onclick="setHeadcountFilter('ALL')" style="padding:4px 10px; border-radius:8px; border:1px solid var(--border); background:#f8fafc; font-size:0.68rem; font-weight:800; cursor:pointer;">All</button>
+          <button type="button" onclick="setHeadcountFilter('MISSING')" style="padding:4px 10px; border-radius:8px; border:1px solid #dc2626; background:#fff5f5; color:#dc2626; font-size:0.68rem; font-weight:800; cursor:pointer;">🚨 Missing Only</button>
+        </div>
+      </div>
+      <div class="headcount-list" id="headcountList"></div>
+      <div style="display: flex; gap: 12px; margin-top: 18px;">
+        <button class="btn btn-danger" onclick="resetHeadcount()" style="font-size:0.8rem; padding:12px;">🔄 New Stop Roll-Call</button>
+        <button class="btn btn-primary" onclick="closeHeadcountModal()" style="font-size:0.8rem; padding:12px;">Done</button>
       </div>
     </div>
   </div>
@@ -1044,7 +1145,11 @@
       <div style="background:#f8fafc; padding:18px; border-radius:16px; margin-bottom:18px; font-size:0.88rem; text-align:left; border: 1px solid var(--border);">
         <div style="margin-bottom:8px;"><strong>Passenger Name:</strong> <span id="siName">-</span></div>
         <div style="margin-bottom:8px;"><strong>Designation / Role:</strong> <span id="siClass" style="color:#a16207; font-weight:800;">-</span></div>
-        <div style="margin-bottom:8px;"><strong>Payment Status:</strong> <span id="siPayment">-</span></div>
+        <div style="margin-bottom:8px;"><strong>Gender:</strong> <span id="siGender">-</span></div>
+        <div style="margin-bottom:8px;"><strong>Ticket ID:</strong> <span id="siTicket">-</span></div>
+        <div style="margin-bottom:8px;"><strong>Medical Note:</strong> <span id="siMedical">None</span></div>
+        <div style="margin-bottom:8px;"><strong>Buddy Tag:</strong> <span id="siBuddy">None</span></div>
+        <div style="margin-bottom:8px;"><strong>Payment & Lock Status:</strong> <span id="siPayment">-</span></div>
         <div><strong>Boarding Status:</strong> <span id="siBoarding">-</span></div>
       </div>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
@@ -1055,27 +1160,85 @@
     </div>
   </div>
 
-  <!-- ADMIN EDIT MODAL -->
+  <!-- FULL ID CARD & BOOKING EDITOR MODAL (ADMIN) -->
   <div class="modal-overlay" id="confirmModal">
     <div class="modal-card">
       <div class="sheet-handle"></div>
-      <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--primary-deep); margin-bottom: 12px;" id="modalHeaderTitle">🪪 Edit ID Card & Approve Seat</h3>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--primary-deep);" id="modalHeaderTitle">🪪 Edit ID Card & Approve Seat</h3>
+        <button onclick="closeConfirmModal()" style="border:none;background:none;font-size:1.4rem;cursor:pointer;color:var(--text-muted);">✕</button>
+      </div>
+      <div style="background:#f8fafc;padding:12px 14px;border-radius:14px;margin-bottom:14px;font-size:0.8rem;border: 1px solid var(--border);">
+        <div><strong>Ticket ID:</strong> <span id="mTicketId">-</span> • <strong>Ref:</strong> <span id="mPaymentRef" style="color:var(--primary-light); font-weight:700;">-</span></div>
+        <div style="margin-top:4px;"><strong>Paid:</strong> ₹<span id="mSubmittedPaid">0</span> • <strong>Balance Due:</strong> ₹<span id="mSubmittedBalance">0</span></div>
+      </div>
       <input type="hidden" id="mCurrentIdx">
+
       <div class="form-group">
-        <label>Passenger Name</label>
-        <input type="text" id="mEditName">
+        <label>Edit Passenger Name (Printed on ID Card)</label>
+        <input type="text" id="mEditName" placeholder="Passenger Full Name">
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <div class="form-group">
+          <label>Edit Gender</label>
+          <select id="mEditGender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Class / Official Role</label>
+          <select id="mEditStandard">
+            <option value="Tour Head">⚜️ Tour Head</option>
+            <option value="Tour Co-Ordinator">🛡️ Tour Co-Ordinator</option>
+            <option value="App In-Charge">💻 App In-Charge</option>
+            <option value="Teacher">Teacher</option>
+            <option value="Parents">Parents</option>
+            <option value="College Students">College Students</option>
+            <option value="Class 1">Class 1</option>
+            <option value="Class 2">Class 2</option>
+            <option value="Class 3">Class 3</option>
+            <option value="Class 4">Class 4</option>
+            <option value="Class 5">Class 5</option>
+            <option value="Class 6">Class 6</option>
+            <option value="Class 7">Class 7</option>
+            <option value="Class 8">Class 8</option>
+            <option value="Class 9">Class 9</option>
+            <option value="Class 10">Class 10</option>
+            <option value="Class 11">Class 11</option>
+            <option value="Class 12">Class 12</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <div class="form-group">
+          <label>Parent / Guardian Name</label>
+          <input type="text" id="mEditParent" placeholder="Parent / Guardian">
+        </div>
+        <div class="form-group">
+          <label>Custom ID Card Title (Optional)</label>
+          <input type="text" id="mEditCustomRole" placeholder="e.g. Tour Head / App In-Charge">
+        </div>
+      </div>
+
+      <div class="form-group" id="dueInputGroup" style="display:none;">
+        <label>Collect Due Balance Amount (₹)</label>
+        <input type="number" id="mDueAmountPaid" min="0" placeholder="Enter balance amount being paid">
       </div>
       <div class="form-group">
-        <label>Assign Seat (01-60)</label>
+        <label>Assign / Confirm Coach Seat (01-60)</label>
         <select id="mAssignSeat"></select>
       </div>
-      <button class="btn btn-primary" onclick="submitConfirmation()">🔒 Save & Approve</button>
+      <button class="btn btn-primary" onclick="submitConfirmation()" id="mSaveBtn">🔒 Save ID Card & Lock Seat</button>
     </div>
   </div>
 
   <div id="toast"></div>
 
   <script>
+    // --- Firebase Cloud Configuration ---
     const firebaseConfig = {
       apiKey: "AIzaSyCb-UG0nIjjPYTQt025JfbIXOHOxhd143Q",
       authDomain: "kerala-trip-2026-8a0f1.firebaseapp.com",
@@ -1089,20 +1252,35 @@
     const db = firebase.database();
 
     const CORS_PROXY_PORTRAIT_URL = "https://wsrv.nl/?url=i.pinimg.com/736x/c1/9f/8e/c19f8e6b1b49f07b9904e38da3b50ecd.jpg&w=300&h=300&fit=cover&a=top";
+    const DIRECT_PORTRAIT_URL = "https://i.pinimg.com/736x/c1/9f/8e/c19f8e6b1b49f07b9904e38da3b50ecd.jpg";
+    let currentPortraitUrl = CORS_PROXY_PORTRAIT_URL;
     let cachedBase64Portrait = "";
 
-    async function preloadSealAsBase64() {
+    async function preloadSealAsBase64(urlToFetch) {
+      if (urlToFetch && urlToFetch.startsWith("data:image")) {
+        cachedBase64Portrait = urlToFetch;
+        applyPortraitToAllSeals(cachedBase64Portrait);
+        return;
+      }
       try {
         const res = await fetch(CORS_PROXY_PORTRAIT_URL, { mode: 'cors' });
         const blob = await res.blob();
         const reader = new FileReader();
-        reader.onloadend = () => { if (reader.result) { cachedBase64Portrait = reader.result; applyPortraitToAllSeals(cachedBase64Portrait); } };
+        reader.onloadend = () => {
+          if (reader.result) {
+            cachedBase64Portrait = reader.result;
+            applyPortraitToAllSeals(cachedBase64Portrait);
+          }
+        };
         reader.readAsDataURL(blob);
       } catch (err) {}
     }
+
     function applyPortraitToAllSeals(srcUrl) {
       document.querySelectorAll('.st-joseph-live-photo').forEach(img => {
-        if (srcUrl.startsWith("data:image")) img.removeAttribute('crossorigin');
+        if (srcUrl.startsWith("data:image")) {
+          img.removeAttribute('crossorigin');
+        }
         img.src = srcUrl;
       });
     }
@@ -1111,18 +1289,50 @@
     localStorage.setItem('midalam_device_id', clientDeviceId);
     const HOLD_DURATION_MS = 3 * 60 * 1000;
 
-    let registrations = [], seatHolds = {}, headcountChecked = {}, sponsorsList = [], expensesList = [], feedList = [], galleryList = [];
+    let registrations = [];
+    let seatHolds = {};
+    let headcountChecked = {};
+    let sponsorsList = [];
+    let expensesList = [];
+    let feedList = [];
+    let galleryList = [];
     let itineraryList = [
-      { time: "05:30 AM", heading: "Assembly & Holy Mass", desc: "Gathering at St. Joseph's Church campus, Midalam." },
-      { time: "08:00 AM", heading: "Breakfast Stop", desc: "Traditional breakfast and refreshments." },
-      { time: "11:30 AM", heading: "Arrival & Sightseeing", desc: "Exploring primary landmarks." },
-      { time: "01:30 PM", heading: "Parish Lunch Fellowship", desc: "Group lunch and relaxation." },
-      { time: "05:00 PM", heading: "Evening Prayer & Return", desc: "Boarding Coach Maskara for return trip." }
+      { time: "05:30 AM", heading: "Assembly & Holy Mass", desc: "Gathering at St. Joseph's Church campus, Midalam. Morning blessing and departure prayer." },
+      { time: "08:00 AM", heading: "Breakfast Stop", desc: "Traditional breakfast and refreshments along the scenic transit route." },
+      { time: "11:30 AM", heading: "Arrival & Sightseeing", desc: "Exploring primary pilgrimage and educational landmarks with parish group leaders." },
+      { time: "01:30 PM", heading: "Parish Lunch Fellowship", desc: "Group lunch session and relaxation at designated scenic spots." },
+      { time: "05:00 PM", heading: "Evening Prayer & Return Journey", desc: "Boarding Coach Maskara for the comfortable evening return trip to Midalam." }
     ];
     let busGps = { lat: null, lng: null, time: null };
-    let isBoardingActive = false, pitStopEndTime = null, pitStopAlerted = false;
-    let currentTicket = null, inlineScanner = null, inlineTorchOn = false, voiceReadoutEnabled = true;
-    let headcountFilterMode = 'ALL', lastScannedCode = "", lastScannedTime = 0, activeFilter = 'ALL', currentSeatFilter = 'ALL';
+    let isBoardingActive = false;
+    let pitStopEndTime = null;
+    let pitStopAlerted = false;
+    let selectedPhotoDataUrl = "";
+    let currentTicket = null;
+    let inlineScanner = null;
+    let modalScanner = null;
+    let inlineTorchOn = false;
+    let modalTorchOn = false;
+    let voiceReadoutEnabled = true;
+    let headcountFilterMode = 'ALL';
+    let lastScannedCode = "";
+    let lastScannedTime = 0;
+    let activeFilter = 'ALL';
+    let currentSeatFilter = 'ALL';
+    let lastActivityTime = Date.now();
+
+    setInterval(() => {
+      if (Date.now() - lastActivityTime > 300000) {
+        const adminPanel = document.getElementById('adminPanel');
+        if (adminPanel && adminPanel.style.display === 'block') {
+          adminLogout();
+          showToast("🔒 Admin session auto-locked after 5 mins of inactivity");
+        }
+      }
+    }, 15000);
+    window.addEventListener('mousemove', () => { lastActivityTime = Date.now(); });
+    window.addEventListener('touchstart', () => { lastActivityTime = Date.now(); });
+    window.addEventListener('keydown', () => { lastActivityTime = Date.now(); });
 
     function normalizeList(val) {
       if (!val) return [];
@@ -1133,20 +1343,46 @@
     function getOfficialDesignation(r) {
       if (!r) return { roleTitle: "-", plainRole: "-", isVip: false, subLine: "-" };
       if (r.customRole && r.customRole.trim() !== "") {
-        return { roleTitle: r.customRole.trim(), plainRole: r.customRole.trim(), isVip: true, subLine: `${r.customRole.trim()} (${r.gender || 'N/A'})` };
+        return {
+          roleTitle: r.customRole.trim(),
+          plainRole: r.customRole.trim(),
+          isVip: true,
+          subLine: `${r.customRole.trim()} (${r.gender || 'N/A'})`
+        };
       }
       const nameClean = (r.name || "").toLowerCase().trim();
       const stdClean = (r.standard || "").trim();
+
       if (nameClean.includes("vigin") || nameClean.includes("vijin") || stdClean === "Tour Head") {
-        return { roleTitle: "⚜️ TOUR HEAD", plainRole: "Tour Head", isVip: true, subLine: `Tour Head • Parish Priest` };
+        return {
+          roleTitle: "⚜️ TOUR HEAD",
+          plainRole: "Tour Head",
+          isVip: true,
+          subLine: `Tour Head • Parish Priest`
+        };
       }
       if (nameClean.includes("shyjan") || stdClean === "App In-Charge") {
-        return { roleTitle: "💻 APP IN-CHARGE", plainRole: "App In-Charge", isVip: true, subLine: `App In-Charge` };
+        return {
+          roleTitle: "💻 APP IN-CHARGE",
+          plainRole: "App In-Charge",
+          isVip: true,
+          subLine: `App In-Charge (${r.gender || 'Male'})`
+        };
       }
       if (nameClean === "denson" || nameClean.startsWith("denson ") || nameClean.includes("bensigar") || stdClean === "Tour Co-Ordinator") {
-        return { roleTitle: "🛡️ TOUR CO-ORDINATOR", plainRole: "Tour Co-Ordinator", isVip: true, subLine: `Tour Co-Ordinator` };
+        return {
+          roleTitle: "🛡️ TOUR CO-ORDINATOR",
+          plainRole: "Tour Co-Ordinator",
+          isVip: true,
+          subLine: `Tour Co-Ordinator (${r.gender || 'Male'})`
+        };
       }
-      return { roleTitle: stdClean || "Pilgrim", plainRole: stdClean || "Pilgrim", isVip: false, subLine: `${stdClean} (${r.gender || 'N/A'})` };
+      return {
+        roleTitle: stdClean || "Pilgrim",
+        plainRole: stdClean || "Pilgrim",
+        isVip: false,
+        subLine: `${stdClean} (${r.gender || 'N/A'}) • Guardian: ${r.parent || '-'}`
+      };
     }
 
     function updateCountdown() {
@@ -1154,7 +1390,10 @@
       const distance = departureDate - Date.now();
       const clockEl = document.getElementById('countdownClock');
       if (!clockEl) return;
-      if (distance < 0) { clockEl.innerText = "🚀 Tour is Underway!"; return; }
+      if (distance < 0) {
+        clockEl.innerText = "🚀 Tour is Underway!";
+        return;
+      }
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -1163,19 +1402,58 @@
     }
     setInterval(updateCountdown, 1000);
 
-    const tripDataRef = db.ref('tripData');
-    tripDataRef.on('value', (snapshot) => {
-      const serverData = snapshot.val() || {};
-      registrations = normalizeList(serverData.registrations);
+    // --- BULLETPROOF ROOT + TRIPDATA FIREBASE LOADER ---
+    const rootRef = db.ref('/');
+    rootRef.on('value', (snapshot) => {
+      const rootData = snapshot.val() || {};
+      let foundList = [];
+      if (rootData.tripData && rootData.tripData.registrations) {
+        foundList = normalizeList(rootData.tripData.registrations);
+      } else if (rootData.registrations) {
+        foundList = normalizeList(rootData.registrations);
+      } else if (rootData.tickets) {
+        foundList = normalizeList(rootData.tickets);
+      } else {
+        for (const key of Object.keys(rootData)) {
+          const val = rootData[key];
+          if (val && typeof val === 'object') {
+            const items = normalizeList(val);
+            if (items.length > foundList.length && items[0] && (items[0].name || items[0].seatNum || items[0].id)) {
+              foundList = items;
+            }
+          }
+        }
+      }
+
+      registrations = foundList;
+      const serverData = rootData.tripData || {};
       seatHolds = serverData.seatHolds || {};
       headcountChecked = serverData.headcountChecked || {};
       sponsorsList = normalizeList(serverData.sponsorsList);
       expensesList = normalizeList(serverData.expensesList);
       feedList = normalizeList(serverData.feedList);
       galleryList = normalizeList(serverData.galleryList);
-      if (serverData.itineraryList && normalizeList(serverData.itineraryList).length > 0) itineraryList = normalizeList(serverData.itineraryList);
+      if (serverData.itineraryList && normalizeList(serverData.itineraryList).length > 0) {
+        itineraryList = normalizeList(serverData.itineraryList);
+      }
       busGps = serverData.busGps || { lat: null, lng: null, time: null };
       isBoardingActive = !!serverData.isBoardingActive;
+
+      if (serverData.pitStopEndTime) {
+        pitStopEndTime = Number(serverData.pitStopEndTime);
+        localStorage.setItem('midalam_pitstop_end', String(pitStopEndTime));
+      } else {
+        pitStopEndTime = null;
+        localStorage.removeItem('midalam_pitstop_end');
+      }
+
+      if (serverData.logoUrl) {
+        currentPortraitUrl = serverData.logoUrl;
+        cachedBase64Portrait = serverData.logoUrl;
+        applyPortraitToAllSeals(cachedBase64Portrait);
+      } else if (cachedBase64Portrait) {
+        applyPortraitToAllSeals(cachedBase64Portrait);
+      }
 
       requestAnimationFrame(() => {
         renderSeats();
@@ -1198,7 +1476,9 @@
           if (isBoardingActive) renderInlineHeadcount();
         }
         const adminPanel = document.getElementById('adminPanel');
-        if (adminPanel && adminPanel.style.display === 'block') renderRoster();
+        if (adminPanel && adminPanel.style.display === 'block') {
+          renderRoster();
+        }
       });
     });
 
@@ -1258,9 +1538,12 @@
         spContainer.innerHTML = sponsorsList.length === 0
           ? `<span style="color:var(--text-muted); font-style:italic;">No sponsors recorded yet.</span>`
           : sponsorsList.map((s, i) => `
-            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:white; border:1px solid var(--border); border-radius:12px; margin-bottom:6px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:#f8fafc; border:1px solid var(--border); border-radius:14px; margin-bottom:8px;">
               <span><strong>${s.name}</strong></span>
-              <span style="color:var(--success); font-weight:800;">₹${Number(s.amount).toLocaleString()}</span>
+              <div style="display:flex; align-items:center; gap:14px;">
+                <span style="color:var(--success); font-weight:800;">₹${Number(s.amount).toLocaleString()}</span>
+                ${isAdminLoggedIn ? `<button type="button" onclick="deleteSponsor(${i})" style="border:none; background:#fee2e2; color:#ef4444; width:24px; height:24px; border-radius:50%; font-weight:700; cursor:pointer;">✕</button>` : ''}
+              </div>
             </div>
           `).join('');
       }
@@ -1268,11 +1551,17 @@
       if (fdContainer) {
         fdContainer.innerHTML = feedList.length === 0
           ? `<div class="feed-item"><div class="feed-text" style="color:var(--text-muted);">No live updates posted yet.</div></div>`
-          : feedList.map(f => `<div class="feed-item"><div class="feed-time">🕒 ${f.time}</div><div class="feed-text">${f.text}</div></div>`).join('');
+          : feedList.map((f, i) => `
+            <div class="feed-item">
+              <div class="feed-time">🕒 ${f.time}</div>
+              <div class="feed-text">${f.text}</div>
+              ${isAdminLoggedIn ? `<button type="button" onclick="deleteFeed(${i})" style="position:absolute; top:14px; right:14px; border:none; background:#fee2e2; color:#ef4444; width:24px; height:24px; border-radius:50%; font-weight:700; cursor:pointer;">✕</button>` : ''}
+            </div>
+          `).join('');
       }
     }
 
-    // --- FEATURE: ONE-CLICK OFFICIAL PARISH REPORT GENERATOR ---
+    // --- FEATURE: ONE-CLICK OFFICIAL PARISH REPORT GENERATOR (UPDATED FORMAT) ---
     function generateOfficialParishReport() {
       const confirmed = registrations.filter(r => r.status === 'CONFIRMED');
       const ticketIncome = confirmed.reduce((sum, r) => sum + (Number(r.paid) || 0), 0);
@@ -1292,10 +1581,10 @@
           .box { border: 1px solid #cbd5e1; padding: 12px; border-radius: 10px; background: #f8fafc; text-align: center; }
           .box h4 { margin: 0; font-size: 1.1rem; color: #1e3a8a; }
           .box p { margin: 4px 0 0; font-size: 0.75rem; color: #64748b; }
-          table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 25px; }
-          th, td { border: 1px solid #cbd5e1; padding: 8px 10px; text-align: left; }
+          table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 25px; }
+          th, td { border: 1px solid #cbd5e1; padding: 9px 12px; text-align: left; }
           th { background: #0f172a !important; color: white !important; }
-          .signs { display: flex; justify-content: space-between; margin-top: 60px; text-align: center; font-size: 0.85rem; font-weight: bold; }
+          .signs { display: flex; justify-content: space-around; margin-top: 60px; text-align: center; font-size: 0.85rem; font-weight: bold; }
         </style></head><body onload="window.print()">
         <h2>St. Joseph's Catechism Midalam</h2>
         <div class="sub">Official Tour Completion & Financial Audit Report • Catechism Tour 2026 (October 19, 2026)</div>
@@ -1315,21 +1604,21 @@
           <tr><td><strong>Total Revenue</strong></td><td><strong>₹${(ticketIncome + totalSponsors).toLocaleString()}</strong></td></tr>
         </table>
 
-        <h3>2. Sponsor Details</h3>
+        <h3>2. Sponsor Details & Benefactors</h3>
         <table>
           <tr><th>Sponsor Name / Family</th><th>Amount Donated (INR)</th></tr>
           ${sponsorsList.length === 0 ? `<tr><td colspan="2" style="text-align:center;">No sponsors recorded.</td></tr>` : sponsorsList.map(s => `<tr><td>${s.name}</td><td>₹${Number(s.amount).toLocaleString()}</td></tr>`).join('')}
         </table>
 
-        <h3>3. Itemized Tour Expenses (Bus, Tea, Entrance Fee, etc.)</h3>
+        <h3>3. Itemized Tour Expenses (Bus, Tea, Entrance Fee, Refreshments, etc.)</h3>
         <table>
-          <tr><th>Expense Description</th><th>Cost (INR)</th></tr>
+          <tr><th>Expense Description / Voucher</th><th>Cost (INR)</th></tr>
           ${expensesList.length === 0 ? `<tr><td colspan="2" style="text-align:center;">No expenses logged.</td></tr>` : expensesList.map(e => `<tr><td>${e.desc}</td><td>₹${Number(e.amount).toLocaleString()}</td></tr>`).join('')}
-          <tr><td><strong>Total Expenses</strong></td><td><strong>₹${totalExpenses.toLocaleString()}</strong></td></tr>
+          <tr><td><strong>Total Tour Expenses</strong></td><td><strong>₹${totalExpenses.toLocaleString()}</strong></td></tr>
         </table>
 
-        <div style="background:#f8fafc; padding:14px; border:1px solid #cbd5e1; border-radius:10px; margin-bottom:20px; font-size:0.9rem;">
-          <strong>Final Balance Summary:</strong> Total Income (₹${(ticketIncome + totalSponsors).toLocaleString()}) minus Total Expenses (₹${totalExpenses.toLocaleString()}) = <strong>₹${netBalance.toLocaleString()}</strong>
+        <div style="background:#f8fafc; padding:14px; border:1px solid #cbd5e1; border-radius:10px; margin-bottom:20px; font-size:0.95rem;">
+          <strong>Financial Summary:</strong> Total Revenue (₹${(ticketIncome + totalSponsors).toLocaleString()}) minus Total Expenses (₹${totalExpenses.toLocaleString()}) = <strong>₹${netBalance.toLocaleString()}</strong>
         </div>
 
         <div class="signs">
@@ -1373,12 +1662,15 @@
       document.getElementById('stopScanBtn').style.display = 'none';
       document.getElementById('inlineTorchBtn').style.display = 'none';
     }
-    async function toggleCameraTorch() {
+    async function toggleCameraTorch(mode) {
       try {
-        if (!inlineScanner || !inlineScanner.isScanning) return showToast("Start camera first.");
-        inlineTorchOn = !inlineTorchOn;
-        await inlineScanner.applyVideoConstraints({ advanced: [{ torch: inlineTorchOn }] });
-        showToast(inlineTorchOn ? "🔦 Flashlight ON" : "🔦 Flashlight OFF");
+        const scannerInstance = mode === 'inline' ? inlineScanner : modalScanner;
+        if (!scannerInstance || !scannerInstance.isScanning) return showToast("Start camera first.");
+        const currentTorch = mode === 'inline' ? inlineTorchOn : modalTorchOn;
+        const nextState = !currentTorch;
+        await scannerInstance.applyVideoConstraints({ advanced: [{ torch: nextState }] });
+        if (mode === 'inline') inlineTorchOn = nextState; else modalTorchOn = nextState;
+        showToast(nextState ? "🔦 Flashlight ON" : "🔦 Flashlight OFF");
       } catch (e) { showToast("Torch not supported on this device."); }
     }
 
@@ -1486,12 +1778,23 @@
       if (!grid) return;
       let html = `
         <div class="gallery-card" onclick="openLightbox('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80', 'Luxury Coach Maskara - Ready for Dispatch')">
-          <div class="gallery-img-box"><img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=400&q=80" alt="Coach"></div>
+          <div class="gallery-img-box"><img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=400&q=80" alt="Coach Maskara"></div>
           <div class="gallery-caption">Luxury Coach Maskara<div class="gallery-sub">Ready for Dispatch</div></div>
         </div>
+        <div class="gallery-card" onclick="openLightbox('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80', 'Kerala Landscape - Pilgrimage Route')">
+          <div class="gallery-img-box"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Scenic Kerala"></div>
+          <div class="gallery-caption">Kerala Landscape<div class="gallery-sub">Pilgrimage Route</div></div>
+        </div>
       `;
-      galleryList.forEach((p) => {
-        html += `<div class="gallery-card"><div class="gallery-img-box"><img src="${p.url}" alt="Photo"></div><div class="gallery-caption">${p.caption}</div></div>`;
+      const isAdminLoggedIn = document.getElementById('adminPanel') && document.getElementById('adminPanel').style.display === 'block';
+      galleryList.forEach((p, idx) => {
+        html += `
+          <div class="gallery-card" style="position:relative;" onclick="openLightbox('${p.url}', '${p.caption.replace(/'/g, "\\'")}')">
+            <div class="gallery-img-box"><img src="${p.url}" alt="Gallery Photo"></div>
+            <div class="gallery-caption">${p.caption}<div class="gallery-sub">Catechism Tour 2026</div></div>
+            ${isAdminLoggedIn ? `<button type="button" onclick="event.stopPropagation(); deleteGalleryPhoto(${idx})" style="position:absolute; top:8px; right:8px; border:none; background:#fee2e2; color:#ef4444; width:24px; height:24px; border-radius:50%; font-weight:700; cursor:pointer;">✕</button>` : ''}
+          </div>
+        `;
       });
       grid.innerHTML = html;
     }
@@ -1499,28 +1802,147 @@
     function renderItinerary() {
       const container = document.getElementById('publicItineraryList');
       if (!container) return;
-      container.innerHTML = itineraryList.map(item => `
-        <div class="timeline-item">
+      const isAdminLoggedIn = document.getElementById('adminPanel') && document.getElementById('adminPanel').style.display === 'block';
+      container.innerHTML = itineraryList.map((item, idx) => `
+        <div class="timeline-item" style="position:relative;">
           <div class="timeline-time">${item.time}</div>
           <div class="timeline-heading">${item.heading}</div>
           <div class="timeline-desc">${item.desc}</div>
+          ${isAdminLoggedIn ? `<button type="button" onclick="deleteItineraryStop(${idx})" style="position:absolute; top:12px; right:12px; border:none; background:#fee2e2; color:#ef4444; width:24px; height:24px; border-radius:50%; font-weight:700; cursor:pointer;">✕</button>` : ''}
         </div>
       `).join('');
     }
+    function addItineraryStop(e) {
+      e.preventDefault();
+      const time = document.getElementById('newItineraryTime').value.trim();
+      const heading = document.getElementById('newItineraryHeading').value.trim();
+      const desc = document.getElementById('newItineraryDesc').value.trim();
+      if (!time || !heading || !desc) return;
+      itineraryList.push({ time, heading, desc });
+      db.ref('tripData/itineraryList').set(itineraryList);
+      document.getElementById('newItineraryTime').value = '';
+      document.getElementById('newItineraryHeading').value = '';
+      document.getElementById('newItineraryDesc').value = '';
+      showToast("✓ Itinerary stop added!");
+    }
+    function deleteItineraryStop(idx) {
+      if (confirm("Delete this itinerary stop?")) {
+        itineraryList.splice(idx, 1);
+        db.ref('tripData/itineraryList').set(itineraryList);
+      }
+    }
 
+    function handlePhotoFileSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        selectedPhotoDataUrl = e.target.result;
+        document.getElementById('newPhotoUrl').value = "";
+      };
+      reader.readAsDataURL(file);
+    }
+    function addGalleryPhoto(e) {
+      e.preventDefault();
+      const urlInput = document.getElementById('newPhotoUrl').value.trim();
+      const caption = document.getElementById('newPhotoCaption').value.trim();
+      const finalUrl = selectedPhotoDataUrl || urlInput;
+      if (!finalUrl || !caption) return;
+      galleryList.unshift({ url: finalUrl, caption });
+      db.ref('tripData/galleryList').set(galleryList);
+      document.getElementById('newPhotoUrl').value = '';
+      document.getElementById('newPhotoCaption').value = '';
+      document.getElementById('newPhotoFile').value = '';
+      selectedPhotoDataUrl = "";
+      showToast("✓ Photo added to gallery!");
+    }
+    function deleteGalleryPhoto(idx) {
+      if (confirm("Delete this photo?")) {
+        galleryList.splice(idx, 1);
+        db.ref('tripData/galleryList').set(galleryList);
+      }
+    }
+    function openLightbox(imgUrl, captionText) {
+      const modal = document.getElementById('lightboxModal');
+      document.getElementById('lightboxImg').src = imgUrl;
+      document.getElementById('lightboxCaption').innerText = captionText;
+      modal.style.display = 'flex';
+    }
+    function closeLightbox() { document.getElementById('lightboxModal').style.display = 'none'; }
+
+    function broadcastCurrentGps() {
+      if (!navigator.geolocation) return showToast("Geolocation not supported");
+      navigator.geolocation.getCurrentPosition(position => {
+        busGps = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' ' + new Date().toLocaleDateString()
+        };
+        db.ref('tripData/busGps').set(busGps);
+        showToast("✓ Bus GPS location broadcasted!");
+      }, () => showToast("Failed to retrieve GPS."), { enableHighAccuracy: true });
+    }
+    function clearBusGps() {
+      if (confirm("Clear current bus GPS location?")) {
+        busGps = { lat: null, lng: null, time: null };
+        db.ref('tripData/busGps').set(busGps);
+      }
+    }
+    function openLiveBusMap() {
+      if (!busGps.lat || !busGps.lng) return alert("Coach GPS location has not been shared yet.");
+      window.open(`https://www.google.com/maps?q=${busGps.lat},${busGps.lng}`, '_blank');
+    }
+    function triggerSosEmergency() {
+      if (!navigator.geolocation) {
+        window.open(`https://api.whatsapp.com/send?phone=919486472814&text=SOS! I need urgent assistance during the Catechism Tour.`, '_blank');
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(pos => {
+        const mapLink = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
+        const text = `*SOS EMERGENCY - CATECHISM TOUR*%0AI need assistance right now! My GPS location is:%0A${mapLink}`;
+        window.open(`https://api.whatsapp.com/send?phone=919486472814&text=${text}`, '_blank');
+      });
+    }
+    function broadcastParentTravelUpdate(statusMessage) {
+      const text = `*ST. JOSEPH'S CATECHISM MIDALAM - CATECHISM TOUR 2026*%0A🚌 *Travel Update:* ${encodeURIComponent(statusMessage)}`;
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    }
+    function broadcastRollCallWhatsApp() {
+      const confirmed = registrations.filter(r => r.status === 'CONFIRMED');
+      const boarded = confirmed.filter(r => r.boarded || headcountChecked[r.id]);
+      const text = `*ST. JOSEPH'S CATECHISM MIDALAM - CATECHISM TOUR 2026*%0A📋 *Roll-Call Status Update*%0AOnboard Attendance: *${boarded.length} / ${confirmed.length}* passengers confirmed present on Coach Maskara!`;
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    }
+
+    function filterSeatView(type, btn) {
+      currentSeatFilter = type;
+      document.querySelectorAll('.seat-filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderSeats();
+    }
     function populateEveryoneLocator() {
       const select = document.getElementById('everyoneLocatorSelect');
       if (!select) return;
       const confirmed = registrations.filter(r => r.status === 'CONFIRMED').sort((a, b) => Number(a.seatNum || 999) - Number(b.seatNum || 999));
-      let html = `<option value="" disabled selected>-- Choose Passenger --</option>`;
+      let html = `<option value="" disabled selected>-- Choose Passenger (Seat Order) --</option>`;
       confirmed.forEach(r => {
-        html += `<option value="${r.seatNum}">Seat #${r.seatNum} - ${r.name}</option>`;
+        const desig = getOfficialDesignation(r);
+        html += `<option value="${r.seatNum}">Seat #${r.seatNum} - ${r.name} (${desig.plainRole})</option>`;
       });
       select.innerHTML = html;
     }
     function locateEveryoneSeat(seatNum) {
       if (!seatNum) return;
-      showToast(`Located Seat #${seatNum}`);
+      const seatNo = String(seatNum).padStart(2, '0');
+      document.querySelectorAll('#darkGreen3dBusDeck .seat-3d-avatar-card').forEach(el => {
+        const numEl = el.querySelector('.s3d-num');
+        if (numEl && numEl.innerText === `#${seatNo}`) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.style.transform = 'scale(1.12)';
+          setTimeout(() => el.style.transform = '', 1500);
+          showToast(`Located Seat #${seatNo}`);
+        }
+      });
     }
 
     function selectSeat(seatNo, seatType) {
@@ -1552,6 +1974,7 @@
           parent: document.getElementById('parentName').value.trim(),
           phone: document.getElementById('phoneNumber').value.trim(),
           medical: document.getElementById('medicalProfile').value.trim(),
+          buddy: document.getElementById('buddyTag').value.trim(),
           seatNum: seat,
           seatType: document.getElementById('selectedSeatType').value,
           totalFare: totalFare,
@@ -1591,6 +2014,54 @@
       if (!qr) return;
       qr.innerHTML = '';
       new QRCode(qr, { text: `upi://pay?pa=9486472814@upi&pn=StJosephMidalam&am=${document.getElementById('paidAmount').value || 500}&cu=INR`, width: 120, height: 120 });
+    }
+
+    function updateDashboard() {
+      const confirmed = registrations.filter(r => r.status === 'CONFIRMED');
+      const pendingList = registrations.filter(r => r.status === 'PENDING');
+      const boarded = registrations.filter(r => r.boarded === true || headcountChecked[r.id]);
+      const seatsCount = confirmed.length;
+      const seatsRemaining = Math.max(0, 60 - seatsCount);
+      const seatPct = Math.round((seatsCount / 60) * 100);
+      const boardedPct = Math.round((boarded.length / 60) * 100);
+      const totalPaid = confirmed.reduce((sum, r) => sum + (Number(r.paid) || 0), 0);
+      const totalSponsors = sponsorsList.reduce((sum, s) => sum + (Number(s.amount) || 0), 0);
+      const totalFundsRealized = totalPaid + totalSponsors;
+      const fullPaidCount = confirmed.filter(r => Number(r.balance) === 0).length;
+      const advPaidCount = confirmed.filter(r => Number(r.balance) > 0).length;
+
+      document.getElementById('kpiSeats').innerHTML = `${seatsCount} <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">/ 60</span>`;
+      document.getElementById('kpiRemaining').innerText = seatsRemaining;
+      document.getElementById('kpiSeatPct').innerText = `${seatPct}%`;
+      document.getElementById('barSeats').style.width = `${Math.min(100, seatPct)}%`;
+      document.getElementById('kpiBoarded').innerHTML = `${boarded.length} <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">/ 60</span>`;
+      document.getElementById('kpiBoardedPct').innerText = `${boardedPct}%`;
+      document.getElementById('barBoarded').style.width = `${Math.min(100, boardedPct)}%`;
+      document.getElementById('kpiPaid').innerText = `₹${totalFundsRealized.toLocaleString()}`;
+      document.getElementById('kpiRealizedPct').innerText = `${seatsCount} / 60 Seats`;
+      document.getElementById('kpiPayBreakdown').innerText = `Full: ${fullPaidCount} | Adv: ${advPaidCount}`;
+      document.getElementById('kpiPendingCount').innerText = `${pendingList.length} Waiting Approval`;
+
+      const navBadge = document.getElementById('navPendingBadge');
+      const adminBanner = document.getElementById('adminPendingAlertBanner');
+      const bannerCount = document.getElementById('pendingBannerCount');
+      if (navBadge) {
+        navBadge.innerText = pendingList.length;
+        navBadge.style.display = pendingList.length > 0 ? 'inline-block' : 'none';
+      }
+      if (adminBanner && bannerCount) {
+        bannerCount.innerText = pendingList.length;
+        adminBanner.style.display = pendingList.length > 0 ? 'block' : 'none';
+      }
+
+      const juniorCount = confirmed.filter(r => ['Class 1', 'Class 2', 'Class 3'].includes(r.standard)).length;
+      const seniorCount = confirmed.length - juniorCount;
+      const upiTotal = confirmed.filter(r => r.mode === 'UPI').reduce((sum, r) => sum + (Number(r.paid) || 0), 0);
+      const cashTotal = totalPaid - upiTotal;
+      document.getElementById('chipJunior').innerText = `${juniorCount} Confirmed (₹250)`;
+      document.getElementById('chipSenior').innerText = `${seniorCount} Confirmed (₹500)`;
+      document.getElementById('chipPayChannels').innerText = `UPI: ₹${upiTotal.toLocaleString()} | Cash: ₹${cashTotal.toLocaleString()}`;
+      document.getElementById('chipTotalPax').innerText = `${registrations.length} Total (${confirmed.length} Locked, ${pendingList.length} Pending)`;
     }
 
     function renderManifestTable() {
