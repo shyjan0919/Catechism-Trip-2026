@@ -46,60 +46,128 @@
       --shadow-unique: 0 10px 25px -8px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
     }
     * {
-      box-sizing: border-box; margin: 0; padding: 0;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-variant-numeric: tabular-nums; -webkit-tap-highlight-color: transparent; font-size: 13px;
+      font-variant-numeric: tabular-nums;
+      -webkit-tap-highlight-color: transparent;
+      font-size: 13px;
     }
+    
     body {
-      background: var(--bg-gradient); background-attachment: fixed; color: var(--text);
-      padding-top: env(safe-area-inset-top); padding-bottom: 45px; min-height: 100vh; overflow-x: hidden;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text);
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: 45px;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
     .tab-content { display: none; }
     .tab-content.active-tab { display: block; }
     .confetti-piece {
       position: fixed; width: 8px; height: 8px; background: var(--accent-gold);
-      top: -20px; z-index: 2000; pointer-events: none; animation: fall linear forwards;
+      top: -20px; z-index: 2000; pointer-events: none;
+      animation: fall linear forwards;
     }
     @keyframes fall {
       0% { transform: translateY(0) rotate(0deg); opacity: 1; }
       100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
     }
     header {
-      background: linear-gradient(135deg, #0f172a 0%, #020617 100%); color: white; padding: 12px 16px;
-      position: sticky; top: 0; z-index: 100; border-bottom: 2.5px solid var(--accent-gold);
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.35);
+      background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+      color: white; padding: 12px 16px; position: sticky; top: 0; z-index: 100;
+      border-bottom: 2.5px solid var(--accent-gold); box-shadow: 0 10px 30px rgba(15, 23, 42, 0.35);
     }
     .header-layout { display: flex; flex-direction: column; max-width: 1200px; margin: 0 auto; gap: 10px; }
     .brand-top-row { display: flex; align-items: center; justify-content: space-between; width: 100%; }
     .brand-section { display: flex; align-items: center; gap: 12px; }
     
+    /* CIRCULAR ST. JOSEPH PHOTO SEAL IN HEADER & ID CARDS */
     .st-joseph-emblem {
       width: 64px; height: 64px; border-radius: 50%; border: 2px solid var(--accent-gold);
-      background: #0f172a; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      background: #0f172a; position: relative; overflow: hidden; 
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
       box-shadow: 0 4px 16px rgba(212,175,55,0.45);
     }
-    .seal-photo-container { position: relative; width: 100%; height: 100%; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #0f172a; }
-    .seal-photo-img { width: 68%; height: 68%; border-radius: 50%; object-fit: cover; object-position: center 15%; border: 2px solid #d4af37; position: relative; z-index: 2; background: #1e293b; display: block; }
-    .seal-ring-svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }
+    .seal-photo-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0f172a;
+    }
+    .seal-photo-img {
+      width: 68%;
+      height: 68%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 15%;
+      border: 2px solid #d4af37;
+      position: relative;
+      z-index: 2;
+      background: #1e293b;
+      display: block;
+    }
+    .seal-ring-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      pointer-events: none;
+    }
 
     .brand-title { font-size: 1.05rem; font-weight: 800; color: #ffffff; letter-spacing: 0.3px; font-family: 'Cinzel', serif; line-height: 1.15; }
     .brand-sub { font-size: 0.62rem; color: var(--accent-gold); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
     .portal-nav-bar {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; width: 100%;
-      background: rgba(2, 6, 23, 0.85); padding: 6px; border-radius: 16px;
-      border: 1px solid rgba(212, 175, 55, 0.35); backdrop-filter: blur(12px);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      width: 100%;
+      background: rgba(2, 6, 23, 0.85);
+      padding: 6px;
+      border-radius: 16px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      backdrop-filter: blur(12px);
     }
-    @media (min-width: 768px) { .portal-nav-bar { grid-template-columns: repeat(9, 1fr); } }
+    @media (min-width: 768px) {
+      .portal-nav-bar { grid-template-columns: repeat(9, 1fr); }
+    }
     .portal-nav-btn {
-      background: transparent; color: #cbd5e1; border: none; padding: 8px 4px; border-radius: 11px;
-      font-size: 0.65rem; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: all 0.18s ease;
-      display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
-      letter-spacing: 0.3px; text-align: center; min-height: 40px; position: relative;
+      background: transparent;
+      color: #cbd5e1;
+      border: none;
+      padding: 8px 4px;
+      border-radius: 11px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      letter-spacing: 0.3px;
+      text-align: center;
+      min-height: 40px;
+      position: relative;
     }
     .portal-nav-btn:hover { background: rgba(255, 255, 255, 0.1); color: white; }
     .portal-nav-btn.active { background: var(--accent-gradient); color: #0f172a; font-weight: 800; box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4); }
-    .nav-badge { position: absolute; top: 2px; right: 6px; background: #ffb703; color: #0f172a; font-size: 0.58rem; font-weight: 800; padding: 1px 5px; border-radius: 10px; display: none; }
-    .sync-strip { background: #020617; color: #e2e8f0; font-size: 0.64rem; padding: 6px 18px; border-bottom: 1px solid rgba(212,175,55,0.2); }
+    .nav-badge {
+      position: absolute; top: 2px; right: 6px; background: #ffb703; color: #0f172a;
+      font-size: 0.58rem; font-weight: 800; padding: 1px 5px; border-radius: 10px; display: none;
+    }
+    .sync-strip {
+      background: #020617; color: #e2e8f0; font-size: 0.64rem; padding: 6px 18px; border-bottom: 1px solid rgba(212,175,55,0.2);
+    }
     .sync-strip-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
     .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; display: inline-block; box-shadow: 0 0 8px #22c55e; animation: pulse-glow 1.5s infinite; }
     @keyframes pulse-glow {
@@ -113,33 +181,46 @@
       border: 1px solid var(--border); box-shadow: var(--shadow-unique); margin-bottom: 20px;
       position: relative; overflow: hidden;
     }
-    .card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent-gradient); }
-    .card-title { font-size: 1.08rem; font-weight: 800; color: var(--primary-deep); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; font-family: 'Cinzel', serif; }
+    .card::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: var(--accent-gradient);
+    }
+    .card-title {
+      font-size: 1.08rem; font-weight: 800; color: var(--primary-deep); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px; font-family: 'Cinzel', serif;
+    }
     .countdown-banner {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); border: 1.5px solid var(--accent-gold);
-      border-radius: var(--radius-sm); padding: 14px; text-align: center; margin-bottom: 18px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); color: white;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      border: 1.5px solid var(--accent-gold); border-radius: var(--radius-sm); padding: 14px; text-align: center; margin-bottom: 18px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); color: white; position: relative; overflow: hidden;
     }
     .countdown-title { font-size: 0.65rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 1px; }
-    .countdown-timer { font-size: 1.35rem; font-weight: 800; color: #ffffff; margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
+    .countdown-timer { font-size: 1.35rem; font-weight: 800; color: #ffffff; margin-top: 4px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px; }
     .dashboard-sos-card {
-      background: linear-gradient(135deg, #020617 0%, #0f172a 100%); border: 1.5px solid var(--accent-gold);
-      border-radius: var(--radius-sm); padding: 16px; margin-bottom: 18px; color: white; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.3);
+      background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+      border: 1.5px solid var(--accent-gold); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 18px; color: white;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.3);
     }
     .dsc-title { font-size: 0.85rem; font-weight: 800; color: var(--accent-gold-light); text-transform: uppercase; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; font-family: 'Cinzel', serif; }
     .dsc-subtitle { font-size: 0.68rem; color: #cbd5e1; margin-bottom: 12px; font-weight: 500; }
     .dsc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .dsc-item { background: rgba(255,255,255,0.06); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 10px 8px; display: flex; flex-direction: column; justify-content: space-between; text-align: center; }
-    .dsc-role { font-size: 0.55rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; }
+    .dsc-role { font-size: 0.55rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.5px; }
     .dsc-name { font-size: 0.8rem; font-weight: 700; margin: 4px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .dsc-call { display: inline-flex; align-items: center; gap: 4px; background: var(--accent-gradient); color: #0f172a; text-decoration: none; font-size: 0.64rem; font-weight: 800; padding: 5px 10px; border-radius: 10px; margin-top: 6px; justify-content: center; }
     .dsc-sos-full { grid-column: span 3; background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); border-radius: 12px; padding: 12px; text-align: center; margin-top: 8px; cursor: pointer; font-size: 0.78rem; font-weight: 700; color: white; display: flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid rgba(255,255,255,0.2); }
     .bento-dashboard-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px; margin-bottom: 18px; }
-    .bento-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 16px; padding: 16px 14px; display: flex; flex-direction: column; justify-content: space-between; }
+    .bento-card {
+      background: #f8fafc; border: 1px solid var(--border); border-radius: 16px; padding: 16px 14px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
     .bento-seats, .bento-boarded { grid-column: span 12; }
     .bento-funds, .bento-status { grid-column: span 6; }
-    @media (min-width: 600px) { .bento-seats, .bento-boarded, .bento-funds, .bento-status { grid-column: span 6; } }
+    @media (min-width: 600px) {
+      .bento-seats, .bento-boarded, .bento-funds, .bento-status { grid-column: span 6; }
+    }
     .bento-lbl { font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: space-between; }
-    .bento-val { font-size: 1.5rem; font-weight: 800; color: var(--primary-deep); margin: 6px 0 2px; }
+    .bento-val { font-size: 1.5rem; font-weight: 800; color: var(--primary-deep); margin: 6px 0 2px; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.5px; }
     .bento-sub { font-size: 0.68rem; color: var(--text-muted); display: flex; justify-content: space-between; font-weight: 600; margin-top: 2px; }
     .progress-bar-bg { width: 100%; height: 6px; background: #e2e8f0; border-radius: 6px; margin-top: 8px; overflow: hidden; }
     .progress-bar-fill { height: 100%; border-radius: 6px; transition: width 0.3s ease; }
@@ -147,12 +228,12 @@
     .bg-success { background: var(--success); }
     .chips-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
     .chip-box { background: #f8fafc; border: 1px solid var(--border); padding: 12px 14px; border-radius: 14px; font-size: 0.76rem; font-weight: 700; color: var(--primary-mid); }
-    .chip-box span { display: block; font-size: 0.6rem; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; }
+    .chip-box span { display: block; font-size: 0.6rem; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
     .timeline-container { position: relative; padding-left: 22px; margin-top: 14px; }
     .timeline-container::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 3px; background: var(--accent-gold); border-radius: 3px; }
     .timeline-item { position: relative; margin-bottom: 18px; background: #f8fafc; border: 1px solid var(--border); border-radius: 16px; padding: 14px; }
     .timeline-item::before { content: ""; position: absolute; left: -22px; top: 16px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary-deep); border: 2px solid var(--accent-gold); }
-    .timeline-time { font-size: 0.7rem; font-weight: 800; color: #a16207; text-transform: uppercase; margin-bottom: 2px; }
+    .timeline-time { font-size: 0.7rem; font-weight: 800; color: #a16207; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
     .timeline-heading { font-size: 0.95rem; font-weight: 800; color: var(--primary-deep); margin-bottom: 4px; }
     .timeline-desc { font-size: 0.76rem; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
     .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
@@ -181,7 +262,7 @@
     }
     input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-light); background: #ffffff; box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12); }
     .price-box { background: #fffdf5; border: 1.5px dashed var(--accent-gold); border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 16px; }
-    .price-tag { font-size: 1.85rem; font-weight: 800; color: #a16207; }
+    .price-tag { font-size: 1.85rem; font-weight: 800; color: #a16207; font-family: 'Plus Jakarta Sans', sans-serif; }
     .price-desc { font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; font-weight: 600; }
     .btn {
       width: 100%; padding: 13px; border: none; border-radius: 14px; font-size: 0.86rem; font-weight: 700;
@@ -194,18 +275,39 @@
     .btn-danger { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; }
     .ledger-summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 18px; }
     .ledger-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 16px; padding: 14px; text-align: center; }
-    .ledger-lbl { font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
-    .ledger-val { font-size: 1.35rem; font-weight: 800; color: var(--primary-deep); margin-top: 4px; }
-    .cutaway-bus-hero { width: 100%; height: 190px; border-radius: var(--radius-sm); border: 2px solid var(--accent-gold); background: #0f172a; overflow: hidden; position: relative; margin-bottom: 18px; display: flex; align-items: center; justify-content: center; }
+    .ledger-lbl { font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .ledger-val { font-size: 1.35rem; font-weight: 800; color: var(--primary-deep); margin-top: 4px; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .feed-item { background: #f8fafc; border: 1px solid var(--border); border-radius: 16px; padding: 14px; margin-bottom: 12px; position: relative; }
+    .feed-time { font-size: 0.65rem; color: #a16207; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; }
+    .feed-text { font-size: 0.82rem; font-weight: 600; color: var(--text); margin-top: 3px; padding-right: 24px; }
+    .cutaway-bus-hero {
+      width: 100%; height: 190px; border-radius: var(--radius-sm); border: 2px solid var(--accent-gold);
+      background: #0f172a; overflow: hidden; position: relative; margin-bottom: 18px; display: flex; align-items: center; justify-content: center;
+    }
     .cutaway-bus-hero img { width: 100%; height: 100%; object-fit: cover; opacity: 0.88; }
-    .bus-3d-overlay-badge { position: absolute; bottom: 10px; left: 12px; background: rgba(15, 23, 42, 0.95); color: #fff; border: 1px solid var(--accent-gold); padding: 5px 12px; border-radius: 12px; font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; }
-    .bus-3d-visual-card { background: #020617; border: 3px solid var(--accent-gold); border-radius: 28px; padding: 20px 14px; margin-top: 14px; }
-    .bus-3d-top-banner { background: #0f172a; border: 1.5px solid var(--accent-gold); border-radius: 16px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; color: white; margin-bottom: 16px; }
-    .bus-3d-driver-row { background: rgba(255,255,255,0.06); border: 1px solid rgba(212,175,55,0.4); border-radius: 14px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; color: white; font-size: 0.75rem; font-weight: 700; margin-bottom: 16px; }
+    .bus-3d-overlay-badge {
+      position: absolute; bottom: 10px; left: 12px; background: rgba(15, 23, 42, 0.95); color: #fff;
+      border: 1px solid var(--accent-gold); padding: 5px 12px; border-radius: 12px; font-size: 0.65rem; font-weight: 700; letter-spacing: 1px;
+    }
+    .bus-3d-visual-card {
+      background: #020617; border: 3px solid var(--accent-gold); border-radius: 28px; padding: 20px 14px; margin-top: 14px;
+    }
+    .bus-3d-top-banner {
+      background: #0f172a; border: 1.5px solid var(--accent-gold); border-radius: 16px; padding: 12px 16px;
+      display: flex; justify-content: space-between; align-items: center; color: white; margin-bottom: 16px;
+    }
+    .bus-3d-driver-row {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(212,175,55,0.4); border-radius: 14px;
+      padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; color: white;
+      font-size: 0.75rem; font-weight: 700; margin-bottom: 16px;
+    }
     .bus-3d-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px 8px; align-items: center; }
     .bus-3d-grid .aisle { grid-column: 3; height: 10px; background: repeating-linear-gradient(90deg, #d4af37 0, #d4af37 5px, transparent 5px, transparent 10px); opacity: 0.75; }
-    .seat-3d-avatar-card { background: #0f172a; border: 1.5px dashed #1e3a8a; border-radius: 16px; padding: 8px 4px; text-align: center; cursor: pointer; min-height: 70px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; position: relative; }
-    .s3d-num { font-size: 0.65rem; font-weight: 800; color: #94a3b8; }
+    .seat-3d-avatar-card {
+      background: #0f172a; border: 1.5px dashed #1e3a8a; border-radius: 16px;
+      padding: 8px 4px; text-align: center; cursor: pointer; min-height: 70px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; position: relative;
+    }
+    .s3d-num { font-size: 0.65rem; font-weight: 800; color: #94a3b8; font-family: 'Plus Jakarta Sans', sans-serif; }
     .s3d-name { font-size: 0.52rem; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 52px; text-transform: uppercase; }
     .seat-3d-avatar-card.booked { background: #fffdf5; border: 1.5px solid var(--accent-gold); }
     .seat-3d-avatar-card.booked .s3d-num { color: #a16207; }
@@ -218,53 +320,245 @@
     .seat-search-wrapper input { padding: 10px 14px; font-size: 0.88rem; border-radius: 12px; background: white; border: 1px solid var(--border); }
     .seat-filter-btn { padding: 7px 14px; border-radius: 16px; border: 1px solid var(--border); background: white; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); cursor: pointer; white-space: nowrap; }
     .seat-filter-btn.active { background: var(--primary-deep); color: white; border-color: var(--primary-deep); }
-    .bus-container { background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 35%, #f8fafc 100%); border: 3px solid #cbd5e1; border-radius: 28px; padding: 20px 14px 24px; margin-top: 12px; position: relative; }
-    .bus-cockpit-cabin { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: center; background: #0f172a; color: white; padding: 12px 16px; border-radius: 16px; font-size: 0.75rem; font-weight: 700; margin-bottom: 16px; border-bottom: 2.5px solid var(--accent-gold); }
+    .bus-container {
+      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 35%, #f8fafc 100%);
+      border: 3px solid #cbd5e1; border-radius: 28px; padding: 20px 14px 24px; margin-top: 12px; position: relative;
+    }
+    .bus-cockpit-cabin {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: center; background: #0f172a; color: white;
+      padding: 12px 16px; border-radius: 16px; font-size: 0.75rem; font-weight: 700;
+      margin-bottom: 16px; border-bottom: 2.5px solid var(--accent-gold);
+    }
     .driver-seat-box { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 10px; border: 1px dashed var(--accent-gold); }
     .seat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px 6px; align-items: center; }
     .seat-grid .aisle { grid-column: 3; height: 10px; background: repeating-linear-gradient(90deg, #94a3b8 0, #94a3b8 5px, transparent 5px, transparent 10px); opacity: 0.8; }
     .seat-3d { position: relative; min-height: 58px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; user-select: none; transition: transform 0.15s ease; }
     .seat-3d.search-highlight { transform: scale(1.14); z-index: 10; filter: drop-shadow(0 0 10px #d4af37); }
     .seat-headrest { width: 72%; height: 11px; background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%); border-radius: 5px 5px 2px 2px; border: 1px solid #94a3b8; z-index: 3; margin-bottom: -3px; }
-    .seat-body { width: 100%; flex: 1; min-height: 44px; background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 70%, #e2e8f0 100%); border: 1px solid #94a3b8; border-radius: 10px 10px 12px 12px; box-shadow: 0 3px 0 #94a3b8; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2px 2px 4px; text-align: center; position: relative; }
-    .seat-num { font-size: 0.75rem; font-weight: 800; color: #0f172a; line-height: 1; }
+    .seat-body {
+      width: 100%; flex: 1; min-height: 44px; background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 70%, #e2e8f0 100%);
+      border: 1px solid #94a3b8; border-radius: 10px 10px 12px 12px; box-shadow: 0 3px 0 #94a3b8;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2px 2px 4px; text-align: center; position: relative;
+    }
+    .seat-num { font-size: 0.75rem; font-weight: 800; color: #0f172a; line-height: 1; font-family: 'Plus Jakarta Sans', sans-serif; }
     .seat-type-tag { font-size: 0.45rem; font-weight: 700; color: #64748b; margin-top: 1px; }
     .seat-assigned-name { font-size: 0.5rem; font-weight: 700; max-width: 46px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; text-transform: capitalize; }
     .seat-3d.selected .seat-headrest { background: var(--accent-gradient); border-color: #a16207; }
-    .seat-3d.selected .seat-body { background: linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%); border-color: #a16207; color: white; box-shadow: 0 3px 0 #020617; }
+    .seat-3d.selected .seat-body { background: linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%); border-color: var(--accent-gold); color: white; box-shadow: 0 3px 0 #020617; }
+    .seat-3d.selected .seat-num, .seat-3d.selected .seat-type-tag { color: #fff; }
+    .seat-3d.live-hold .seat-headrest { background: linear-gradient(180deg, #a855f7 0%, #7e22ce 100%); border-color: #581c87; }
+    .seat-3d.live-hold .seat-body { background: linear-gradient(180deg, #f3e8ff 0%, #e9d5ff 100%); border-color: #9333ea; }
     .seat-3d.booked .seat-headrest { background: linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%); border-color: #0f172a; }
     .seat-3d.booked .seat-body { background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%); border-color: #1e3a8a; }
+    .seat-3d.advance .seat-headrest { background: linear-gradient(180deg, #ffb703 0%, #fb8500 100%); border-color: #a16207; }
+    .seat-3d.advance .seat-body { background: linear-gradient(180deg, #fffdf5 0%, #fef3c7 100%); border-color: #ffb703; }
+    .seat-3d.pending .seat-headrest { background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%); border-color: #b45309; }
+    .seat-3d.pending .seat-body { background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%); border-color: #f59e0b; }
+    .seat-3d.boarded .seat-headrest { background: linear-gradient(180deg, #15803d 0%, #14532d 100%); border-color: #052e16; }
+    .seat-3d.boarded .seat-body { background: linear-gradient(180deg, #dcfce7 0%, #bbf7d0 100%); border-color: #15803d; }
 
-    .student-roster-card { background: #ffffff; border: 1px solid var(--border); border-radius: 20px; padding: 20px; box-shadow: 0 4px 16px rgba(15,23,42,0.04); margin-bottom: 14px; }
-    .src-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; }
-    .src-name { font-size: 1.05rem; font-weight: 800; color: var(--primary-deep); }
+    .filter-wrapper { margin-bottom: 18px; }
+    .search-input-box { position: relative; margin-bottom: 14px; }
+    .search-input-box input { padding-left: 44px; border-radius: 16px; background: #ffffff; }
+    .search-icon-pos { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 1.05rem; color: var(--text-muted); }
+    .filter-pills-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+    .pill-btn { padding: 9px 18px; border-radius: 22px; border: 1px solid var(--border); background: white; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); cursor: pointer; white-space: nowrap; }
+    .pill-btn.active { background: var(--primary-deep); color: white; border-color: var(--primary-deep); }
+    .roster-cards-container { display: flex; flex-direction: column; gap: 16px; }
+    .student-roster-card { background: #ffffff; border: 1px solid var(--border); border-radius: 20px; padding: 20px; box-shadow: 0 4px 16px rgba(15,23,42,0.04); }
+    .student-roster-card.is-pending-card { border: 2px solid #f59e0b; background: #fffdf7; }
+    .src-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; }
+    .src-name { font-size: 1.05rem; font-weight: 800; color: var(--primary-deep); text-transform: capitalize; }
     .src-meta { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
     .src-tid-badge { background: #f8fafc; color: var(--primary-deep); font-size: 0.72rem; font-weight: 800; padding: 5px 14px; border-radius: 12px; border: 1px solid var(--border-glow); font-family: 'JetBrains Mono', monospace; }
-    
-    /* ID CARD PASS */
-    .id-card-pass { background: #ffffff; border-radius: 22px; border: 3px solid #0f172a; overflow: hidden; width: 100%; max-width: 340px; margin: 0 auto 16px; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.25); display: flex; flex-direction: column; position: relative; }
-    .id-card-top { background: radial-gradient(circle at 50% 35%, #1e3a8a 0%, #0f172a 85%); color: #ffffff; padding: 14px 16px 16px; text-align: center; border-bottom: 3px solid var(--accent-gold); position: relative; }
-    .id-lanyard-slot { width: 52px; height: 8px; background: #020617; border: 1.5px solid rgba(212, 175, 55, 0.65); border-radius: 10px; margin: 0 auto 10px; }
-    .id-seal-wrapper { width: 142px; height: 142px; margin: 0 auto 8px; border-radius: 50%; background: #0f172a; border: 2.5px solid var(--accent-gold); box-shadow: 0 0 22px rgba(212, 175, 55, 0.45); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
-    .id-tour-pill { display: inline-block; background: var(--accent-gradient); color: #0f172a; font-size: 0.65rem; font-weight: 800; padding: 4px 16px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
-    .id-card-bottom { padding: 16px 16px 14px; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); text-align: center; }
-    .id-pax-name { font-family: 'Cinzel', serif; font-size: 1.22rem; font-weight: 800; color: #0f172a; text-transform: uppercase; line-height: 1.2; }
-    .id-pax-role { font-size: 0.76rem; font-weight: 800; color: #a16207; margin-top: 4px; margin-bottom: 12px; }
-    .id-vip-badge { display: inline-block; background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); color: #fef08a; border: 1.5px solid #d4af37; padding: 3px 12px; border-radius: 12px; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; margin-bottom: 4px; }
-    .id-data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; text-align: left; margin-bottom: 12px; }
-    .id-data-cell { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 7px 10px; }
-    .id-cell-lbl { font-size: 0.52rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.4px; }
-    .id-cell-val { font-size: 0.82rem; font-weight: 800; color: #0f172a; margin-top: 2px; }
-    .id-qr-section { display: flex; align-items: center; justify-content: center; gap: 14px; background: #ffffff; border: 1.5px dashed var(--accent-gold); border-radius: 14px; padding: 10px; }
-    #qrcode { width: 90px; height: 90px; display: flex; align-items: center; justify-content: center; background: white; padding: 3px; }
-    #qrcode img { width: 84px !important; height: 84px !important; object-fit: contain; }
-    .id-card-footer { background: #0f172a; color: #ffffff; padding: 10px 14px; border-top: 2px solid var(--accent-gold); text-align: center; }
-    .id-coord-title { font-size: 0.52rem; color: var(--accent-gold); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
-    .id-coord-Row { display: flex; justify-content: space-between; font-size: 0.62rem; font-weight: 700; color: #f8fafc; }
+    .src-details-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+    .src-detail-box { background: #f8fafc; border: 1px solid var(--border); padding: 10px; border-radius: 14px; text-align: center; }
+    .src-detail-lbl { font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+    .src-detail-val { font-size: 0.92rem; font-weight: 800; color: var(--primary-deep); margin-top: 3px; }
+    .action-boxes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    @media (min-width: 580px) { .action-boxes-grid { grid-template-columns: repeat(6, 1fr); } }
+    .act-card-btn {
+      display: flex; flex-direction: row; align-items: center; justify-content: center;
+      padding: 10px 8px; border-radius: 12px; border: 1px solid transparent; font-size: 0.75rem; 
+      font-weight: 700; cursor: pointer; background: #f8fafc; gap: 5px; white-space: nowrap;
+    }
+    .act-card-btn:active { transform: scale(0.96); }
+    .btn-box-confirm { background: #dcfce7; color: #15803d; border-color: #86efac; }
+    .btn-box-due { background: #e0f2fe; color: #0369a1; border-color: #7dd3fc; }
+    .btn-box-pass { background: #fef9c3; color: #854d0e; border-color: #fde047; }
+    .btn-box-dl { background: #ffedd5; color: #9a3412; border-color: #fdba74; }
+    .btn-box-wa { background: #dcfce7; color: #166534; border-color: #4ade80; }
+    .btn-box-del { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
 
-    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(12px); z-index: 2000; display: none; align-items: flex-end; justify-content: center; padding: 0; }
+    /* VERTICAL OFFICIAL LANYARD ID-CARD BOARDING PASS */
+    .id-card-pass {
+      background: #ffffff;
+      border-radius: 22px;
+      border: 3px solid #0f172a;
+      overflow: hidden;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto 16px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.25);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .id-card-top {
+      background: radial-gradient(circle at 50% 35%, #1e3a8a 0%, #0f172a 85%);
+      color: #ffffff;
+      padding: 14px 16px 16px;
+      text-align: center;
+      border-bottom: 3px solid var(--accent-gold);
+      position: relative;
+    }
+    .id-lanyard-slot {
+      width: 52px;
+      height: 8px;
+      background: #020617;
+      border: 1.5px solid rgba(212, 175, 55, 0.65);
+      border-radius: 10px;
+      margin: 0 auto 10px;
+    }
+    .id-seal-wrapper {
+      width: 142px;
+      height: 142px;
+      margin: 0 auto 8px;
+      border-radius: 50%;
+      background: #0f172a;
+      border: 2.5px solid var(--accent-gold);
+      box-shadow: 0 0 22px rgba(212, 175, 55, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .id-tour-pill {
+      display: inline-block;
+      background: var(--accent-gradient);
+      color: #0f172a;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 4px 16px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    .id-card-bottom {
+      padding: 16px 16px 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      text-align: center;
+    }
+    .id-pax-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.22rem;
+      font-weight: 800;
+      color: #0f172a;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+    .id-pax-role {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #a16207;
+      margin-top: 4px;
+      margin-bottom: 12px;
+    }
+    .id-vip-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #fef08a;
+      border: 1.5px solid #d4af37;
+      padding: 3px 12px;
+      border-radius: 12px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .id-data-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      text-align: left;
+      margin-bottom: 12px;
+    }
+    .id-data-cell {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 7px 10px;
+    }
+    .id-cell-lbl {
+      font-size: 0.52rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .id-cell-val {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 2px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .id-qr-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      background: #ffffff;
+      border: 1.5px dashed var(--accent-gold);
+      border-radius: 14px;
+      padding: 10px;
+    }
+    #qrcode {
+      width: 90px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      padding: 3px;
+    }
+    #qrcode img { width: 84px !important; height: 84px !important; object-fit: contain; }
+    .id-card-footer {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 10px 14px;
+      border-top: 2px solid var(--accent-gold);
+      text-align: center;
+    }
+    .id-coord-title {
+      font-size: 0.52rem;
+      color: var(--accent-gold);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 3px;
+    }
+    .id-coord-Row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: #f8fafc;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(12px);
+      z-index: 2000; display: none; align-items: flex-end; justify-content: center; padding: 0;
+    }
     @media (min-width: 600px) { .modal-overlay { align-items: center; padding: 16px; } }
-    .modal-card { background: white; border-radius: 28px; padding: 22px 18px env(safe-area-inset-bottom, 18px); max-width: 450px; width: 100%; max-height: 92vh; overflow-y: auto; position: relative; }
+    .modal-card {
+      background: white; border-radius: 28px;
+      padding: 22px 18px env(safe-area-inset-bottom, 18px); max-width: 450px; width: 100%; max-height: 92vh; overflow-y: auto; position: relative;
+    }
     .sheet-handle { width: 44px; height: 5px; background: #cbd5e1; border-radius: 4px; margin: -10px auto 14px; }
     .success-card { text-align: center; padding: 24px 14px; display: none; }
     .success-card .icon-circle { width: 68px; height: 68px; background: #fef3c7; color: #d97706; font-size: 2.2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; border: 2px solid #f59e0b; }
@@ -273,7 +567,10 @@
     .headcount-list { max-height: 300px; overflow-y: auto; margin: 14px 0; border: 1px solid var(--border); border-radius: 16px; }
     .hc-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid #f1f5f9; background: white; gap: 8px; }
     .hc-item.checked { background: #dcfce7; }
-    #toast { position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); background: #0f172a; color: white; padding: 12px 24px; border-radius: 30px; font-size: 0.82rem; font-weight: 700; z-index: 2500; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.35); border: 1.5px solid var(--accent-gold); }
+    #toast {
+      position: fixed; bottom: 35px; left: 50%; transform: translateX(-50%); background: #0f172a; color: white;
+      padding: 12px 24px; border-radius: 30px; font-size: 0.82rem; font-weight: 700; z-index: 2500; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.35); border: 1.5px solid var(--accent-gold);
+    }
   </style>
 </head>
 <body>
@@ -284,6 +581,7 @@
     <button id="pwaInstallBtn" style="background:#0f172a; color:#fef08a; border:1px solid #fef08a; padding:6px 14px; border-radius:10px; font-weight:800; font-size:0.72rem; cursor:pointer;">Install App</button>
   </div>
 
+  <!-- REUSABLE SVG RING OVERLAY FOR CURVED TEXT AROUND REAL PHOTO -->
   <svg style="display:none;">
     <symbol id="st-joseph-ring-text" viewBox="0 0 240 240">
       <defs>
@@ -307,6 +605,7 @@
     </symbol>
   </svg>
 
+  <!-- HEADER WITH YOUR EXACT ST. JOSEPH & CHILD JESUS PICTURE -->
   <header>
     <div class="header-layout">
       <div class="brand-top-row">
@@ -361,15 +660,24 @@
           <div class="dsc-subtitle">🛡️ Your children are safe, secure, and monitored live under St. Joseph's patronage!</div>
           <div class="dsc-grid">
             <div class="dsc-item">
-              <div><span class="dsc-role">Tour Head</span><div class="dsc-name">Fr. Vijin Bright</div></div>
+              <div>
+                <span class="dsc-role">Tour Head</span>
+                <div class="dsc-name">Fr. Vijin Bright</div>
+              </div>
               <a href="tel:+918526504345" class="dsc-call">📞 Call</a>
             </div>
             <div class="dsc-item">
-              <div><span class="dsc-role">Co-Ordinator</span><div class="dsc-name">Denson</div></div>
+              <div>
+                <span class="dsc-role">Co-Ordinator</span>
+                <div class="dsc-name">Denson</div>
+              </div>
               <a href="tel:+919486472814" class="dsc-call">📞 Call</a>
             </div>
             <div class="dsc-item">
-              <div><span class="dsc-role">Co-Ordinator</span><div class="dsc-name">Bensigar</div></div>
+              <div>
+                <span class="dsc-role">Co-Ordinator</span>
+                <div class="dsc-name">Bensigar</div>
+              </div>
               <a href="tel:+919486270230" class="dsc-call">📞 Call</a>
             </div>
             <div class="dsc-sos-full" onclick="triggerSosEmergency()">
@@ -555,7 +863,7 @@
             </div>
             
             <input type="hidden" id="selectedSeat" required>
-            <input type="hidden" id="selectedSeatType" value="Window (W)">
+            <input type="hidden" id="selectedSeatType" value="Side (S)">
           </div>
 
           <div class="form-group">
@@ -672,32 +980,6 @@
     <div id="infoTab" class="tab-content">
       <div class="card">
         <div class="card-title">📢 Tour Transparency & Live Tracking</div>
-        
-        <!-- FEATURE: EMERGENCY DIGITAL BUSINESS CARD -->
-        <div style="background:linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); border:2px solid var(--accent-gold); border-radius:20px; padding:18px; margin-bottom:22px; color:white; text-align:center;">
-          <div style="font-size:0.75rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">📇 Emergency Digital Business Card</div>
-          <div style="font-size:1.1rem; font-weight:800; font-family:'Cinzel',serif; margin-bottom:10px;">St. Joseph's Catechism Tour 2026</div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:0.78rem; text-align:left; margin-bottom:12px;">
-            <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:10px;"><strong>Fr. Vijin Bright:</strong><br><a href="tel:+918526504345" style="color:#fef08a;">+91 85265 04345</a></div>
-            <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:10px;"><strong>Denson:</strong><br><a href="tel:+919486472814" style="color:#fef08a;">+91 94864 72814</a></div>
-          </div>
-          <a href="tel:+919486472814" class="btn btn-accent" style="text-decoration:none; display:inline-flex; width:auto; padding:8px 20px; font-size:0.78rem; margin:0 auto;">📞 Call Tour Coordinator Now</a>
-        </div>
-
-        <!-- FEATURE: LIVE EXPENSE TRACKER -->
-        <div style="background:#fffdf5; border:1.5px solid var(--accent-gold); border-radius:18px; padding:18px; margin-bottom:22px;">
-          <h4 style="font-size:0.92rem; font-weight:800; color:#a16207; margin-bottom:8px;">💵 Live Expense Tracker & Treasurer Splitter</h4>
-          <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:12px;">Real-time logging of on-the-spot tour costs and voucher splits.</p>
-          <div id="publicExpensesList" style="font-size:0.82rem; color:var(--text-muted); margin-bottom:14px;">Loading expenses...</div>
-          <div id="adminExpenseBox" style="display:none; border-top:1.5px dashed var(--accent-gold); padding-top:14px;">
-            <form onsubmit="addExpense(event)" style="display:grid; grid-template-columns: 2fr 1fr auto; gap:8px;">
-              <input type="text" id="newExpenseDesc" placeholder="Expense description (e.g., Tea, Bus)" required style="padding:10px; background:white;">
-              <input type="number" id="newExpenseAmount" placeholder="Cost (₹)" required style="padding:10px; background:white;">
-              <button type="submit" class="btn btn-primary" style="padding:10px 14px; font-size:0.75rem;">Log</button>
-            </form>
-          </div>
-        </div>
-
         <div style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); border: 1px solid #38bdf8; border-radius: 20px; padding: 18px; margin-bottom: 22px; text-align: center;">
           <h4 style="font-size: 1rem; font-weight: 700; color: #0369a1; margin-bottom: 4px;">📍 Coach Live GPS Location</h4>
           <p style="font-size: 0.75rem; color: #0c4a6e; font-weight: 600; margin-bottom: 12px;" id="busGpsStatusText">Broadcasting status: Ready for tour day</p>
@@ -725,6 +1007,10 @@
             <div class="ledger-val" id="ledgerNet" style="color:var(--success);">₹0</div>
           </div>
         </div>
+        <div style="margin-top: 22px; background: #fffdf5; border: 1.5px solid var(--accent-gold); border-radius: 18px; padding: 16px;">
+          <h4 style="font-size: 0.92rem; font-weight: 800; color: #a16207; margin-bottom: 8px;">💵 Cash Tracker & Expense Splitter</h4>
+          <div id="publicExpensesList" style="font-size:0.82rem; color:var(--text-muted); margin-bottom:12px;">Loading expenses...</div>
+        </div>
         <div style="margin-top: 22px;">
           <label style="margin-bottom: 10px;">Sponsors & Benefactors</label>
           <div id="publicSponsorsList" style="font-size:0.82rem; color:var(--text-muted); margin-bottom:18px;">Loading sponsors...</div>
@@ -739,6 +1025,15 @@
             <button class="btn btn-primary" style="flex:1; padding:12px; font-size:0.78rem;" onclick="broadcastCurrentGps()">📡 Broadcast GPS</button>
             <button class="btn btn-danger" style="flex:1; padding:12px; font-size:0.78rem;" onclick="clearBusGps()">🗑️ Reset GPS</button>
           </div>
+          <div style="margin-bottom:16px; background:#f8fafc; padding:16px; border-radius:16px; border:1px solid var(--border);">
+            <label style="font-size:0.7rem; margin-bottom:6px; display:block;">Broadcast Live Update to Parents' WhatsApp</label>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+              <button class="btn btn-accent" style="flex:1; padding:10px; font-size:0.72rem;" onclick="broadcastParentTravelUpdate('🚌 Bus departed from St. Joseph Church campus!')">Departed Church</button>
+              <button class="btn btn-accent" style="flex:1; padding:10px; font-size:0.72rem;" onclick="broadcastParentTravelUpdate('🍳 Stopped for breakfast refreshments!')">Breakfast Stop</button>
+              <button class="btn btn-accent" style="flex:1; padding:10px; font-size:0.72rem;" onclick="broadcastParentTravelUpdate('🏞️ Reached sightseeing destination safely!')">Reached Spot</button>
+              <button class="btn btn-accent" style="flex:1; padding:10px; font-size:0.72rem;" onclick="broadcastParentTravelUpdate('🏡 Heading back home to Midalam!')">Heading Back</button>
+            </div>
+          </div>
           <form onsubmit="addSponsor(event)" style="margin-bottom:16px; background:#f8fafc; padding:16px; border-radius:16px; border:1px solid var(--border);">
             <label style="font-size:0.7rem;">Add Sponsor</label>
             <div style="display:grid; grid-template-columns: 2fr 1fr; gap:8px; margin-top:6px;">
@@ -746,6 +1041,14 @@
               <input type="number" id="newSponsorAmount" placeholder="Amount (₹)" required style="padding:12px;">
             </div>
             <button type="submit" class="btn btn-secondary" style="margin-top:10px; padding:12px; font-size:0.78rem;">Add Sponsor</button>
+          </form>
+          <form onsubmit="addExpense(event)" style="margin-bottom:16px; background:#f8fafc; padding:16px; border-radius:16px; border:1px solid var(--border);">
+            <label style="font-size:0.7rem;">Add On-the-Spot Expense (Cash Tracker)</label>
+            <div style="display:grid; grid-template-columns: 2fr 1fr; gap:8px; margin-top:6px;">
+              <input type="text" id="newExpenseDesc" placeholder="Expense (e.g. Water bottles)" required style="padding:12px;">
+              <input type="number" id="newExpenseAmount" placeholder="Cost (₹)" required style="padding:12px;">
+            </div>
+            <button type="submit" class="btn btn-secondary" style="margin-top:10px; padding:12px; font-size:0.78rem;">Log Expense</button>
           </form>
           <form onsubmit="addFeedUpdate(event)" style="background:#f8fafc; padding:16px; border-radius:16px; border:1px solid var(--border);">
             <label style="font-size:0.7rem;">Post Live Timeline Update</label>
@@ -756,10 +1059,10 @@
       </div>
     </div>
 
-    <!-- TAB 7: ⚡ LIGHTNING-FAST TURBO QR SCANNER -->
+    <!-- TAB 7: ULTRA-FAST ZERO-DELAY QR SCANNER + TORCH + VOICE + MISSING FILTER -->
     <div id="scannerTab" class="tab-content">
       <div class="card">
-        <div class="card-title">📷 High-Speed Boarding & Pit-Stop Turbo Scanner</div>
+        <div class="card-title">📷 High-Speed Boarding & Pit-Stop QR Scanner</div>
         <div id="boardingLockedMsg" style="text-align: center; padding: 24px 12px;">
           <div style="font-size: 2.4rem; margin-bottom: 10px;">🔒</div>
           <h4 style="font-size: 1rem; font-weight: 800; color: var(--primary-deep);">Boarding Scanner is Currently Locked</h4>
@@ -767,7 +1070,7 @@
         </div>
         <div id="boardingUnlockedContent" style="display:none;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-            <span style="font-size:0.78rem; font-weight:800; color:var(--success);">⚡ 60 FPS Turbo Recognition Ready (Lamination & Mobile Screen Optimized)</span>
+            <span style="font-size:0.78rem; font-weight:800; color:var(--success);">⚡ Zero-Delay Continuous Scanner Ready</span>
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
               <button type="button" id="voiceToggleBtn" onclick="toggleVoiceReadout()" style="border:1px solid var(--primary-light); background:#eff6ff; color:var(--primary-light); font-size:0.7rem; font-weight:800; padding:6px 10px; border-radius:10px; cursor:pointer;">🔊 Voice: ON</button>
               <button type="button" onclick="resetHeadcount()" style="border:1px solid #ef4444; background:#fee2e2; color:#b91c1c; font-size:0.7rem; font-weight:800; padding:6px 10px; border-radius:10px; cursor:pointer;">🔄 New Stop Roll-Call</button>
@@ -775,7 +1078,7 @@
           </div>
           
           <div style="display:flex; gap:8px; margin-bottom: 14px;">
-            <button class="btn btn-primary" onclick="startInlineScanner()" id="startScanBtn" style="flex:1;">⚡ Launch Turbo Scanner</button>
+            <button class="btn btn-primary" onclick="startInlineScanner()" id="startScanBtn" style="flex:1;">⚡ Launch Camera Scanner</button>
             <button class="btn btn-accent" onclick="toggleCameraTorch('inline')" id="inlineTorchBtn" style="display:none; width:auto; padding:12px 16px;">🔦 Torch</button>
             <button class="btn btn-secondary" onclick="stopInlineScanner()" id="stopScanBtn" style="display:none; width:auto; padding:12px 16px;">⏹️ Stop</button>
           </div>
@@ -804,7 +1107,7 @@
     <!-- TAB 8: MANIFEST -->
     <div id="manifestTab" class="tab-content">
       <div class="card">
-        <div class="card-title">📋 Passenger Booking Manifest & Window/Aisle Seating</div>
+        <div class="card-title">📋 Passenger Booking Manifest & ID Card Pass</div>
         <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px;">Sorted chronologically by coach seat number (01 to 60). Once Admin approves your payment, tap <strong>"🪪 ID Pass"</strong> to view and save your official ID Card!</p>
         
         <div class="seat-search-wrapper" style="margin-bottom: 16px;">
@@ -831,15 +1134,6 @@
     <div id="rosterTab" class="tab-content">
       <div class="card">
         <div class="card-title">🔐 Coordinator Control Center</div>
-        
-        <!-- FEATURE: ONE-CLICK OFFICIAL PARISH REPORT GENERATOR -->
-        <div style="background:linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); border:2px solid var(--accent-gold); border-radius:18px; padding:18px; margin-bottom:20px; color:white; text-align:center;">
-          <div style="font-size:0.75rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">📄 Official Parish Audit & Submission</div>
-          <div style="font-size:1.1rem; font-weight:800; font-family:'Cinzel',serif; margin-bottom:10px;">One-Click Official Parish Report Generator</div>
-          <p style="font-size:0.75rem; color:#cbd5e1; margin-bottom:14px;">Generates a clean report with ticket income, sponsor list, itemized expenses (bus, tea, entrance fee), and coordinator sign-offs (no student names).</p>
-          <button class="btn btn-accent" style="width:auto; margin:0 auto; padding:10px 22px; font-size:0.8rem;" onclick="generateOfficialParishReport()">🖨️ Generate Official Parish Report</button>
-        </div>
-
         <div style="background: linear-gradient(135deg, #fffdf5 0%, #fef3c7 100%); border: 1.5px solid var(--accent-gold); border-radius: 16px; padding: 16px; margin-bottom: 20px;">
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <h4 style="font-size: 0.92rem; font-weight: 800; color: #a16207; margin-bottom: 4px;">⏱️ Cloud-Synced Pit-Stop Timer (Survives Refresh)</h4>
@@ -1238,7 +1532,7 @@
   <div id="toast"></div>
 
   <script>
-    // --- Firebase Cloud Configuration ---
+    // --- Firebase Cloud Configuration (kerala-trip-2026-8a0f1) ---
     const firebaseConfig = {
       apiKey: "AIzaSyCb-UG0nIjjPYTQt025JfbIXOHOxhd143Q",
       authDomain: "kerala-trip-2026-8a0f1.firebaseapp.com",
@@ -1402,31 +1696,78 @@
     }
     setInterval(updateCountdown, 1000);
 
-    // --- BULLETPROOF ROOT + TRIPDATA FIREBASE LOADER ---
-    const rootRef = db.ref('/');
-    rootRef.on('value', (snapshot) => {
-      const rootData = snapshot.val() || {};
-      let foundList = [];
-      if (rootData.tripData && rootData.tripData.registrations) {
-        foundList = normalizeList(rootData.tripData.registrations);
-      } else if (rootData.registrations) {
-        foundList = normalizeList(rootData.registrations);
-      } else if (rootData.tickets) {
-        foundList = normalizeList(rootData.tickets);
+    setInterval(() => {
+      const selSeat = document.getElementById('selectedSeat')?.value;
+      const badge = document.getElementById('liveHoldBadge');
+      const timerTxt = document.getElementById('liveHoldTimer');
+      if (!selSeat || !seatHolds[selSeat] || seatHolds[selSeat].clientId !== clientDeviceId) {
+        if (badge) badge.style.display = 'none';
       } else {
-        for (const key of Object.keys(rootData)) {
-          const val = rootData[key];
-          if (val && typeof val === 'object') {
-            const items = normalizeList(val);
-            if (items.length > foundList.length && items[0] && (items[0].name || items[0].seatNum || items[0].id)) {
-              foundList = items;
-            }
-          }
+        const remSec = Math.max(0, Math.floor((seatHolds[selSeat].expiresAt - Date.now()) / 1000));
+        if (remSec <= 0) {
+          badge.style.display = 'none';
+          document.getElementById('selectedSeat').value = '';
+          db.ref(`tripData/seatHolds/${selSeat}`).remove();
+          renderSeats();
+        } else {
+          badge.style.display = 'inline-block';
+          const m = String(Math.floor(remSec / 60)).padStart(2, '0');
+          const s = String(remSec % 60).padStart(2, '0');
+          timerTxt.innerText = `${m}:${s}`;
         }
       }
 
-      registrations = foundList;
-      const serverData = rootData.tripData || {};
+      const pitDisplay = document.getElementById('pitStopTimerDisplay');
+      const activeTag = document.getElementById('pitStopActiveTag');
+      const targetEnd = pitStopEndTime || parseInt(localStorage.getItem('midalam_pitstop_end') || '0', 10);
+
+      if (targetEnd && targetEnd > 0) {
+        const remPitSec = Math.floor((targetEnd - Date.now()) / 1000);
+        if (remPitSec > 0) {
+          if (activeTag) activeTag.style.display = 'inline-block';
+          const pm = String(Math.floor(remPitSec / 60)).padStart(2, '0');
+          const ps = String(remPitSec % 60).padStart(2, '0');
+          if (pitDisplay) pitDisplay.innerText = `${pm}:${ps}`;
+          pitStopAlerted = false;
+        } else {
+          if (activeTag) activeTag.style.display = 'none';
+          if (pitDisplay) pitDisplay.innerText = "⏰ TIME'S UP! BUS DEPARTING!";
+          if (!pitStopAlerted) {
+            pitStopAlerted = true;
+            playChime('duplicate');
+            speakText("Attention please! Pit stop time is up. Bus is departing.");
+            showToast("🚨 Pit-Stop Time Expired! Ready for departure!");
+          }
+        }
+      } else {
+        if (activeTag) activeTag.style.display = 'none';
+      }
+    }, 1000);
+
+    function startPitStopTimer() {
+      const mins = parseInt(document.getElementById('timerMinutes').value, 10) || 10;
+      const targetTime = Date.now() + (mins * 60 * 1000);
+      pitStopEndTime = targetTime;
+      pitStopAlerted = false;
+      localStorage.setItem('midalam_pitstop_end', String(targetTime));
+      db.ref('tripData/pitStopEndTime').set(targetTime);
+      showToast(`✓ Pit-Stop Timer started for ${mins} mins (Survives refresh!)`);
+    }
+    function stopPitStopTimer() {
+      pitStopEndTime = null;
+      pitStopAlerted = false;
+      localStorage.removeItem('midalam_pitstop_end');
+      db.ref('tripData/pitStopEndTime').remove();
+      const mins = parseInt(document.getElementById('timerMinutes')?.value, 10) || 10;
+      document.getElementById('pitStopTimerDisplay').innerText = `${String(mins).padStart(2, '0')}:00`;
+      showToast("Timer reset.");
+    }
+
+    // --- LIGHTNING-SPEED REALTIME LISTENER ---
+    const tripDataRef = db.ref('tripData');
+    tripDataRef.on('value', (snapshot) => {
+      const serverData = snapshot.val() || {};
+      registrations = normalizeList(serverData.registrations);
       seatHolds = serverData.seatHolds || {};
       headcountChecked = serverData.headcountChecked || {};
       sponsorsList = normalizeList(serverData.sponsorsList);
@@ -1482,321 +1823,106 @@
       });
     });
 
-    // --- FEATURE: LIVE EXPENSE TRACKER ---
-    function addExpense(e) {
-      e.preventDefault();
-      const desc = document.getElementById('newExpenseDesc').value.trim();
-      const amount = Number(document.getElementById('newExpenseAmount').value);
-      if (!desc || !amount) return;
-      expensesList.push({ desc, amount });
-      db.ref('tripData/expensesList').set(expensesList);
-      document.getElementById('newExpenseDesc').value = '';
-      document.getElementById('newExpenseAmount').value = '';
-      showToast("✓ Live Expense Logged!");
+    function uploadCustomSealLogo(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          canvas.width = 300;
+          canvas.height = 300;
+          const ctx = canvas.getContext('2d');
+          const minSide = Math.min(img.width, img.height);
+          const sx = (img.width - minSide) / 2;
+          const sy = (img.height - minSide) / 5;
+          ctx.drawImage(img, sx, Math.max(0, sy), minSide, minSide, 0, 0, 300, 300);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+          cachedBase64Portrait = dataUrl;
+          db.ref('tripData/logoUrl').set(dataUrl);
+          showToast("✓ St. Joseph Photo Locked Permanently in Firebase!");
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
     }
-    function deleteExpense(i) {
-      if (confirm("Delete this expense voucher?")) {
-        expensesList.splice(i, 1);
-        db.ref('tripData/expensesList').set(expensesList);
-      }
-    }
-
-    function renderTransparencyLedger() {
-      const confirmed = registrations.filter(r => r.status === 'CONFIRMED');
-      const ticketIncome = confirmed.reduce((sum, r) => sum + (Number(r.paid) || 0), 0);
-      const totalSponsors = sponsorsList.reduce((sum, s) => sum + (Number(s.amount) || 0), 0);
-      const totalExpenses = expensesList.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
-      const netBalance = (ticketIncome + totalSponsors) - totalExpenses;
-
-      document.getElementById('ledgerIncome').innerText = `₹${ticketIncome.toLocaleString()}`;
-      document.getElementById('ledgerSponsors').innerText = `₹${totalSponsors.toLocaleString()}`;
-      document.getElementById('ledgerExpenses').innerText = `₹${totalExpenses.toLocaleString()}`;
-      const netEl = document.getElementById('ledgerNet');
-      netEl.innerText = `₹${netBalance.toLocaleString()}`;
-      netEl.style.color = netBalance >= 0 ? 'var(--success)' : 'var(--danger)';
-
-      const isAdminLoggedIn = document.getElementById('adminPanel') && document.getElementById('adminPanel').style.display === 'block';
-      const expContainer = document.getElementById('publicExpensesList');
-      if (expContainer) {
-        expContainer.innerHTML = expensesList.length === 0
-          ? `<span style="color:var(--text-muted); font-style:italic;">No live expenses recorded yet.</span>`
-          : expensesList.map((e, i) => `
-            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:white; border:1px solid var(--border); border-radius:12px; margin-bottom:6px;">
-              <span><strong>${e.desc}</strong></span>
-              <div style="display:flex; align-items:center; gap:12px;">
-                <span style="color:var(--danger); font-weight:800;">₹${Number(e.amount).toLocaleString()}</span>
-                ${isAdminLoggedIn ? `<button type="button" onclick="deleteExpense(${i})" style="border:none; background:#fee2e2; color:#ef4444; width:22px; height:22px; border-radius:50%; font-weight:700; cursor:pointer;">✕</button>` : ''}
-              </div>
-            </div>
-          `).join('');
-      }
-      const adminExpBox = document.getElementById('adminExpenseBox');
-      if (adminExpBox) adminExpBox.style.display = isAdminLoggedIn ? 'block' : 'none';
-
-      const spContainer = document.getElementById('publicSponsorsList');
-      if (spContainer) {
-        spContainer.innerHTML = sponsorsList.length === 0
-          ? `<span style="color:var(--text-muted); font-style:italic;">No sponsors recorded yet.</span>`
-          : sponsorsList.map((s, i) => `
-            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:#f8fafc; border:1px solid var(--border); border-radius:14px; margin-bottom:8px;">
-              <span><strong>${s.name}</strong></span>
-              <div style="display:flex; align-items:center; gap:14px;">
-                <span style="color:var(--success); font-weight:800;">₹${Number(s.amount).toLocaleString()}</span>
-                ${isAdminLoggedIn ? `<button type="button" onclick="deleteSponsor(${i})" style="border:none; background:#fee2e2; color:#ef4444; width:24px; height:24px; border-radius:50%; font-weight:700; cursor:pointer;">✕</button>` : ''}
-              </div>
-            </div>
-          `).join('');
-      }
-      const fdContainer = document.getElementById('publicFeedList');
-      if (fdContainer) {
-        fdContainer.innerHTML = feedList.length === 0
-          ? `<div class="feed-item"><div class="feed-text" style="color:var(--text-muted);">No live updates posted yet.</div></div>`
-          : feedList.map((f, i) => `
-            <div class="feed-item">
-              <div class="feed-time">🕒 ${f.time}</div>
-              <div class="feed-text">${f.text}</div>
-              ${isAdminLoggedIn ? `<button type="button" onclick="deleteFeed(${i})" style="position:absolute; top:14px; right:14px; border:none; background:#fee2e2; color:#ef4444; width:24px; height:24px; border-radius:50%; font-weight:700; cursor:pointer;">✕</button>` : ''}
-            </div>
-          `).join('');
-      }
+    function resetDefaultSealLogo() {
+      db.ref('tripData/logoUrl').remove();
+      preloadSealAsBase64();
+      showToast("✓ Restored Default St. Joseph & Child Portrait!");
     }
 
-    // --- FEATURE: ONE-CLICK OFFICIAL PARISH REPORT GENERATOR (UPDATED FORMAT) ---
-    function generateOfficialParishReport() {
-      const confirmed = registrations.filter(r => r.status === 'CONFIRMED');
-      const ticketIncome = confirmed.reduce((sum, r) => sum + (Number(r.paid) || 0), 0);
-      const totalSponsors = sponsorsList.reduce((sum, s) => sum + (Number(s.amount) || 0), 0);
-      const totalExpenses = expensesList.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
-      const netBalance = (ticketIncome + totalSponsors) - totalExpenses;
-      const boarded = confirmed.filter(r => r.boarded || headcountChecked[r.id]);
-
-      let printWin = window.open('', '_blank');
-      let html = `
-        <html><head><title>Official Parish Tour Report - Catechism 2026</title>
-        <style>
-          body { font-family: 'Plus Jakarta Sans', sans-serif; padding: 25px; color: #0f172a; }
-          h2 { text-align: center; font-family: 'Cinzel', serif; margin-bottom: 2px; }
-          .sub { text-align: center; font-size: 0.85rem; color: #475569; margin-bottom: 20px; }
-          .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
-          .box { border: 1px solid #cbd5e1; padding: 12px; border-radius: 10px; background: #f8fafc; text-align: center; }
-          .box h4 { margin: 0; font-size: 1.1rem; color: #1e3a8a; }
-          .box p { margin: 4px 0 0; font-size: 0.75rem; color: #64748b; }
-          table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 25px; }
-          th, td { border: 1px solid #cbd5e1; padding: 9px 12px; text-align: left; }
-          th { background: #0f172a !important; color: white !important; }
-          .signs { display: flex; justify-content: space-around; margin-top: 60px; text-align: center; font-size: 0.85rem; font-weight: bold; }
-        </style></head><body onload="window.print()">
-        <h2>St. Joseph's Catechism Midalam</h2>
-        <div class="sub">Official Tour Completion & Financial Audit Report • Catechism Tour 2026 (October 19, 2026)</div>
-        
-        <div class="grid">
-          <div class="box"><h4>${confirmed.length} / 60</h4><p>Confirmed Seats</p></div>
-          <div class="box"><h4>${boarded.length}</h4><p>Boarded Present</p></div>
-          <div class="box"><h4>₹${(ticketIncome + totalSponsors).toLocaleString()}</h4><p>Total Revenue</p></div>
-          <div class="box"><h4>₹${netBalance.toLocaleString()}</h4><p>Net Balance / Surplus</p></div>
-        </div>
-
-        <h3>1. Income Breakdown</h3>
-        <table>
-          <tr><th>Income Source</th><th>Amount (INR)</th></tr>
-          <tr><td>Total Amount Received through Tickets</td><td>₹${ticketIncome.toLocaleString()}</td></tr>
-          <tr><td>Total Amount Received from Sponsors</td><td>₹${totalSponsors.toLocaleString()}</td></tr>
-          <tr><td><strong>Total Revenue</strong></td><td><strong>₹${(ticketIncome + totalSponsors).toLocaleString()}</strong></td></tr>
-        </table>
-
-        <h3>2. Sponsor Details & Benefactors</h3>
-        <table>
-          <tr><th>Sponsor Name / Family</th><th>Amount Donated (INR)</th></tr>
-          ${sponsorsList.length === 0 ? `<tr><td colspan="2" style="text-align:center;">No sponsors recorded.</td></tr>` : sponsorsList.map(s => `<tr><td>${s.name}</td><td>₹${Number(s.amount).toLocaleString()}</td></tr>`).join('')}
-        </table>
-
-        <h3>3. Itemized Tour Expenses (Bus, Tea, Entrance Fee, Refreshments, etc.)</h3>
-        <table>
-          <tr><th>Expense Description / Voucher</th><th>Cost (INR)</th></tr>
-          ${expensesList.length === 0 ? `<tr><td colspan="2" style="text-align:center;">No expenses logged.</td></tr>` : expensesList.map(e => `<tr><td>${e.desc}</td><td>₹${Number(e.amount).toLocaleString()}</td></tr>`).join('')}
-          <tr><td><strong>Total Tour Expenses</strong></td><td><strong>₹${totalExpenses.toLocaleString()}</strong></td></tr>
-        </table>
-
-        <div style="background:#f8fafc; padding:14px; border:1px solid #cbd5e1; border-radius:10px; margin-bottom:20px; font-size:0.95rem;">
-          <strong>Financial Summary:</strong> Total Revenue (₹${(ticketIncome + totalSponsors).toLocaleString()}) minus Total Expenses (₹${totalExpenses.toLocaleString()}) = <strong>₹${netBalance.toLocaleString()}</strong>
-        </div>
-
-        <div class="signs">
-          <div>___________________________<br>Fr. Vijin Bright<br>Tour Head / Parish Priest</div>
-          <div>___________________________<br>Denson & Bensigar<br>Tour Coordinators</div>
-        </div>
-        </body></html>
-      `;
-      printWin.document.write(html);
-      printWin.document.close();
-    }
-
-    // --- FEATURE: ⚡ LIGHTNING-FAST TURBO QR SCANNER ---
-    const turboScannerConfig = {
-      fps: 60,
-      qrbox: (vw, vh) => { let m = Math.min(vw, vh); let sz = Math.floor(m * 0.75); return { width: sz, height: sz }; },
-      aspectRatio: 1.0,
-      experimentalFeatures: { useBarCodeDetectorIfSupported: true }
-    };
-
-    function startInlineScanner() {
-      document.getElementById('inlineScannerBox').style.display = 'block';
-      document.getElementById('startScanBtn').style.display = 'none';
-      document.getElementById('stopScanBtn').style.display = 'flex';
-      document.getElementById('inlineTorchBtn').style.display = 'flex';
-      const resultBox = document.getElementById('inlineScanResult');
-      resultBox.innerText = "⚡ Turbo Scanner Active — Hold over print, lamination or mobile QR";
-      resultBox.style.background = "#f8fafc";
-      resultBox.style.color = "var(--primary-deep)";
-      
-      if (!inlineScanner) inlineScanner = new Html5Qrcode("inlineScannerTarget");
-      inlineScanner.start({ facingMode: "environment" }, turboScannerConfig, (text) => processScanCode(text, resultBox), () => {}).catch(() => {
-        resultBox.innerText = "Camera access error. Allow permissions.";
+    function populateSwapSeatsDropdowns() {
+      const selA = document.getElementById('swapSeatA');
+      const selB = document.getElementById('swapSeatB');
+      if (!selA || !selB) return;
+      const sorted = [...registrations].sort((a, b) => Number(a.seatNum || 999) - Number(b.seatNum || 999));
+      let opts = `<option value="">-- Select Seat --</option>`;
+      sorted.forEach(r => {
+        opts += `<option value="${r.id}">Seat #${r.seatNum} - ${r.name}</option>`;
       });
-    }
-    async function stopInlineScanner() {
-      inlineTorchOn = false;
-      if (inlineScanner) { try { if (inlineScanner.isScanning) await inlineScanner.stop(); } catch(e) {} }
-      document.getElementById('inlineScannerBox').style.display = 'none';
-      document.getElementById('startScanBtn').style.display = 'flex';
-      document.getElementById('stopScanBtn').style.display = 'none';
-      document.getElementById('inlineTorchBtn').style.display = 'none';
-    }
-    async function toggleCameraTorch(mode) {
-      try {
-        const scannerInstance = mode === 'inline' ? inlineScanner : modalScanner;
-        if (!scannerInstance || !scannerInstance.isScanning) return showToast("Start camera first.");
-        const currentTorch = mode === 'inline' ? inlineTorchOn : modalTorchOn;
-        const nextState = !currentTorch;
-        await scannerInstance.applyVideoConstraints({ advanced: [{ torch: nextState }] });
-        if (mode === 'inline') inlineTorchOn = nextState; else modalTorchOn = nextState;
-        showToast(nextState ? "🔦 Flashlight ON" : "🔦 Flashlight OFF");
-      } catch (e) { showToast("Torch not supported on this device."); }
+      selA.innerHTML = opts;
+      selB.innerHTML = opts;
     }
 
-    function processScanCode(decodedText, resultBox) {
-      if (!decodedText) return;
-      const now = Date.now();
-      if (decodedText === lastScannedCode && (now - lastScannedTime) < 1200) return;
-      lastScannedCode = decodedText; lastScannedTime = now;
+    async function swapTwoSeats() {
+      const idA = document.getElementById('swapSeatA').value;
+      const idB = document.getElementById('swapSeatB').value;
+      if (!idA || !idB || idA === idB) {
+        return showToast("Please select two different passengers to swap seats.");
+      }
+      const idxA = registrations.findIndex(r => r.id === idA);
+      const idxB = registrations.findIndex(r => r.id === idB);
+      if (idxA === -1 || idxB === -1) return;
 
-      let ticketId = decodedText.includes("MIDALAM2026-SECURE-PASS:") ? decodedText.split(':')[1].split('|')[0] : decodedText.trim();
-      const matchIdx = registrations.findIndex(r => r.id === ticketId);
-      if (matchIdx === -1) {
-        resultBox.innerText = `❌ Pass "${ticketId}" not found!`;
-        resultBox.style.background = "#dc2626"; resultBox.style.color = "#fff";
+      const pA = registrations[idxA];
+      const pB = registrations[idxB];
+      if (!confirm(`Confirm Seat Swap:\n\nSwap ${pA.name} (Seat #${pA.seatNum}) ⇄ ${pB.name} (Seat #${pB.seatNum})?`)) {
         return;
       }
-      const passenger = registrations[matchIdx];
-      if (passenger.boarded || headcountChecked[passenger.id]) {
-        document.getElementById('dupScanPaxName').innerText = passenger.name;
-        document.getElementById('dupScanPaxMeta').innerText = `Seat #${passenger.seatNum} • ID: ${passenger.id}`;
-        document.getElementById('duplicateScanModal').style.display = 'flex';
-        return;
-      }
-      passenger.boarded = true; headcountChecked[passenger.id] = true;
-      db.ref(`tripData/registrations/${matchIdx}/boarded`).set(true);
-      db.ref(`tripData/headcountChecked/${passenger.id}`).set(true);
-      resultBox.innerText = `✅ BOARDED: ${passenger.name} — Seat #${passenger.seatNum}`;
-      resultBox.style.background = "#15803d"; resultBox.style.color = "#fff";
-      showToast(`✓ Marked Present: ${passenger.name} (Seat #${passenger.seatNum})`);
-      renderInlineHeadcount();
-    }
-    function closeDuplicateScanModal() { document.getElementById('duplicateScanModal').style.display = 'none'; lastScannedCode = ""; }
+      const tempSeat = pA.seatNum;
+      const tempType = pA.seatType;
+      pA.seatNum = pB.seatNum;
+      pA.seatType = pB.seatType;
+      pB.seatNum = tempSeat;
+      pB.seatType = tempType;
 
-    function renderInlineHeadcount() {
-      const container = document.getElementById('inlineHeadcountList');
-      const countDisplay = document.getElementById('inlineHcCountDisplay');
-      if (!container || !countDisplay) return;
-      const confirmed = registrations.filter(r => r.status === 'CONFIRMED').sort((a, b) => Number(a.seatNum || 999) - Number(b.seatNum || 999));
-      const boardedCount = confirmed.filter(r => r.boarded || headcountChecked[r.id]).length;
-      countDisplay.innerText = `Onboard: ${boardedCount} / ${confirmed.length}`;
-      container.innerHTML = confirmed.map(r => {
-        const isPresent = !!r.boarded || !!headcountChecked[r.id];
-        return `<div class="hc-item ${isPresent ? 'checked' : ''}"><div><strong>Seat #${r.seatNum} - ${r.name}</strong></div><span style="font-size:0.72rem; font-weight:800; color:${isPresent?'var(--success)':'var(--warning)'};">${isPresent?'✓ Boarded':'Pending'}</span></div>`;
-      }).join('');
+      await syncRegistrationsFast();
+      showToast(`✓ Swapped Seat #${pB.seatNum} ⇄ Seat #${pA.seatNum}!`);
     }
 
-    function renderSeats() {
-      const matrix = document.getElementById('seatMatrix');
-      if (!matrix) return;
-      matrix.innerHTML = '';
-      const seatAllocationMap = {};
-      registrations.forEach(r => {
-        if (r.seatNum && r.seatNum !== 'WAITING' && r.status === 'CONFIRMED') {
-          seatAllocationMap[String(r.seatNum).padStart(2, '0')] = r;
-        }
+    function syncRegistrationsFast() {
+      return db.ref('tripData/registrations').set(registrations);
+    }
+    function syncToCloud() {
+      return db.ref('tripData').update({
+        registrations: registrations,
+        headcountChecked: headcountChecked,
+        sponsorsList: sponsorsList,
+        expensesList: expensesList,
+        feedList: feedList,
+        galleryList: galleryList,
+        itineraryList: itineraryList,
+        busGps: busGps,
+        isBoardingActive: isBoardingActive
       });
-      for (let i = 1; i <= 60; i++) {
-        const seatNo = String(i).padStart(2, '0');
-        const occupant = seatAllocationMap[seatNo];
-        const isWindow = (i % 4 === 1 || i % 4 === 0);
-        let seatClass = occupant ? "booked" : "";
-        
-        const seatWrapper = document.createElement('div');
-        seatWrapper.className = `seat-3d ${seatClass}`;
-        seatWrapper.innerHTML = `
-          <div class="seat-headrest"></div>
-          <div class="seat-body">
-            <span class="seat-num">${seatNo}</span>
-            <span class="seat-type-tag">${isWindow ? 'WINDOW' : 'AISLE'}</span>
-            <span class="seat-assigned-name">${occupant ? formatSeatName(occupant.name) : 'OPEN'}</span>
-          </div>
-        `;
-        if (!occupant) seatWrapper.onclick = () => selectSeat(seatNo, isWindow ? 'Window (W)' : 'Aisle (A)');
-        matrix.appendChild(seatWrapper);
-        if (i % 4 === 2) { matrix.appendChild(Object.assign(document.createElement('div'), { className: 'aisle' })); }
-      }
     }
 
-    function render3dDarkGreenBus() {
-      const deck = document.getElementById('darkGreen3dBusDeck');
-      if (!deck) return;
-      deck.innerHTML = '';
-      const seatAllocationMap = {};
-      registrations.forEach(r => {
-        if (r.seatNum && r.seatNum !== 'WAITING' && r.status === 'CONFIRMED') {
-          seatAllocationMap[String(r.seatNum).padStart(2, '0')] = r;
-        }
+    function updateQuickCountBreakdown() {
+      const confirmed = registrations.filter(r => r.status === 'CONFIRMED');
+      let boys = 0, girls = 0, junior = 0, senior = 0;
+      confirmed.forEach(r => {
+        const std = r.standard || '';
+        if (['Class 1', 'Class 2', 'Class 3'].includes(std)) junior++;
+        else if (!['Parents', 'Teacher', 'Tour Head', 'Tour Co-Ordinator', 'App In-Charge'].includes(std)) senior++;
+        if (r.gender === 'Female') girls++;
+        else boys++;
       });
-      for (let i = 1; i <= 60; i++) {
-        const seatNo = String(i).padStart(2, '0');
-        const occupant = seatAllocationMap[seatNo];
-        const isBooked = !!occupant;
-        let cardClass = "seat-3d-avatar-card";
-        let innerHtml = isBooked ? `<span class="s3d-num">#${seatNo}</span><span class="s3d-name">${formatSeatName(occupant.name)}</span>` : `<span class="s3d-num">#${seatNo}</span><span class="s3d-name" style="color:#94a3b8;">OPEN</span>`;
-        if (isBooked) cardClass += " booked";
-        const card = document.createElement('div');
-        card.className = cardClass; card.innerHTML = innerHtml;
-        deck.appendChild(card);
-        if (i % 4 === 2) { deck.appendChild(Object.assign(document.createElement('div'), { className: 'aisle' })); }
-      }
-    }
-
-    function renderGallery() {
-      const grid = document.getElementById('publicGalleryGrid');
-      if (!grid) return;
-      let html = `
-        <div class="gallery-card" onclick="openLightbox('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80', 'Luxury Coach Maskara - Ready for Dispatch')">
-          <div class="gallery-img-box"><img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=400&q=80" alt="Coach Maskara"></div>
-          <div class="gallery-caption">Luxury Coach Maskara<div class="gallery-sub">Ready for Dispatch</div></div>
-        </div>
-        <div class="gallery-card" onclick="openLightbox('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80', 'Kerala Landscape - Pilgrimage Route')">
-          <div class="gallery-img-box"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Scenic Kerala"></div>
-          <div class="gallery-caption">Kerala Landscape<div class="gallery-sub">Pilgrimage Route</div></div>
-        </div>
-      `;
-      const isAdminLoggedIn = document.getElementById('adminPanel') && document.getElementById('adminPanel').style.display === 'block';
-      galleryList.forEach((p, idx) => {
-        html += `
-          <div class="gallery-card" style="position:relative;" onclick="openLightbox('${p.url}', '${p.caption.replace(/'/g, "\\'")}')">
-            <div class="gallery-img-box"><img src="${p.url}" alt="Gallery Photo"></div>
-            <div class="gallery-caption">${p.caption}<div class="gallery-sub">Catechism Tour 2026</div></div>
-            ${isAdminLoggedIn ? `<button type="button" onclick="event.stopPropagation(); deleteGalleryPhoto(${idx})" style="position:absolute; top:8px; right:8px; border:none; background:#fee2e2; color:#ef4444; width:24px; height:24px; border-radius:50%; font-weight:700; cursor:pointer;">✕</button>` : ''}
-          </div>
-        `;
-      });
-      grid.innerHTML = html;
+      document.getElementById('qcBoys').innerText = boys;
+      document.getElementById('qcGirls').innerText = girls;
+      document.getElementById('qcJunSen').innerText = `${junior} / ${senior}`;
+      document.getElementById('qcTotal').innerText = `${confirmed.length} / 60`;
     }
 
     function renderItinerary() {
@@ -1945,75 +2071,694 @@
       });
     }
 
-    function selectSeat(seatNo, seatType) {
-      document.getElementById('selectedSeat').value = seatNo;
-      document.getElementById('selectedSeatType').value = seatType;
-      showToast(`⚡ Seat #${seatNo} (${seatType}) Selected!`);
-      renderSeats();
-      updateDynamicUpiQr();
+    function render3dDarkGreenBus() {
+      const deck = document.getElementById('darkGreen3dBusDeck');
+      if (!deck) return;
+      deck.innerHTML = '';
+      const seatAllocationMap = {};
+      registrations.forEach(r => {
+        if (r.seatNum && r.seatNum !== 'WAITING' && r.status === 'CONFIRMED') {
+          seatAllocationMap[String(r.seatNum).padStart(2, '0')] = {
+            ...r,
+            boarded: !!r.boarded || !!headcountChecked[r.id]
+          };
+        }
+      });
+      for (let i = 1; i <= 60; i++) {
+        const seatNo = String(i).padStart(2, '0');
+        const occupant = seatAllocationMap[seatNo];
+        const isBooked = !!occupant;
+        const isBoarded = isBooked && occupant.boarded;
+        let cardClass = "seat-3d-avatar-card";
+        let innerHtml = "";
+        if (isBoarded) {
+          cardClass += " boarded-present";
+          const desig = getOfficialDesignation(occupant);
+          let emoji = desig.isVip ? "⚜️" : (occupant.standard === 'Teacher' ? "👩‍🏫" : (occupant.standard === 'Parents' ? "👨‍👩‍👦" : "👨‍🎓"));
+          innerHtml = `
+            <span class="s3d-num">#${seatNo}</span>
+            <span style="font-size:1.2rem;">${emoji}</span>
+            <span class="s3d-name">${formatSeatName(occupant.name)}</span>
+            <div class="presence-check">✓</div>
+          `;
+        } else if (isBooked) {
+          cardClass += " booked";
+          innerHtml = `
+            <span class="s3d-num">#${seatNo}</span>
+            <span class="s3d-name" style="font-size:0.52rem; margin:auto 0;">${formatSeatName(occupant.name)}</span>
+          `;
+        } else {
+          innerHtml = `
+            <span class="s3d-num">#${seatNo}</span>
+            <span class="s3d-name" style="color:#94a3b8; margin:auto 0;">OPEN</span>
+          `;
+        }
+        const card = document.createElement('div');
+        card.className = cardClass;
+        card.innerHTML = innerHtml;
+        if (isBooked) card.onclick = () => showSeatInfo(occupant);
+        deck.appendChild(card);
+        if (i % 4 === 2) {
+          const aisle = document.createElement('div');
+          aisle.className = 'aisle';
+          deck.appendChild(aisle);
+        }
+      }
     }
 
-    async function handleRegistration(e) {
-      e.preventDefault();
-      const seat = document.getElementById('selectedSeat').value;
-      if (!seat) return showToast("Please tap an available 3D seat");
-      const totalFare = parseInt(document.getElementById('fareDisplay').innerText.replace('₹','')) || 500;
-      const paid = parseInt(document.getElementById('paidAmount').value) || 0;
+    function renderGallery() {
+      const grid = document.getElementById('publicGalleryGrid');
+      if (!grid) return;
+      let html = `
+        <div class="gallery-card" onclick="openLightbox('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80', 'Luxury Coach Maskara - Ready for Dispatch')">
+          <div class="gallery-img-box"><img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=400&q=80" alt="Coach Maskara"></div>
+          <div class="gallery-caption">Luxury Coach Maskara<div class="gallery-sub">Ready for Dispatch</div></div>
+        </div>
+        <div class="gallery-card" onclick="openLightbox('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80', 'Kerala Landscape - Pilgrimage Route')">
+          <div class="gallery-img-box"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Scenic Kerala"></div>
+          <div class="gallery-caption">Kerala Landscape<div class="gallery-sub">Pilgrimage Route</div></div>
+        </div>
+      `;
+      const isAdminLoggedIn = document.getElementById('adminPanel') && document.getElementById('adminPanel').style.display === 'block';
+      galleryList.forEach((p, idx) => {
+        html += `
+          <div class="gallery-card" style="position:relative;" onclick="openLightbox('${p.url}', '${p.caption.replace(/'/g, "\\'")}')">
+            <div class="gallery-img-box"><img src="${p.url}" alt="Gallery Photo"></div>
+            <div class="gallery-caption">${p.caption}<div class="gallery-sub">Catechism Tour 2026</div></div>
+            ${isAdminLoggedIn ? `<button type="button" onclick="event.stopPropagation(); deleteGalleryPhoto(${idx})" style="position:absolute; top:8px; right:8px; border:none; background:#fee2e2; color:#ef4444; width:24px; height:24px; border-radius:50%; font-weight:700; cursor:pointer;">✕</button>` : ''}
+          </div>
+        `;
+      });
+      grid.innerHTML = html;
+    }
 
-      db.ref('tripData/registrations').transaction(currentList => {
-        const list = normalizeList(currentList);
-        const maxNum = list.reduce((max, r) => {
-          const num = parseInt(String(r.id || '').replace('MID-', ''), 10);
-          return !isNaN(num) && num > max ? num : max;
-        }, 100);
-        list.push({
-          id: 'MID-' + String(maxNum + 1),
-          name: document.getElementById('studentName').value.trim(),
-          gender: document.getElementById('gender').value,
-          standard: document.getElementById('standard').value,
-          parent: document.getElementById('parentName').value.trim(),
-          phone: document.getElementById('phoneNumber').value.trim(),
-          medical: document.getElementById('medicalProfile').value.trim(),
-          buddy: document.getElementById('buddyTag').value.trim(),
-          seatNum: seat,
-          seatType: document.getElementById('selectedSeatType').value,
-          totalFare: totalFare,
-          paid: paid,
-          balance: Math.max(0, totalFare - paid),
-          mode: document.getElementById('paymentMode').value,
-          refId: document.getElementById('refId').value.trim(),
-          status: "PENDING",
-          boarded: false
+    function renderTransparencyLedger() {
+      const confirmed = registrations.filter(r => r.status === 'CONFIRMED');
+      const ticketIncome = confirmed.reduce((sum, r) => sum + (Number(r.paid) || 0), 0);
+      const totalSponsors = sponsorsList.reduce((sum, s) => sum + (Number(s.amount) || 0), 0);
+      const totalExpenses = expensesList.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+      const netBalance = (ticketIncome + totalSponsors) - totalExpenses;
+
+      document.getElementById('ledgerIncome').innerText = `₹${ticketIncome.toLocaleString()}`;
+      document.getElementById('ledgerSponsors').innerText = `₹${totalSponsors.toLocaleString()}`;
+      document.getElementById('ledgerExpenses').innerText = `₹${totalExpenses.toLocaleString()}`;
+      const netEl = document.getElementById('ledgerNet');
+      netEl.innerText = `₹${netBalance.toLocaleString()}`;
+      netEl.style.color = netBalance >= 0 ? 'var(--success)' : 'var(--danger)';
+
+      const isAdminLoggedIn = document.getElementById('adminPanel') && document.getElementById('adminPanel').style.display === 'block';
+      const spContainer = document.getElementById('publicSponsorsList');
+      if (spContainer) {
+        spContainer.innerHTML = sponsorsList.length === 0
+          ? `<span style="color:var(--text-muted); font-style:italic;">No sponsors recorded yet.</span>`
+          : sponsorsList.map((s, i) => `
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:#f8fafc; border:1px solid var(--border); border-radius:14px; margin-bottom:8px;">
+              <span><strong>${s.name}</strong></span>
+              <div style="display:flex; align-items:center; gap:14px;">
+                <span style="color:var(--success); font-weight:800;">₹${Number(s.amount).toLocaleString()}</span>
+                ${isAdminLoggedIn ? `<button type="button" onclick="deleteSponsor(${i})" style="border:none; background:#fee2e2; color:#ef4444; width:24px; height:24px; border-radius:50%; font-weight:700; cursor:pointer;">✕</button>` : ''}
+              </div>
+            </div>
+          `).join('');
+      }
+      const expContainer = document.getElementById('publicExpensesList');
+      if (expContainer) {
+        expContainer.innerHTML = expensesList.length === 0
+          ? `<span style="color:var(--text-muted); font-style:italic;">No expenses recorded yet.</span>`
+          : expensesList.map((e, i) => `
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:#f8fafc; border:1px solid var(--border); border-radius:14px; margin-bottom:8px;">
+              <span><strong>${e.desc}</strong></span>
+              <div style="display:flex; align-items:center; gap:14px;">
+                <span style="color:var(--danger); font-weight:800;">₹${Number(e.amount).toLocaleString()}</span>
+                ${isAdminLoggedIn ? `<button type="button" onclick="deleteExpense(${i})" style="border:none; background:#fee2e2; color:#ef4444; width:24px; height:24px; border-radius:50%; font-weight:700; cursor:pointer;">✕</button>` : ''}
+              </div>
+            </div>
+          `).join('');
+      }
+      const fdContainer = document.getElementById('publicFeedList');
+      if (fdContainer) {
+        fdContainer.innerHTML = feedList.length === 0
+          ? `<div class="feed-item"><div class="feed-text" style="color:var(--text-muted);">No live updates posted yet.</div></div>`
+          : feedList.map((f, i) => `
+            <div class="feed-item">
+              <div class="feed-time">🕒 ${f.time}</div>
+              <div class="feed-text">${f.text}</div>
+              ${isAdminLoggedIn ? `<button type="button" onclick="deleteFeed(${i})" style="position:absolute; top:14px; right:14px; border:none; background:#fee2e2; color:#ef4444; width:24px; height:24px; border-radius:50%; font-weight:700; cursor:pointer;">✕</button>` : ''}
+            </div>
+          `).join('');
+      }
+    }
+
+    function addSponsor(e) {
+      e.preventDefault();
+      const name = document.getElementById('newSponsorName').value.trim();
+      const amount = Number(document.getElementById('newSponsorAmount').value);
+      if (!name || !amount) return;
+      sponsorsList.push({ name, amount });
+      db.ref('tripData/sponsorsList').set(sponsorsList);
+      document.getElementById('newSponsorName').value = '';
+      document.getElementById('newSponsorAmount').value = '';
+      showToast("✓ Sponsor added!");
+    }
+    function deleteSponsor(i) {
+      if (confirm("Delete this sponsor?")) {
+        sponsorsList.splice(i, 1);
+        db.ref('tripData/sponsorsList').set(sponsorsList);
+      }
+    }
+    function addExpense(e) {
+      e.preventDefault();
+      const desc = document.getElementById('newExpenseDesc').value.trim();
+      const amount = Number(document.getElementById('newExpenseAmount').value);
+      if (!desc || !amount) return;
+      expensesList.push({ desc, amount });
+      db.ref('tripData/expensesList').set(expensesList);
+      document.getElementById('newExpenseDesc').value = '';
+      document.getElementById('newExpenseAmount').value = '';
+      showToast("✓ Expense logged!");
+    }
+    function deleteExpense(i) {
+      if (confirm("Delete this expense?")) {
+        expensesList.splice(i, 1);
+        db.ref('tripData/expensesList').set(expensesList);
+      }
+    }
+    function addFeedUpdate(e) {
+      e.preventDefault();
+      const text = document.getElementById('newFeedText').value.trim();
+      if (!text) return;
+      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' ' + new Date().toLocaleDateString();
+      feedList.unshift({ time: timeStr, text });
+      db.ref('tripData/feedList').set(feedList);
+      document.getElementById('newFeedText').value = '';
+      showToast("✓ Announcement posted!");
+    }
+    function deleteFeed(i) {
+      if (confirm("Delete this announcement?")) {
+        feedList.splice(i, 1);
+        db.ref('tripData/feedList').set(feedList);
+      }
+    }
+
+    function triggerNativeConfetti() {
+      const colors = ['#d4af37', '#1e3a8a', '#0f172a', '#15803d', '#ffb703'];
+      for (let i = 0; i < 45; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.width = (Math.random() * 6 + 4) + 'px';
+        piece.style.height = (Math.random() * 10 + 6) + 'px';
+        piece.style.animationDuration = (Math.random() * 1.4 + 1.4) + 's';
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 2800);
+      }
+    }
+
+    function toggleBoardingMasterSwitch() {
+      isBoardingActive = !isBoardingActive;
+      db.ref('tripData/isBoardingActive').set(isBoardingActive);
+      updateBoardingSwitchUI();
+      showToast(isBoardingActive ? "✓ Boarding scanner enabled" : "🔒 Boarding scanner locked");
+    }
+    function updateBoardingSwitchUI() {
+      const btn = document.getElementById('boardingSwitchBtn');
+      const desc = document.getElementById('boardingSwitchStatusDesc');
+      if (btn && desc) {
+        btn.innerText = isBoardingActive ? "Lock Boarding" : "Enable Boarding";
+        btn.style.background = isBoardingActive ? "var(--danger)" : "var(--accent-gradient)";
+        btn.style.color = isBoardingActive ? "#fff" : "#0f172a";
+        desc.innerText = isBoardingActive ? "Status: Unlocked & Active" : "Status: Locked";
+      }
+    }
+
+    function generateUniquePassPayload(id, seat, phone) {
+      return `MIDALAM2026-SECURE-PASS:${id}|SEAT:${seat}`;
+    }
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg; toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2800);
+    }
+
+    function switchTab(tabId, evt) {
+      stopInlineScanner();
+      document.querySelectorAll('.tab-content').forEach(el => {
+        el.style.display = 'none';
+        el.classList.remove('active-tab');
+      });
+      document.querySelectorAll('.portal-nav-btn').forEach(el => el.classList.remove('active'));
+      const targetTab = document.getElementById(tabId);
+      if (targetTab) {
+        targetTab.style.display = 'block';
+        targetTab.classList.add('active-tab');
+      }
+      if (evt && evt.currentTarget) {
+        evt.currentTarget.classList.add('active');
+      } else {
+        document.querySelectorAll('.portal-nav-btn').forEach(b => {
+          if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(tabId)) b.classList.add('active');
         });
-        return list;
-      }, (err, committed) => {
-        if (committed) {
-          document.getElementById('regForm').style.display = 'none';
-          document.getElementById('bookingSuccessCard').style.display = 'block';
-        }
+      }
+      if (tabId === 'scannerTab') {
+        document.getElementById('boardingLockedMsg').style.display = isBoardingActive ? 'none' : 'block';
+        document.getElementById('boardingUnlockedContent').style.display = isBoardingActive ? 'block' : 'none';
+        if (isBoardingActive) renderInlineHeadcount();
+      } else if (tabId === 'manifestTab') renderManifestTable();
+      else if (tabId === 'rosterTab') renderRoster();
+      else if (tabId === 'infoTab') renderTransparencyLedger();
+      else if (tabId === 'visualTab') render3dDarkGreenBus();
+      else if (tabId === 'galleryTab') renderGallery();
+      else if (tabId === 'itineraryTab') renderItinerary();
+    }
+
+    function closeSeatInfoModal() { document.getElementById('seatInfoModal').style.display = 'none'; }
+    function closeLostFoundModal() { document.getElementById('lostFoundModal').style.display = 'none'; }
+
+    function openLostFoundCard(occupant) {
+      closeSeatInfoModal();
+      const desig = getOfficialDesignation(occupant);
+      document.getElementById('lfName').innerText = `${occupant.name} (Seat #${occupant.seatNum})`;
+      document.getElementById('lfClass').innerText = `${desig.plainRole} • Gender: ${occupant.gender || 'N/A'}`;
+      document.getElementById('lfParentPhone').innerText = `Parent/Guardian: ${occupant.parent || '-'} (${occupant.phone || 'N/A'})`;
+      document.getElementById('lfMedical').innerText = `🩺 Medical Note: ${occupant.medical || 'None reported'}`;
+      const callParentBtn = document.getElementById('lfCallParent');
+      if (occupant.phone) {
+        callParentBtn.href = `tel:+91${occupant.phone.replace(/\D/g, '').slice(-10)}`;
+        callParentBtn.style.display = 'flex';
+      } else {
+        callParentBtn.style.display = 'none';
+      }
+      document.getElementById('lostFoundModal').style.display = 'flex';
+    }
+
+    function showSeatInfo(occupant) {
+      const desig = getOfficialDesignation(occupant);
+      document.getElementById('siName').innerText = occupant.name;
+      document.getElementById('siGender').innerText = occupant.gender || 'Not specified';
+      document.getElementById('siClass').innerText = desig.roleTitle;
+      document.getElementById('siTicket').innerText = occupant.id;
+      document.getElementById('siMedical').innerText = occupant.medical || 'None';
+      document.getElementById('siBuddy').innerText = occupant.buddy || 'None';
+      const hasBal = Number(occupant.balance) > 0;
+      const isConfirmed = occupant.status === 'CONFIRMED';
+      document.getElementById('siPayment').innerText = isConfirmed
+        ? (hasBal ? `🔒 Seat Locked • Advance Paid (Due: ₹${occupant.balance})` : '🔒 Seat Locked • Fully Paid')
+        : '⏳ Waiting for Admin Payment Verification';
+      const isPresent = occupant.boarded || headcountChecked[occupant.id];
+      document.getElementById('siBoarding').innerHTML = isPresent
+        ? `<span style="color:var(--success);">✓ Present Onboard</span>`
+        : `<span style="color:var(--warning);">Not Boarded Yet</span>`;
+
+      const passBtn = document.getElementById('siViewPassBtn');
+      if (isConfirmed) {
+        passBtn.style.display = 'flex';
+        passBtn.onclick = () => {
+          closeSeatInfoModal();
+          openTicketModal(occupant);
+        };
+      } else {
+        passBtn.style.display = 'none';
+      }
+      const lfBtn = document.getElementById('siLostFoundBtn');
+      if (lfBtn) {
+        lfBtn.onclick = () => openLostFoundCard(occupant);
+      }
+      document.getElementById('seatInfoModal').style.display = 'flex';
+    }
+
+    function renderManifestTable() {
+      const tbody = document.getElementById('manifestTableBody');
+      const q = document.getElementById('manifestSearchQuery')?.value.toLowerCase().trim() || '';
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      const filtered = registrations.filter(r => 
+        !q || (r.name && r.name.toLowerCase().includes(q)) || (r.id && r.id.toLowerCase().includes(q)) || String(r.seatNum).includes(q) || (r.phone && r.phone.includes(q))
+      ).sort((a, b) => Number(a.seatNum || 999) - Number(b.seatNum || 999));
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 18px; color: var(--text-muted);">No matching bookings found.</td></tr>`;
+        return;
+      }
+      filtered.forEach(r => {
+        const origIdx = registrations.findIndex(item => item.id === r.id);
+        const isConf = r.status === 'CONFIRMED';
+        const hasBalance = Number(r.balance) > 0;
+        const desig = getOfficialDesignation(r);
+        const paymentLabel = !isConf ? '⏳ Waiting Admin Approval' : (hasBalance ? `🔒 Locked • Adv (Due: ₹${r.balance})` : '🔒 Locked • Fully Paid');
+        const paymentBg = !isConf ? '#fef3c7' : (hasBalance ? '#e0f2fe' : '#dcfce7');
+        const paymentColor = !isConf ? '#b45309' : (hasBalance ? '#0369a1' : '#15803d');
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = "1px solid #f1f5f9";
+        tr.innerHTML = `
+          <td style="padding: 14px 10px;">
+            <strong style="color:var(--primary-deep);">Seat #${r.seatNum}</strong><br>
+            <span style="font-size:0.65rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">${r.id}</span>
+          </td>
+          <td style="padding: 14px 10px;">
+            <strong style="text-transform:capitalize;">${r.name}</strong> (${r.gender || 'N/A'})<br>
+            <span style="font-size:0.68rem; color:${desig.isVip ? '#a16207' : 'var(--text-muted)'}; font-weight:${desig.isVip ? '800' : '600'};">${desig.roleTitle}</span>
+          </td>
+          <td style="padding: 14px 10px;">
+            <span style="font-size:0.68rem; font-weight:700; padding:5px 10px; border-radius:10px; background:${paymentBg}; color:${paymentColor}; display:inline-block;">
+              ${paymentLabel}
+            </span>
+          </td>
+          <td style="padding: 14px 10px;">
+            ${isConf
+              ? `<button onclick="adminGenerateTicket(${origIdx})" style="border:1.5px solid var(--accent-gold); background:var(--primary-deep); color:#fff; font-size:0.7rem; font-weight:800; padding:6px 12px; border-radius:10px; cursor:pointer;">🪪 ID Pass</button>`
+              : `<span style="font-size:0.65rem; color:#94a3b8; font-weight:600;">Locked until approved</span>`
+            }
+          </td>
+        `;
+        tbody.appendChild(tr);
       });
     }
 
-    function formatSeatName(fullName) {
-      if (!fullName) return '';
-      const parts = fullName.trim().split(' ');
-      return parts.length === 1 ? parts[0] : parts[0] + ' ' + parts[1].charAt(0).toUpperCase() + '.';
+    function toggleVoiceReadout() {
+      voiceReadoutEnabled = !voiceReadoutEnabled;
+      const btn = document.getElementById('voiceToggleBtn');
+      if (btn) {
+        btn.innerText = voiceReadoutEnabled ? "🔊 Voice: ON" : "🔇 Voice: OFF";
+        btn.style.background = voiceReadoutEnabled ? "#eff6ff" : "#f1f5f9";
+      }
+      showToast(voiceReadoutEnabled ? "🔊 Voice Readout Enabled" : "🔇 Voice Readout Muted");
+    }
+
+    function speakText(text) {
+      if (!voiceReadoutEnabled || !('speechSynthesis' in window)) return;
+      try {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.rate = 1.1;
+        window.speechSynthesis.speak(u);
+      } catch (e) {}
+    }
+
+    async function toggleCameraTorch(mode) {
+      try {
+        const scannerInstance = mode === 'inline' ? inlineScanner : modalScanner;
+        if (!scannerInstance || !scannerInstance.isScanning) return showToast("Start camera first to use Torch.");
+        const currentTorch = mode === 'inline' ? inlineTorchOn : modalTorchOn;
+        const nextState = !currentTorch;
+        await scannerInstance.applyVideoConstraints({ advanced: [{ torch: nextState }] });
+        if (mode === 'inline') inlineTorchOn = nextState;
+        else modalTorchOn = nextState;
+        showToast(nextState ? "🔦 Flashlight ON" : "🔦 Flashlight OFF");
+      } catch (err) {
+        showToast("Torch not supported on this camera/browser.");
+      }
+    }
+
+    function startInlineScanner() {
+      document.getElementById('inlineScannerBox').style.display = 'block';
+      document.getElementById('startScanBtn').style.display = 'none';
+      document.getElementById('stopScanBtn').style.display = 'flex';
+      document.getElementById('inlineTorchBtn').style.display = 'flex';
+      const resultBox = document.getElementById('inlineScanResult');
+      resultBox.innerText = "⚡ High-Speed Scanner Active — Point at ID Card QR";
+      resultBox.style.background = "#f8fafc";
+      resultBox.style.color = "var(--primary-deep)";
+      if (!inlineScanner) inlineScanner = new Html5Qrcode("inlineScannerTarget");
+      inlineScanner.start(
+        { facingMode: "environment" },
+        { fps: 30, qrbox: { width: 250, height: 250 }, disableFlip: false },
+        (decodedText) => processScanCode(decodedText, resultBox),
+        () => {}
+      ).catch(() => {
+        resultBox.innerText = "Camera access error. Please allow camera permissions.";
+        resultBox.style.color = "var(--danger)";
+      });
+    }
+    async function stopInlineScanner() {
+      inlineTorchOn = false;
+      if (inlineScanner) {
+        try { if (inlineScanner.isScanning) await inlineScanner.stop(); } catch (e) {}
+      }
+      const box = document.getElementById('inlineScannerBox');
+      if (box) box.style.display = 'none';
+      const startBtn = document.getElementById('startScanBtn');
+      if (startBtn) startBtn.style.display = 'flex';
+      const stopBtn = document.getElementById('stopScanBtn');
+      if (stopBtn) stopBtn.style.display = 'none';
+      const torchBtn = document.getElementById('inlineTorchBtn');
+      if (torchBtn) torchBtn.style.display = 'none';
+    }
+    function openScannerModal() {
+      document.getElementById('scannerModal').style.display = 'flex';
+      const resultBox = document.getElementById('scannerResult');
+      resultBox.innerText = "⚡ Instant Scanner Active...";
+      if (!modalScanner) modalScanner = new Html5Qrcode("scannerTarget");
+      modalScanner.start(
+        { facingMode: "environment" },
+        { fps: 30, qrbox: { width: 230, height: 230 }, disableFlip: false },
+        (decodedText) => processScanCode(decodedText, resultBox),
+        () => {}
+      ).catch(() => {
+        resultBox.innerText = "Camera access denied.";
+        resultBox.style.color = "var(--danger)";
+      });
+    }
+    async function closeScannerModal() {
+      modalTorchOn = false;
+      if (modalScanner) {
+        try { if (modalScanner.isScanning) await modalScanner.stop(); } catch(e) {}
+      }
+      document.getElementById('scannerModal').style.display = 'none';
+    }
+
+    function closeDuplicateScanModal() {
+      document.getElementById('duplicateScanModal').style.display = 'none';
+      lastScannedCode = "";
+    }
+
+    function openHeadcountModal() {
+      renderModalHeadcount();
+      document.getElementById('headcountModal').style.display = 'flex';
+    }
+    function closeHeadcountModal() { document.getElementById('headcountModal').style.display = 'none'; }
+
+    function setHeadcountFilter(mode) {
+      headcountFilterMode = mode;
+      const allBtn = document.getElementById('hcFilterAllBtn');
+      const missBtn = document.getElementById('hcFilterMissingBtn');
+      if (allBtn && missBtn) {
+        allBtn.style.background = mode === 'ALL' ? 'var(--primary-deep)' : '#fff';
+        allBtn.style.color = mode === 'ALL' ? '#fff' : 'var(--primary-deep)';
+        missBtn.style.background = mode === 'MISSING' ? '#dc2626' : '#fff';
+        missBtn.style.color = mode === 'MISSING' ? '#fff' : '#dc2626';
+      }
+      renderInlineHeadcount();
+      renderModalHeadcount();
+    }
+
+    function renderInlineHeadcount() {
+      const container = document.getElementById('inlineHeadcountList');
+      const countDisplay = document.getElementById('inlineHcCountDisplay');
+      if (!container || !countDisplay) return;
+      const confirmed = registrations.filter(r => r.status === 'CONFIRMED').sort((a, b) => Number(a.seatNum || 999) - Number(b.seatNum || 999));
+      const boardedCount = confirmed.filter(r => r.boarded || headcountChecked[r.id]).length;
+      const missingCount = confirmed.length - boardedCount;
+      countDisplay.innerText = `Onboard: ${boardedCount} / ${confirmed.length} (${missingCount} Missing)`;
+
+      const filteredList = headcountFilterMode === 'MISSING'
+        ? confirmed.filter(r => !(r.boarded || headcountChecked[r.id]))
+        : confirmed;
+
+      if (filteredList.length === 0) {
+        container.innerHTML = `<div style="padding:18px; text-align:center; color:var(--success); font-weight:800;">🎉 All confirmed passengers are onboard!</div>`;
+        return;
+      }
+
+      container.innerHTML = filteredList.map((r) => {
+        const isPresent = !!r.boarded || !!headcountChecked[r.id];
+        const desig = getOfficialDesignation(r);
+        const cleanPhone = (r.phone || '').replace(/\D/g, '').slice(-10);
+        return `
+          <div class="hc-item ${isPresent ? 'checked' : ''}">
+            <div style="flex:1;">
+              <strong>Seat #${r.seatNum} - ${r.name}</strong>
+              <div style="font-size:0.68rem; color:var(--text-muted);">${desig.plainRole} ${r.phone ? '• 📞 ' + r.phone : ''}</div>
+            </div>
+            <div style="display:flex; gap:6px; align-items:center;">
+              ${(!isPresent && cleanPhone) ? `<a href="tel:+91${cleanPhone}" style="text-decoration:none; background:#fef3c7; color:#b45309; border:1px solid #f59e0b; padding:6px 10px; border-radius:10px; font-size:0.7rem; font-weight:800;">📞 Call</a>` : ''}
+              <button type="button" onclick="toggleHeadcountStatus('${r.id}')" style="border:none; background:${isPresent ? '#15803d' : '#e2e8f0'}; color:${isPresent ? 'white' : '#0f172a'}; font-size:0.72rem; font-weight:700; padding:6px 12px; border-radius:10px; cursor:pointer;">
+                ${isPresent ? '✓ Boarded' : 'Mark Present'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderModalHeadcount() {
+      const container = document.getElementById('headcountList');
+      const countDisplay = document.getElementById('hcCountDisplay');
+      if (!container || !countDisplay) return;
+      const confirmed = registrations.filter(r => r.status === 'CONFIRMED').sort((a, b) => Number(a.seatNum || 999) - Number(b.seatNum || 999));
+      const boardedCount = confirmed.filter(r => r.boarded || headcountChecked[r.id]).length;
+      const missingCount = confirmed.length - boardedCount;
+      countDisplay.innerText = `Onboard: ${boardedCount} / ${confirmed.length} (${missingCount} Missing)`;
+
+      const filteredList = headcountFilterMode === 'MISSING'
+        ? confirmed.filter(r => !(r.boarded || headcountChecked[r.id]))
+        : confirmed;
+
+      if (filteredList.length === 0) {
+        container.innerHTML = `<div style="padding:18px; text-align:center; color:var(--success); font-weight:800;">🎉 All confirmed passengers are onboard!</div>`;
+        return;
+      }
+
+      container.innerHTML = filteredList.map((r) => {
+        const isPresent = !!r.boarded || !!headcountChecked[r.id];
+        const desig = getOfficialDesignation(r);
+        const cleanPhone = (r.phone || '').replace(/\D/g, '').slice(-10);
+        return `
+          <div class="hc-item ${isPresent ? 'checked' : ''}">
+            <div style="flex:1;">
+              <strong>Seat #${r.seatNum} - ${r.name}</strong>
+              <div style="font-size:0.68rem; color:var(--text-muted);">${desig.plainRole}</div>
+            </div>
+            <div style="display:flex; gap:6px; align-items:center;">
+              ${(!isPresent && cleanPhone) ? `<a href="tel:+91${cleanPhone}" style="text-decoration:none; background:#fef3c7; color:#b45309; border:1px solid #f59e0b; padding:6px 10px; border-radius:10px; font-size:0.7rem; font-weight:800;">📞 Call</a>` : ''}
+              <button type="button" onclick="toggleHeadcountStatus('${r.id}')" style="border:none; background:${isPresent ? '#15803d' : '#e2e8f0'}; color:${isPresent ? 'white' : '#0f172a'}; font-size:0.72rem; font-weight:700; padding:6px 12px; border-radius:10px; cursor:pointer;">
+                ${isPresent ? '✓ Boarded' : 'Mark Present'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function sendWhatsAppApprovalConfirmation(passenger) {
+      if (!passenger.phone) return;
+      let cleanPhone = passenger.phone.replace(/\D/g, '');
+      if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
+      const desig = getOfficialDesignation(passenger);
+      const balTxt = Number(passenger.balance) > 0 ? `Advance Paid: ₹${passenger.paid} (Balance Due: ₹${passenger.balance})` : `Full Payment Verified: ₹${passenger.paid}`;
+      const msg = `*ST. JOSEPH'S CATECHISM MIDALAM - CATECHISM TOUR 2026*%0A🔒 *Seat Approved & Locked!*%0A%0aDear Parent, payment for *${passenger.name}* (${desig.plainRole}) has been verified!%0A• *Coach Seat:* #${passenger.seatNum}%0A• *Pass ID:* ${passenger.id}%0A• *Payment:* ${balTxt}%0A%0aYour official St. Joseph's ID Card Boarding Pass is now unlocked in the portal!`;
+      window.open(`https://api.whatsapp.com/send?phone=${cleanPhone}&text=${msg}`, '_blank');
+    }
+    function sendWhatsAppDueReminder(idx) {
+      const passenger = registrations[idx];
+      if (!passenger || !passenger.phone) return showToast("No mobile number available.");
+      let cleanPhone = passenger.phone.replace(/\D/g, '');
+      if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
+      const msg = `*ST. JOSEPH'S CATECHISM MIDALAM - CATECHISM TOUR 2026*%0A🔔 *Balance Reminder*%0A%0aDear Parent, gentle reminder regarding the pending balance of *₹${passenger.balance}* for *${passenger.name}* (Seat #${passenger.seatNum}). Thank you!`;
+      window.open(`https://api.whatsapp.com/send?phone=${cleanPhone}&text=${msg}`, '_blank');
+    }
+
+    function toggleHeadcountStatus(ticketId) {
+      const idx = registrations.findIndex(r => r.id === ticketId);
+      if (idx !== -1) {
+        const reg = registrations[idx];
+        const currentStatus = !!reg.boarded || !!headcountChecked[ticketId];
+        const actionLabel = currentStatus ? "Mark as PENDING (Not Onboard)" : "Mark as BOARDED (Present Onboard)";
+        if (!confirm(`Confirm Attendance Change:\n\nDo you want to ${actionLabel} for ${reg.name} (Seat #${reg.seatNum})?`)) {
+          return;
+        }
+        const newState = !currentStatus;
+        reg.boarded = newState;
+        headcountChecked[ticketId] = newState;
+        db.ref(`tripData/registrations/${idx}/boarded`).set(newState);
+        db.ref(`tripData/headcountChecked/${ticketId}`).set(newState);
+        showToast(`${reg.name}: ${newState ? '✓ Marked Boarded' : 'Marked Pending'}`);
+      }
+    }
+
+    function toggleBoardingManual(idx) {
+      const passenger = registrations[idx];
+      if (!passenger) return;
+      if (passenger.status !== 'CONFIRMED') return showToast("Approve passenger payment first before boarding.");
+      const currentStatus = !!passenger.boarded || !!headcountChecked[passenger.id];
+      const actionLabel = currentStatus ? "Mark as PENDING (Not Boarded)" : "Mark as BOARDED (Present Onboard)";
+      if (!confirm(`Confirm Boarding Update:\n\nDo you want to ${actionLabel} for ${passenger.name} (Seat #${passenger.seatNum})?`)) {
+        return;
+      }
+      const newState = !currentStatus;
+      passenger.boarded = newState;
+      headcountChecked[passenger.id] = newState;
+      db.ref(`tripData/registrations/${idx}/boarded`).set(newState);
+      db.ref(`tripData/headcountChecked/${passenger.id}`).set(newState);
+      showToast(`${passenger.name}: ${newState ? '✓ Marked Boarded' : 'Marked Pending'}`);
+    }
+
+    function resetHeadcount() {
+      if (confirm("🔄 Start New Pit-Stop Roll-Call?\n\nThis will reset everyone's 'Boarded' status to Pending so you can scan all QR ID Cards fresh as students re-enter the bus.")) {
+        registrations.forEach(r => r.boarded = false);
+        headcountChecked = {};
+        lastScannedCode = "";
+        syncToCloud();
+        showToast("✓ Roll-Call Reset! Ready to scan students boarding the bus.");
+      }
+    }
+
+    function searchAndLocateSeat() {
+      const query = document.getElementById('seatSearchQuery').value.toLowerCase().trim();
+      document.querySelectorAll('.seat-3d').forEach(s => s.classList.remove('search-highlight'));
+      if (!query) return;
+      const matched = registrations.find(r => 
+        (r.name && r.name.toLowerCase().includes(query)) || (r.phone && r.phone.includes(query)) || (r.id && r.id.toLowerCase().includes(query))
+      );
+      if (matched && matched.seatNum) {
+        const seatNo = String(matched.seatNum).padStart(2, '0');
+        document.querySelectorAll('.seat-3d').forEach(el => {
+          const numEl = el.querySelector('.seat-num');
+          if (numEl && numEl.innerText === seatNo) {
+            el.classList.add('search-highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            showToast(`Found: ${matched.name} ➔ Seat #${seatNo}`);
+          }
+        });
+      }
     }
 
     function updateFare() {
       const std = document.getElementById('standard').value;
-      const fare = (['Class 1', 'Class 2', 'Class 3'].includes(std)) ? 250 : 500;
-      document.getElementById('fareDisplay').innerText = "₹" + fare;
-      document.getElementById('paidAmount').value = fare;
+      const fareDisplay = document.getElementById('fareDisplay');
+      const desc = document.getElementById('fareRuleDesc');
+      const paid = document.getElementById('paidAmount');
+      const paymentType = document.getElementById('paymentType').value;
+      let fare = (['Class 1', 'Class 2', 'Class 3'].includes(std)) ? 250 : 500;
+      fareDisplay.innerText = "₹" + fare;
+      desc.innerText = fare === 250 ? "Junior Catechism Fare (Class 1 to 3): ₹250" : "Standard Fare (Class 4+, College, Parents & Teachers): ₹500";
+      if (paymentType === 'FULL') paid.value = fare;
       updateDynamicUpiQr();
     }
-    function togglePaymentType() { updateDynamicUpiQr(); }
-    function toggleUpiBox() { document.getElementById('upiPaymentQrBox').style.display = document.getElementById('paymentMode').value === 'UPI' ? 'block' : 'none'; updateDynamicUpiQr(); }
+    function togglePaymentType() {
+      const paymentType = document.getElementById('paymentType').value;
+      const paidInput = document.getElementById('paidAmount');
+      const label = document.getElementById('paidAmountLabel');
+      const std = document.getElementById('standard').value;
+      let fare = (['Class 1', 'Class 2', 'Class 3'].includes(std)) ? 250 : 500;
+      if (paymentType === 'FULL') {
+        paidInput.readOnly = true;
+        paidInput.value = fare;
+        label.innerText = "Amount Being Paid (Full Fare)";
+      } else {
+        paidInput.readOnly = false;
+        paidInput.value = "";
+        paidInput.placeholder = "Enter advance amount (e.g. 200)";
+        label.innerText = "Amount Being Paid (Advance Amount)";
+      }
+      updateDynamicUpiQr();
+    }
+    function toggleUpiBox() {
+      const mode = document.getElementById('paymentMode').value;
+      const box = document.getElementById('upiPaymentQrBox');
+      if (box) {
+        box.style.display = mode === 'UPI' ? 'block' : 'none';
+        if (mode === 'UPI') updateDynamicUpiQr();
+      }
+    }
     function updateDynamicUpiQr() {
-      const qr = document.getElementById('bookingUpiQr');
-      if (!qr) return;
-      qr.innerHTML = '';
-      new QRCode(qr, { text: `upi://pay?pa=9486472814@upi&pn=StJosephMidalam&am=${document.getElementById('paidAmount').value || 500}&cu=INR`, width: 120, height: 120 });
+      const qrBox = document.getElementById('bookingUpiQr');
+      if (!qrBox) return;
+      const amt = Number(document.getElementById('paidAmount')?.value) || 500;
+      const seat = document.getElementById('selectedSeat')?.value || '';
+      qrBox.innerHTML = '';
+      const upiUri = `upi://pay?pa=9486472814@upi&pn=StJosephCatechismMidalam&am=${amt}&cu=INR&tn=${encodeURIComponent('Seat_' + seat)}`;
+      new QRCode(qrBox, { text: upiUri, width: 125, height: 125, colorDark: "#0f172a", colorLight: "#ffffff" });
     }
 
     function updateDashboard() {
@@ -2064,73 +2809,744 @@
       document.getElementById('chipTotalPax').innerText = `${registrations.length} Total (${confirmed.length} Locked, ${pendingList.length} Pending)`;
     }
 
-    function renderManifestTable() {
-      const tbody = document.getElementById('manifestTableBody');
-      if (!tbody) return;
-      tbody.innerHTML = '';
-      registrations.sort((a,b)=>Number(a.seatNum)-Number(b.seatNum)).forEach((r, idx) => {
-        const desig = getOfficialDesignation(r);
-        tbody.innerHTML += `
-          <tr style="border-bottom:1px solid #f1f5f9;">
-            <td style="padding:12px 8px;"><strong>#${r.seatNum}</strong><br><span style="font-size:0.6rem; color:#64748b;">${r.seatType || 'Window'}</span></td>
-            <td style="padding:12px 8px;"><strong>${r.name}</strong><br><span style="font-size:0.65rem; color:#a16207;">${desig.plainRole}</span></td>
-            <td style="padding:12px 8px;"><span style="font-size:0.68rem; font-weight:700; padding:4px 8px; border-radius:8px; background:${r.status==='CONFIRMED'?'#dcfce7':'#fef3c7'}; color:${r.status==='CONFIRMED'?'#15803d':'#b45309'};">${r.status}</span></td>
-            <td style="padding:12px 8px;">${r.status==='CONFIRMED'?`<button class="btn btn-accent" style="padding:5px 10px; font-size:0.68rem; width:auto;" onclick="openTicketModal(registrations[${idx}])">🪪 ID</button>`:'-'}</td>
-          </tr>
-        `;
+    function formatSeatName(fullName) {
+      if (!fullName) return '';
+      const parts = fullName.trim().split(' ');
+      return parts.length === 1 ? parts[0] : parts[0] + ' ' + parts[1].charAt(0).toUpperCase() + '.';
+    }
+
+    function renderSeats() {
+      const matrix = document.getElementById('seatMatrix');
+      if (!matrix) return;
+      matrix.innerHTML = '';
+      const now = Date.now();
+      const currentSelectedSeat = document.getElementById('selectedSeat')?.value || '';
+
+      const seatAllocationMap = {};
+      registrations.forEach(r => {
+        if (r.seatNum && r.seatNum !== 'WAITING') {
+          const seatNo = String(r.seatNum).padStart(2, '0');
+          seatAllocationMap[seatNo] = {
+            ...r,
+            confirmed: r.status === 'CONFIRMED',
+            hasBalance: Number(r.balance) > 0,
+            boarded: !!r.boarded || !!headcountChecked[r.id]
+          };
+        }
       });
+
+      for (let i = 1; i <= 60; i++) {
+        const seatNo = String(i).padStart(2, '0');
+        const occupant = seatAllocationMap[seatNo];
+        const isBooked = !!occupant;
+        const isConfirmed = isBooked && occupant.confirmed;
+        const hasBalance = isConfirmed && occupant.hasBalance;
+        const isBoarded = isConfirmed && occupant.boarded;
+        const isWindow = (i % 4 === 1 || i % 4 === 0);
+
+        const activeHold = seatHolds[seatNo];
+        const isHeldByOther = !isBooked && activeHold && activeHold.expiresAt > now && activeHold.clientId !== clientDeviceId;
+        const isSelectedByMe = !isBooked && (currentSelectedSeat === seatNo || (activeHold && activeHold.expiresAt > now && activeHold.clientId === clientDeviceId));
+
+        let hideSeat = false;
+        if (currentSeatFilter === 'AVAILABLE' && (isBooked || isHeldByOther)) hideSeat = true;
+        if (currentSeatFilter === 'WINDOW' && !isWindow) hideSeat = true;
+        if (currentSeatFilter === 'AISLE' && isWindow) hideSeat = true;
+
+        let seatClass = "";
+        if (isBooked) {
+          if (!isConfirmed) seatClass = "pending";
+          else if (isBoarded) seatClass = "boarded";
+          else if (hasBalance) seatClass = "advance";
+          else seatClass = "booked";
+        } else if (isSelectedByMe) {
+          seatClass = "selected";
+        } else if (isHeldByOther) {
+          seatClass = "live-hold";
+        }
+
+        const seatWrapper = document.createElement('div');
+        seatWrapper.className = `seat-3d ${seatClass}`;
+        if (hideSeat) seatWrapper.style.opacity = '0.25';
+
+        let subLabelHtml = '';
+        if (isBooked) {
+          subLabelHtml = `<span class="seat-assigned-name" title="${occupant.name}">${isBoarded ? '✓ ' : ''}${isConfirmed ? formatSeatName(occupant.name) : '⏳ Hold'}</span>`;
+        } else if (isSelectedByMe) {
+          subLabelHtml = `<span class="seat-assigned-name" style="color:#fef08a;">✓ Yours</span>`;
+        } else if (isHeldByOther) {
+          subLabelHtml = `<span class="seat-assigned-name" style="color:#7e22ce;">🔒 Hold</span>`;
+        }
+
+        seatWrapper.innerHTML = `
+          <div class="seat-headrest"></div>
+          <div class="seat-body">
+            <span class="seat-num">${seatNo}</span>
+            <span class="seat-type-tag">${isWindow ? 'WIN' : 'AISLE'}</span>
+            ${subLabelHtml}
+          </div>
+        `;
+        
+        if (isBooked) {
+          seatWrapper.onclick = () => showSeatInfo(occupant);
+        } else if (isHeldByOther) {
+          seatWrapper.onclick = () => showToast(`Seat #${seatNo} is currently being selected by another user!`);
+        } else {
+          seatWrapper.onclick = () => selectSeat(seatNo, isWindow ? 'Window (W)' : 'Aisle (A)');
+        }
+        matrix.appendChild(seatWrapper);
+        if (i % 4 === 2) {
+          const aisle = document.createElement('div');
+          aisle.className = 'aisle';
+          if (hideSeat) aisle.style.opacity = '0.25';
+          matrix.appendChild(aisle);
+        }
+      }
+    }
+
+    function selectSeat(seatNo, seatType) {
+      const prevSeat = document.getElementById('selectedSeat').value;
+      if (prevSeat && prevSeat !== seatNo) {
+        db.ref(`tripData/seatHolds/${prevSeat}`).remove();
+      }
+      document.getElementById('selectedSeat').value = seatNo;
+      document.getElementById('selectedSeatType').value = seatType;
+      seatHolds[seatNo] = { clientId: clientDeviceId, expiresAt: Date.now() + HOLD_DURATION_MS };
+      renderSeats();
+      updateDynamicUpiQr();
+
+      const holdRef = db.ref(`tripData/seatHolds/${seatNo}`);
+      holdRef.transaction((currentHold) => {
+        if (currentHold && currentHold.expiresAt > Date.now() && currentHold.clientId !== clientDeviceId) {
+          return;
+        }
+        return { clientId: clientDeviceId, expiresAt: Date.now() + HOLD_DURATION_MS };
+      }, (error, committed) => {
+        if (!committed) {
+          document.getElementById('selectedSeat').value = '';
+          renderSeats();
+          showToast(`Seat #${seatNo} was just grabbed by someone else!`);
+        } else {
+          showToast(`⚡ Seat #${seatNo} locked live for 3 minutes!`);
+        }
+      });
+    }
+
+    async function handleRegistration(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      const selectedSeat = document.getElementById('selectedSeat').value;
+      if (!selectedSeat) return showToast("Please tap an available 3D seat on the coach map");
+
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Locking Seat Hold...";
+
+      const totalFare = parseInt(document.getElementById('fareDisplay').innerText.replace('₹','')) || 500;
+      const paid = parseInt(document.getElementById('paidAmount').value) || 0;
+
+      db.ref('tripData/registrations').transaction((currentList) => {
+        const list = normalizeList(currentList);
+        if (list.some(r => String(r.seatNum).padStart(2, '0') === String(selectedSeat).padStart(2, '0'))) {
+          return;
+        }
+        const maxNum = list.reduce((max, r) => {
+          const num = parseInt(String(r.id || '').replace('MID-', ''), 10);
+          return !isNaN(num) && num > max ? num : max;
+        }, 100);
+        list.push({
+          id: 'MID-' + String(maxNum + 1),
+          name: document.getElementById('studentName').value.trim(),
+          gender: document.getElementById('gender').value,
+          standard: document.getElementById('standard').value,
+          parent: document.getElementById('parentName').value.trim(),
+          phone: document.getElementById('phoneNumber').value.trim(),
+          medical: document.getElementById('medicalProfile').value.trim(),
+          buddy: document.getElementById('buddyTag').value.trim(),
+          wing: "Main deck",
+          seatNum: selectedSeat,
+          seatType: document.getElementById('selectedSeatType').value,
+          totalFare: totalFare,
+          paid: paid,
+          balance: Math.max(0, totalFare - paid),
+          mode: document.getElementById('paymentMode').value,
+          refId: document.getElementById('refId').value.trim(),
+          status: "PENDING",
+          boarded: false,
+          submittedAt: new Date().toISOString()
+        });
+        return list;
+      }, (error, committed) => {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "⏳ Submit Booking for Admin Approval";
+        if (error || !committed) {
+          alert(`Seat #${selectedSeat} was just taken! Please pick another open seat.`);
+          return;
+        }
+        db.ref(`tripData/seatHolds/${selectedSeat}`).remove();
+        document.getElementById('regForm').style.display = 'none';
+        document.getElementById('bookingSuccessCard').style.display = 'block';
+        triggerNativeConfetti();
+      });
+    }
+
+    function resetBookingFormToDefault() {
+      document.getElementById('regForm').reset();
+      document.getElementById('regForm').style.display = 'block';
+      document.getElementById('bookingSuccessCard').style.display = 'none';
+      document.querySelectorAll('.seat-3d').forEach(s => s.classList.remove('selected'));
+      document.getElementById('selectedSeat').value = '';
+      togglePaymentType();
+      toggleUpiBox();
     }
 
     function openTicketModal(data) {
+      if (data.status !== 'CONFIRMED') {
+        alert("⏳ Your Official ID Card Pass is locked until the Coordinator verifies your payment and approves your seat!");
+        return;
+      }
       currentTicket = data;
+      const desig = getOfficialDesignation(data);
+      const vipWrap = document.getElementById('tPassVipBadgeWrap');
+      const vipBadge = document.getElementById('tPassVipBadge');
+
+      if (desig.isVip) {
+        vipWrap.style.display = 'block';
+        vipBadge.innerText = desig.roleTitle;
+      } else {
+        vipWrap.style.display = 'none';
+      }
+
+      if (cachedBase64Portrait) {
+        const sealImg = document.getElementById('idCardSealImg');
+        if (sealImg) {
+          sealImg.removeAttribute('crossorigin');
+          sealImg.src = cachedBase64Portrait;
+        }
+      }
+
       document.getElementById('tPassId').innerText = data.id;
       document.getElementById('tPassName').innerText = data.name;
-      document.getElementById('tPassStandard').innerText = getOfficialDesignation(data).subLine;
-      document.getElementById('tPassSeat').innerText = `#${data.seatNum} (${data.seatType || 'Window'})`;
-      const qr = document.getElementById('qrcode');
-      qr.innerHTML = '';
-      new QRCode(qr, { text: `MIDALAM2026-SECURE-PASS:${data.id}|SEAT:${data.seatNum}`, width: 84, height: 84 });
+      document.getElementById('tPassStandard').innerText = desig.subLine;
+      document.getElementById('tPassSeat').innerText = `#${data.seatNum} (${data.seatType || 'Deck'})`;
+      const isCurrentlyBoarded = data.boarded || headcountChecked[data.id];
+      document.getElementById('tPassBoardingTime').innerText = isCurrentlyBoarded ? "✓ BOARDED ON COACH" : "05:30 AM, OCT 19";
+      const uniquePayload = generateUniquePassPayload(data.id, data.seatNum, data.phone);
+      const qrContainer = document.getElementById('qrcode');
+      qrContainer.innerHTML = '';
+      new QRCode(qrContainer, {
+        text: uniquePayload,
+        width: 84,
+        height: 84,
+        colorDark: "#0f172a",
+        colorLight: "#ffffff"
+      });
       document.getElementById('ticketModal').style.display = 'flex';
+      triggerNativeConfetti();
     }
     function closeTicketModal() { document.getElementById('ticketModal').style.display = 'none'; }
+    function adminGenerateTicket(idx) { openTicketModal(registrations[idx]); }
+
     async function downloadTicketImage() {
-      html2canvas(document.getElementById('ticketPrintArea'), { scale: 2.5, useCORS: true }).then(canvas => {
-        const a = document.createElement('a'); a.download = `${currentTicket.id}_IDCard.png`; a.href = canvas.toDataURL("image/png"); a.click();
-      });
+      if (!currentTicket) return;
+      const dlBtn = document.getElementById('dlPassBtn');
+      if (dlBtn) dlBtn.innerText = "⏳ Preparing ID Card...";
+      if (!cachedBase64Portrait) {
+        await preloadSealAsBase64();
+      }
+      setTimeout(() => {
+        html2canvas(document.getElementById('ticketPrintArea'), {
+          scale: 2.5,
+          useCORS: true,
+          backgroundColor: "#ffffff"
+        }).then(canvas => {
+          const link = document.createElement('a');
+          link.download = `${currentTicket.id}_${currentTicket.name}_StJoseph_IDCard.png`;
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+          if (dlBtn) dlBtn.innerText = "💾 Download ID Card";
+          showToast(`✓ Downloaded ID Card for ${currentTicket.name}`);
+        }).catch(() => {
+          if (dlBtn) dlBtn.innerText = "💾 Download ID Card";
+        });
+      }, 150);
     }
+
+    async function downloadAdminTicketDirect(idx) {
+      const data = registrations[idx];
+      if (data.status !== 'CONFIRMED') return showToast("Approve payment first to download ID Pass.");
+      if (!cachedBase64Portrait) {
+        await preloadSealAsBase64();
+      }
+      openTicketModal(data);
+      setTimeout(() => {
+        html2canvas(document.getElementById('ticketPrintArea'), {
+          scale: 2.5,
+          useCORS: true,
+          backgroundColor: "#ffffff"
+        }).then(canvas => {
+          const link = document.createElement('a');
+          link.download = `${data.id}_${data.name}_StJoseph_IDCard.png`;
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+          closeTicketModal();
+          showToast(`✓ Saved ID Card for ${data.name}`);
+        });
+      }, 300);
+    }
+
+    function printSeatManifest() {
+      const confirmedList = registrations.filter(r => r.status === 'CONFIRMED').sort((a,b) => Number(a.seatNum) - Number(b.seatNum));
+      if (confirmedList.length === 0) return showToast("No confirmed bookings to print yet.");
+      let printWindow = window.open('', '_blank');
+      let html = `
+        <html><head><title>St. Joseph's Catechism Midalam - Seat Manifest</title>
+        <style>
+          body { font-family: sans-serif; padding: 20px; }
+          h2 { text-align: center; color: #0f172a; margin-bottom: 4px; }
+          p { text-align: center; font-size: 0.8rem; color: #555; margin-bottom: 18px; }
+          table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+          th, td { border: 1px solid #cbd5e1; padding: 8px 10px; text-align: left; }
+          th { background: #0f172a !important; color: white !important; }
+        </style></head><body onload="window.print()">
+        <h2>St. Joseph's Catechism Midalam - Bus Seat Manifest</h2>
+        <p>Catechism Tour 2026 • Coach Maskara (Seats 01 to 60)</p>
+        <table><thead><tr><th>Seat #</th><th>Pass ID</th><th>Name</th><th>Gender</th><th>Designation / Class</th><th>Phone</th><th>Status</th></tr></thead><tbody>
+      `;
+      confirmedList.forEach(r => {
+        const isBoarded = !!r.boarded || !!headcountChecked[r.id];
+        const desig = getOfficialDesignation(r);
+        html += `<tr><td><strong>#${r.seatNum}</strong></td><td>${r.id}</td><td><strong>${r.name}</strong></td><td>${r.gender || '-'}</td><td><strong>${desig.plainRole}</strong></td><td>${r.phone || '-'}</td><td>${isBoarded ? '✓ BOARDED' : 'LOCKED'}</td></tr>`;
+      });
+      html += `</tbody></table></body></html>`;
+      printWindow.document.write(html);
+      printWindow.document.close();
+    }
+
+    function printAllBoardingPasses() {
+      const confirmedList = registrations.filter(r => r.status === 'CONFIRMED').sort((a,b) => Number(a.seatNum) - Number(b.seatNum));
+      if (confirmedList.length === 0) return showToast("No confirmed ID Passes to print yet.");
+      const sealSvgMarkup = document.querySelector('svg').outerHTML;
+      const imgSrcToUse = cachedBase64Portrait || DIRECT_PORTRAIT_URL;
+      let printWindow = window.open('', '_blank');
+      let html = `
+        <html><head><title>St. Joseph's Catechism Midalam - All ID Cards</title>
+        <style>
+          @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+          body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8fafc; padding: 15px; display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; }
+          .id-card { width: 310px; border: 3px solid #0f172a; border-radius: 20px; overflow: hidden; page-break-inside: avoid; background: #fff; }
+          .top { background: #0f172a !important; color: #fff !important; padding: 14px; text-align: center; border-bottom: 3px solid #d4af37; }
+          .body { padding: 14px; text-align: center; }
+          .vip-pill { display:inline-block; background:#0f172a !important; color:#fef08a !important; border:1.5px solid #d4af37; padding:2px 10px; border-radius:10px; font-size:10px; font-weight:800; margin-bottom:4px; }
+          .foot { background: #0f172a !important; color: #fff !important; padding: 8px 12px; font-size: 10px; font-weight: bold; display: flex; justify-content: space-between; border-top: 2px solid #d4af37; }
+        </style></head><body>
+        ${sealSvgMarkup}
+      `;
+      confirmedList.forEach(r => {
+        const desig = getOfficialDesignation(r);
+        const uniquePayload = generateUniquePassPayload(r.id, r.seatNum, r.phone);
+        const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=${encodeURIComponent(uniquePayload)}`;
+        html += `
+          <div class="id-card">
+            <div class="top">
+              <div style="width:115px; height:115px; margin:0 auto 6px; border-radius:50%; border:2px solid #d4af37; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#0f172a;">
+                <img src="${imgSrcToUse}"
+                     style="width:68%; height:68%; border-radius:50%; object-fit:cover; object-position:center 15%; position:relative; z-index:2; display:block;">
+                <svg viewBox="0 0 240 240" style="position:absolute; inset:0; width:100%; height:100%; z-index:3;"><use href="#st-joseph-ring-text"></use></svg>
+              </div>
+              <div style="font-size:10px; color:#d4af37; font-weight:bold; letter-spacing:0.6px;">CATECHISM TOUR 2026 • OFFICIAL ID PASS</div>
+            </div>
+            <div class="body">
+              ${desig.isVip ? `<div><span class="vip-pill">${desig.roleTitle}</span></div>` : ''}
+              <div style="font-size:16px; font-weight:800; color:#0f172a; text-transform:uppercase;">${r.name}</div>
+              <div style="font-size:11px; color:#a16207; font-weight:800; margin:3px 0 10px;">${desig.subLine}</div>
+              <div style="display:flex; justify-content:space-around; background:#f8fafc; padding:7px; border-radius:10px; border:1px solid #e2e8f0; margin-bottom:10px; font-size:11px;">
+                <div><strong>SEAT:</strong> #${r.seatNum}</div>
+                <div><strong>ID:</strong> ${r.id}</div>
+                <div><strong>MIDALAM ➔ KERALA</strong></div>
+              </div>
+              <img src="${qrImageUrl}" style="width:85px; height:85px; border:1px solid #d4af37; padding:4px; border-radius:8px;">
+            </div>
+            <div class="foot">
+              <span>DENSON: 9486472814</span>
+              <span>BENSIGAR: 9486270230</span>
+            </div>
+          </div>
+        `;
+      });
+      html += `<script>window.onload = function(){ setTimeout(function(){ window.print(); }, 600); };<\/script></body></html>`;
+      printWindow.document.write(html);
+      printWindow.document.close();
+    }
+
     function shareWhatsApp() {
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(`St. Joseph's Tour 2026 Pass: ${currentTicket.name} (Seat #${currentTicket.seatNum})`)}`, '_blank');
+      if (!currentTicket) return;
+      const desig = getOfficialDesignation(currentTicket);
+      const text = `*ST. JOSEPH'S CATECHISM MIDALAM - CATECHISM TOUR 2026*%0A🪪 *Official Pilgrim ID Pass: ${currentTicket.id}*%0A• Passenger: ${currentTicket.name}%0A• Designation: ${desig.plainRole}%0A• Confirmed Seat: #${currentTicket.seatNum}%0A• Coordinators: Denson (9486472814) / Bensigar (9486270230)`;
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    }
+
+    function playChime(type = 'success') {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (type === 'success') {
+          if (navigator.vibrate) navigator.vibrate(80);
+          const osc = ctx.createOscillator();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(880, ctx.currentTime);
+          osc.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.12);
+        } else if (type === 'duplicate') {
+          if (navigator.vibrate) navigator.vibrate([200, 80, 250]);
+          const osc = ctx.createOscillator();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(240, ctx.currentTime);
+          osc.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.35);
+        } else {
+          if (navigator.vibrate) navigator.vibrate(300);
+          const osc = ctx.createOscillator();
+          osc.frequency.setValueAtTime(180, ctx.currentTime);
+          osc.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.25);
+        }
+      } catch(e) {}
+    }
+
+    function processScanCode(decodedText, resultBox) {
+      if (!decodedText) return;
+      const now = Date.now();
+      if (decodedText === lastScannedCode && (now - lastScannedTime) < 1200) {
+        return;
+      }
+      lastScannedCode = decodedText;
+      lastScannedTime = now;
+
+      let ticketId = "";
+      if (decodedText.includes("MIDALAM2026-SECURE-PASS:")) {
+        ticketId = decodedText.split(':')[1].split('|')[0];
+      } else if (decodedText.includes("MIDALAM2026|")) {
+        ticketId = decodedText.split('|')[1];
+      } else {
+        ticketId = decodedText.trim();
+      }
+
+      const matchIdx = registrations.findIndex(r => r.id === ticketId);
+      if (matchIdx === -1) {
+        playChime('error');
+        speakText("Invalid pass");
+        resultBox.innerText = `❌ INVALID QR: Pass "${ticketId}" not found!`;
+        resultBox.style.color = "#ffffff";
+        resultBox.style.background = "#dc2626";
+        return;
+      }
+
+      const passenger = registrations[matchIdx];
+      const desig = getOfficialDesignation(passenger);
+
+      if (passenger.status !== 'CONFIRMED') {
+        playChime('error');
+        speakText(`Unapproved pass for ${passenger.name}`);
+        resultBox.innerText = `⚠️ UNAPPROVED PASS: ${passenger.name} (Seat #${passenger.seatNum})`;
+        resultBox.style.color = "#ffffff";
+        resultBox.style.background = "#d97706";
+        return;
+      }
+
+      if (passenger.boarded || headcountChecked[passenger.id]) {
+        playChime('duplicate');
+        speakText(`Already boarded! ${passenger.name}, Seat ${Number(passenger.seatNum)}`);
+        resultBox.innerText = `⚠️ ALREADY BOARDED: ${passenger.name} (Seat #${passenger.seatNum})`;
+        resultBox.style.color = "#ffffff";
+        resultBox.style.background = "#b91c1c";
+
+        document.getElementById('dupScanPaxName').innerText = passenger.name;
+        document.getElementById('dupScanPaxMeta').innerText = `Seat #${passenger.seatNum} • ${desig.plainRole} • ID: ${passenger.id}`;
+        document.getElementById('duplicateScanModal').style.display = 'flex';
+        return;
+      }
+
+      passenger.boarded = true;
+      headcountChecked[passenger.id] = true;
+      db.ref(`tripData/registrations/${matchIdx}/boarded`).set(true);
+      db.ref(`tripData/headcountChecked/${passenger.id}`).set(true);
+
+      playChime('success');
+      speakText(`Boarded ${passenger.name}, Seat ${Number(passenger.seatNum)}`);
+      resultBox.innerText = `✅ BOARDED: ${passenger.name} — Seat #${passenger.seatNum}`;
+      resultBox.style.color = "#ffffff";
+      resultBox.style.background = "#15803d";
+      showToast(`✅ Marked Present: ${passenger.name} (Seat #${passenger.seatNum})`);
     }
 
     function checkAdminPinSecure() {
-      if (document.getElementById('adminPin').value.trim() === "7777") {
+      const lockoutMsg = document.getElementById('lockoutMsg');
+      const pinInput = document.getElementById('adminPin');
+      const rawVal = (pinInput.value || '').trim();
+
+      let encoded = "";
+      try { encoded = btoa(rawVal); } catch(e) {}
+
+      if (encoded === "Nzc3Nw==" || encoded === "U0hBNzc3Nw==" || encoded === "c2hhNzc3Nw==") {
+        localStorage.removeItem('midalam_pin_fails');
+        localStorage.removeItem('midalam_lock_until');
+        lockoutMsg.style.display = 'none';
+        pinInput.value = '';
         document.getElementById('adminAuthBox').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
-        showToast("✓ Admin Unlocked");
-        renderTransparencyLedger();
-      } else { showToast("❌ Invalid Pin (Try 7777)"); }
-    }
-    function togglePinVisibility() { const i = document.getElementById('adminPin'); i.type = i.type === 'password' ? 'text' : 'password'; }
-    function adminLogout() { document.getElementById('adminPanel').style.display = 'none'; document.getElementById('adminAuthBox').style.display = 'block'; renderTransparencyLedger(); }
-    function toggleBoardingMasterSwitch() {
-      isBoardingActive = !isBoardingActive;
-      db.ref('tripData/isBoardingActive').set(isBoardingActive);
-      updateBoardingSwitchUI();
-    }
-    function updateBoardingSwitchUI() {
-      const btn = document.getElementById('boardingSwitchBtn');
-      if (btn) { btn.innerText = isBoardingActive ? "Lock Boarding" : "Enable Boarding"; }
+        renderRoster();
+        document.getElementById('adminInfoManager').style.display = 'block';
+        document.getElementById('adminGalleryUploader').style.display = 'block';
+        document.getElementById('adminItineraryManager').style.display = 'block';
+        showToast("✓ Coordinator Access Unlocked");
+      } else {
+        pinInput.value = '';
+        showToast("❌ Invalid Passkey. Please try again.");
+      }
     }
 
-    function switchTab(tabId, evt) {
-      stopInlineScanner();
-      document.querySelectorAll('.tab-content').forEach(el => { el.style.display = 'none'; el.classList.remove('active-tab'); });
-      document.querySelectorAll('.portal-nav-btn').forEach(el => el.classList.remove('active'));
-      document.getElementById(tabId).style.display = 'block';
-      document.getElementById(tabId).classList.add('active-tab');
-      if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+    function togglePinVisibility() {
+      const pinInput = document.getElementById('adminPin');
+      pinInput.type = pinInput.type === 'password' ? 'text' : 'password';
     }
-    function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 2500); }
+    function adminLogout() {
+      document.getElementById('adminPanel').style.display = 'none';
+      document.getElementById('adminAuthBox').style.display = 'block';
+      document.getElementById('adminInfoManager').style.display = 'none';
+      document.getElementById('adminGalleryUploader').style.display = 'none';
+      document.getElementById('adminItineraryManager').style.display = 'none';
+      renderTransparencyLedger();
+      renderGallery();
+      renderItinerary();
+    }
+
+    function setFilterCategory(cat, el) {
+      activeFilter = cat;
+      document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
+      filterRosterCards();
+    }
+    function filterRosterCards() {
+      const q = document.getElementById('rosterSearch')?.value.toLowerCase().trim() || '';
+      document.querySelectorAll('.student-roster-card').forEach(card => {
+        const text = card.innerText.toLowerCase();
+        const matchesQuery = !q || text.includes(q);
+        const status = card.getAttribute('data-status');
+        const isBoarded = card.getAttribute('data-boarded') === 'true';
+        let matchesPill = activeFilter === 'ALL' || 
+                          (activeFilter === 'CONFIRMED' && status === 'CONFIRMED') || 
+                          (activeFilter === 'PENDING' && status === 'PENDING') || 
+                          (activeFilter === 'BOARDED' && isBoarded);
+        card.style.display = (matchesQuery && matchesPill) ? 'block' : 'none';
+      });
+    }
+
+    function renderRoster() {
+      const container = document.getElementById('rosterCardsList');
+      if (!container) return;
+      container.innerHTML = '';
+      const sortedRegistrations = [...registrations].sort((a, b) => {
+        if (a.status === 'PENDING' && b.status !== 'PENDING') return -1;
+        if (a.status !== 'PENDING' && b.status === 'PENDING') return 1;
+        return Number(a.seatNum || 999) - Number(b.seatNum || 999);
+      });
+
+      sortedRegistrations.forEach((r) => {
+        const originalIdx = registrations.findIndex(item => item.id === r.id);
+        const isConfirmed = r.status === 'CONFIRMED';
+        const isBoarded = !!r.boarded || !!headcountChecked[r.id];
+        const hasBalance = Number(r.balance) > 0;
+        const desig = getOfficialDesignation(r);
+        const statusText = !isConfirmed ? '⏳ Waiting Approval' : (hasBalance ? `🔒 Locked • Adv (₹${r.balance} due)` : '🔒 Locked • Full Paid');
+        const card = document.createElement('div');
+        card.className = `student-roster-card ${!isConfirmed ? 'is-pending-card' : ''}`;
+        card.setAttribute('data-status', r.status);
+        card.setAttribute('data-boarded', isBoarded);
+        card.innerHTML = `
+          <div class="src-header">
+            <div>
+              <div class="src-name">${r.name} ${desig.isVip ? `<span style="font-size:0.7rem; background:#fef08a; color:#0f172a; padding:2px 8px; border-radius:8px; margin-left:4px; border:1px solid #d4af37;">${desig.roleTitle}</span>` : ''}</div>
+              <div class="src-meta">${desig.plainRole} • ${r.gender || 'N/A'} • Parent: ${r.parent || '-'} • 📞 ${r.phone || '-'}</div>
+              <div style="font-size:0.72rem; color:var(--primary-light); font-weight:700; margin-top:3px;">💳 ${r.mode || 'Cash'}: "${r.refId || '-'}" (Paid: ₹${r.paid || 0})</div>
+            </div>
+            <div class="src-tid-badge">Seat #${r.seatNum} • ${r.id}</div>
+          </div>
+          <div class="src-details-grid">
+            <div class="src-detail-box"><div class="src-detail-lbl">Seat #</div><div class="src-detail-val">#${r.seatNum}</div></div>
+            <div class="src-detail-box"><div class="src-detail-lbl">Status</div><div class="src-detail-val" style="font-size:0.75rem; color:${isConfirmed?(hasBalance?'#0369a1':'var(--success)'):'var(--warning)'};">${statusText}</div></div>
+            <div class="src-detail-box" onclick="toggleBoardingManual(${originalIdx})" style="cursor:pointer; background:${isBoarded?'#dcfce7':'#f8fafc'};" title="Click to change boarding status (with confirmation)">
+              <div class="src-detail-lbl">Boarding (Tap)</div>
+              <div class="src-detail-val" style="color:${isBoarded?'var(--success)':'var(--text-muted)'};">${isBoarded?'✓ Boarded':'Pending'}</div>
+            </div>
+          </div>
+          <div class="action-boxes-grid">
+            <button class="act-card-btn btn-box-confirm" onclick="openConfirmModal(${originalIdx})"><span>✏️</span><span>${isConfirmed ? 'Edit ID' : 'Approve'}</span></button>
+            <button class="act-card-btn btn-box-due" onclick="openDueModal(${originalIdx})"><span>💵</span><span>Due</span></button>
+            <button class="act-card-btn btn-box-pass" onclick="adminGenerateTicket(${originalIdx})"><span>🪪</span><span>ID Card</span></button>
+            <button class="act-card-btn btn-box-dl" onclick="downloadAdminTicketDirect(${originalIdx})"><span>📥</span><span>Save</span></button>
+            <button class="act-card-btn btn-box-wa" onclick="sendWhatsAppApprovalConfirmation(registrations[${originalIdx}])"><span>📲</span><span>WA Lock</span></button>
+            <button class="act-card-btn btn-box-del" onclick="cancelRegistration(${originalIdx})"><span>🗑</span><span>Delete</span></button>
+          </div>
+          ${hasBalance ? `<button class="btn btn-accent" style="margin-top:12px; padding:11px; font-size:0.78rem;" onclick="sendWhatsAppDueReminder(${originalIdx})">💬 Send Due Balance Reminder via WhatsApp</button>` : ''}
+        `;
+        container.appendChild(card);
+      });
+      filterRosterCards();
+    }
+
+    window.openConfirmModal = function(idx) {
+      const passenger = registrations[idx];
+      const desig = getOfficialDesignation(passenger);
+      document.getElementById('mCurrentIdx').value = idx;
+      document.getElementById('modalHeaderTitle').innerText = "🪪 Edit ID Card & Approve Seat";
+      document.getElementById('dueInputGroup').style.display = 'none';
+      document.getElementById('mDueAmountPaid').value = '';
+      document.getElementById('mTicketId').innerText = passenger.id;
+      document.getElementById('mPaymentRef').innerText = `${passenger.mode || 'Cash'} — ${passenger.refId || 'No Ref'}`;
+      document.getElementById('mSubmittedPaid').innerText = passenger.paid;
+      document.getElementById('mSubmittedBalance').innerText = passenger.balance;
+
+      document.getElementById('mEditName').value = passenger.name || '';
+      document.getElementById('mEditParent').value = passenger.parent || '';
+      document.getElementById('mEditCustomRole').value = passenger.customRole || '';
+      document.getElementById('mEditGender').value = passenger.gender || 'Male';
+      document.getElementById('mEditStandard').value = desig.plainRole || passenger.standard || 'Class 5';
+      populateSeatDropdown(passenger.seatNum, idx);
+      document.getElementById('confirmModal').style.display = 'flex';
+    };
+
+    window.openDueModal = function(idx) {
+      const passenger = registrations[idx];
+      const desig = getOfficialDesignation(passenger);
+      document.getElementById('mCurrentIdx').value = idx;
+      document.getElementById('modalHeaderTitle').innerText = "💵 Collect Due Balance & Edit ID Card";
+      document.getElementById('dueInputGroup').style.display = 'block';
+      document.getElementById('mDueAmountPaid').value = passenger.balance || 0;
+      document.getElementById('mTicketId').innerText = passenger.id;
+      document.getElementById('mPaymentRef').innerText = `${passenger.mode || 'Cash'} — ${passenger.refId || 'No Ref'}`;
+      document.getElementById('mSubmittedPaid').innerText = passenger.paid;
+      document.getElementById('mSubmittedBalance').innerText = passenger.balance;
+
+      document.getElementById('mEditName').value = passenger.name || '';
+      document.getElementById('mEditParent').value = passenger.parent || '';
+      document.getElementById('mEditCustomRole').value = passenger.customRole || '';
+      document.getElementById('mEditGender').value = passenger.gender || 'Male';
+      document.getElementById('mEditStandard').value = desig.plainRole || passenger.standard || 'Class 5';
+      populateSeatDropdown(passenger.seatNum, idx);
+      document.getElementById('confirmModal').style.display = 'flex';
+    };
+
+    function populateSeatDropdown(currentSeat, idx) {
+      const seatSelect = document.getElementById('mAssignSeat');
+      seatSelect.innerHTML = '';
+      const opt = document.createElement('option');
+      opt.value = currentSeat;
+      opt.innerText = `Seat ${currentSeat} (Current)`;
+      seatSelect.appendChild(opt);
+      const booked = registrations.filter((r, i) => i !== idx).map(r => String(r.seatNum).padStart(2, '0'));
+      for (let i = 1; i <= 60; i++) {
+        const seatNo = String(i).padStart(2, '0');
+        if (seatNo !== String(currentSeat).padStart(2, '0') && !booked.includes(seatNo)) {
+          const optOther = document.createElement('option');
+          optOther.value = seatNo;
+          optOther.innerText = `Seat ${seatNo}`;
+          seatSelect.appendChild(optOther);
+        }
+      }
+    }
+    window.closeConfirmModal = function() { document.getElementById('confirmModal').style.display = 'none'; };
+
+    async function submitConfirmation() {
+      const idx = Number(document.getElementById('mCurrentIdx').value);
+      const passenger = registrations[idx];
+      if (!passenger) return;
+      const newSeatNum = document.getElementById('mAssignSeat').value;
+      const dueGroup = document.getElementById('dueInputGroup');
+      const dueInput = document.getElementById('mDueAmountPaid');
+
+      passenger.name = document.getElementById('mEditName').value.trim() || passenger.name;
+      passenger.parent = document.getElementById('mEditParent').value.trim() || passenger.parent;
+      passenger.customRole = document.getElementById('mEditCustomRole').value.trim();
+      passenger.gender = document.getElementById('mEditGender').value;
+      passenger.standard = document.getElementById('mEditStandard').value;
+
+      if (dueGroup && dueGroup.style.display !== 'none' && dueInput.value !== "" && Number(dueInput.value) > 0) {
+        const duePaid = Number(dueInput.value);
+        passenger.paid = Number(passenger.paid) + duePaid;
+        passenger.balance = Math.max(0, Number(passenger.totalFare) - passenger.paid);
+      }
+      passenger.seatNum = newSeatNum;
+      passenger.status = 'CONFIRMED';
+
+      await db.ref(`tripData/registrations/${idx}`).update({
+        name: passenger.name,
+        parent: passenger.parent,
+        customRole: passenger.customRole || "",
+        gender: passenger.gender,
+        standard: passenger.standard,
+        paid: passenger.paid,
+        balance: passenger.balance,
+        seatNum: passenger.seatNum,
+        status: 'CONFIRMED'
+      });
+      closeConfirmModal();
+      showToast(`🔒 ID Card & Seat #${newSeatNum} saved for ${passenger.name}!`);
+    }
+
+    window.cancelRegistration = async function(idx) {
+      const ticket = registrations[idx];
+      if (confirm(`Delete registration for ${ticket.id} (${ticket.name} - Seat #${ticket.seatNum}) and free the seat?`)) {
+        registrations.splice(idx, 1);
+        await syncRegistrationsFast();
+        showToast("Registration deleted & seat freed.");
+      }
+    };
+
+    function exportCSV() {
+      let csv = "Ticket ID,Name,Gender,Designation,Parent,Mobile,Medical,Buddy,Seat,Paid,Balance,Mode,RefId,Status,Boarded\n";
+      registrations.forEach(r => {
+        const desig = getOfficialDesignation(r);
+        csv += `"${r.id}","${r.name}","${r.gender || ''}","${desig.plainRole}","${r.parent}","${r.phone}","${r.medical || ''}","${r.buddy || ''}","${r.seatNum}","${r.paid}","${r.balance}","${r.mode || ''}","${r.refId || ''}","${r.status}","${r.boarded || headcountChecked[r.id] ? 'YES' : 'NO'}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = "St_Joseph_Catechism_Midalam_Manifest.csv";
+      a.click();
+    }
+
+    // --- PWA SERVICE WORKER & INSTALL PROMPT ---
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+
+    let deferredPwaPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPwaPrompt = e;
+      const banner = document.getElementById('pwaInstallBanner');
+      if (banner) banner.style.display = 'flex';
+    });
+
+    document.getElementById('pwaInstallBtn')?.addEventListener('click', async () => {
+      if (!deferredPwaPrompt) return;
+      deferredPwaPrompt.prompt();
+      const { outcome } = await deferredPwaPrompt.userChoice;
+      if (outcome === 'accepted') {
+        document.getElementById('pwaInstallBanner').style.display = 'none';
+      }
+      deferredPwaPrompt = null;
+    });
+
+    window.addEventListener('appinstalled', () => {
+      const banner = document.getElementById('pwaInstallBanner');
+      if (banner) banner.style.display = 'none';
+      showToast("✓ St. Joseph's Catechism Tour App Installed!");
+    });
 
     window.onload = function() {
       preloadSealAsBase64();
