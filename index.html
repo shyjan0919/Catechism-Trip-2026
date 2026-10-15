@@ -130,7 +130,7 @@
       color: white; text-align: center; margin-bottom: 18px;
       box-shadow: 0 12px 28px rgba(15, 23, 42, 0.25);
     }
-    .countdown-title { font-size: 0.65rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 1px; }
+    .countdown-title { font-size: 0.68rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 1px; }
     .countdown-timer { font-size: 1.35rem; font-weight: 800; color: #ffffff; margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
 
     .main-four-grid {
@@ -363,6 +363,9 @@
     .seat-3d.boarded .seat-headrest { background: linear-gradient(180deg, #15803d 0%, #14532d 100%); border-color: #052e16; }
     .seat-3d.boarded .seat-body { background: linear-gradient(180deg, #dcfce7 0%, #bbf7d0 100%); border-color: #15803d; }
 
+    /* =========================================================================
+       CLEAN, BULLETPROOF MOBILE PASSENGER ROSTER CARD ALIGNMENT
+       ========================================================================= */
     .filter-wrapper { margin-bottom: 18px; }
     .search-input-box { position: relative; margin-bottom: 14px; }
     .search-input-box input { padding-left: 44px; border-radius: 16px; background: #ffffff; }
@@ -370,23 +373,61 @@
     .filter-pills-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
     .pill-btn { padding: 9px 18px; border-radius: 22px; border: 1px solid var(--border); background: white; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); cursor: pointer; white-space: nowrap; }
     .pill-btn.active { background: var(--primary-deep); color: white; border-color: var(--primary-deep); }
-    .roster-cards-container { display: flex; flex-direction: column; gap: 16px; }
-    .student-roster-card { background: #ffffff; border: 1px solid var(--border); border-radius: 20px; padding: 20px; box-shadow: 0 4px 16px rgba(15,23,42,0.04); }
+    
+    .roster-cards-container { display: flex; flex-direction: column; gap: 14px; }
+    .student-roster-card {
+      background: #ffffff; border: 1px solid var(--border); border-radius: 18px;
+      padding: 15px 14px; box-shadow: 0 4px 14px rgba(15,23,42,0.04);
+      display: flex; flex-direction: column; gap: 10px;
+    }
     .student-roster-card.is-pending-card { border: 2px solid #f59e0b; background: #fffdf7; }
-    .src-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; }
-    .src-name { font-size: 1.05rem; font-weight: 800; color: var(--primary-deep); text-transform: capitalize; }
-    .src-meta { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
-    .src-tid-badge { background: #f8fafc; color: var(--primary-deep); font-size: 0.72rem; font-weight: 800; padding: 5px 14px; border-radius: 12px; border: 1px solid var(--border-glow); font-family: 'JetBrains Mono', monospace; }
-    .src-details-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
-    .src-detail-box { background: #f8fafc; border: 1px solid var(--border); padding: 10px; border-radius: 14px; text-align: center; }
-    .src-detail-lbl { font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
-    .src-detail-val { font-size: 0.92rem; font-weight: 800; color: var(--primary-deep); margin-top: 3px; }
-    .action-boxes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    @media (min-width: 580px) { .action-boxes-grid { grid-template-columns: repeat(6, 1fr); } }
+    
+    .src-header {
+      display: flex; flex-direction: column; gap: 6px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px;
+    }
+    @media (min-width: 480px) {
+      .src-header { flex-direction: row; justify-content: space-between; align-items: flex-start; }
+    }
+    .src-name-wrap { flex: 1; }
+    .src-name {
+      font-size: 0.98rem; font-weight: 800; color: var(--primary-deep); text-transform: capitalize;
+      display: flex; align-items: center; flex-wrap: wrap; gap: 6px; line-height: 1.3;
+    }
+    .src-meta {
+      font-size: 0.72rem; color: var(--text-muted); font-weight: 600; margin-top: 4px;
+      line-height: 1.4; word-break: break-word;
+    }
+    .src-tid-badge {
+      align-self: flex-start; background: #f8fafc; color: var(--primary-deep);
+      font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 10px;
+      border: 1px solid var(--border-glow); font-family: 'JetBrains Mono', monospace; white-space: nowrap;
+    }
+    
+    .src-details-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+    }
+    .src-detail-box {
+      background: #f8fafc; border: 1px solid var(--border); padding: 8px 4px;
+      border-radius: 12px; text-align: center; min-width: 0;
+    }
+    .src-detail-lbl {
+      font-size: 0.6rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+    }
+    .src-detail-val {
+      font-size: 0.78rem; font-weight: 800; color: var(--primary-deep); margin-top: 2px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .action-boxes-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+    }
+    @media (min-width: 580px) {
+      .action-boxes-grid { grid-template-columns: repeat(6, 1fr); }
+    }
     .act-card-btn {
       display: flex; flex-direction: row; align-items: center; justify-content: center;
-      padding: 10px 8px; border-radius: 12px; border: 1px solid transparent; font-size: 0.75rem; 
-      font-weight: 700; cursor: pointer; background: #f8fafc; gap: 5px; white-space: nowrap;
+      padding: 9px 4px; border-radius: 10px; border: 1px solid transparent; font-size: 0.72rem; 
+      font-weight: 700; cursor: pointer; background: #f8fafc; gap: 4px; white-space: nowrap;
     }
     .act-card-btn:active { transform: scale(0.96); }
     .btn-box-confirm { background: #dcfce7; color: #15803d; border-color: #86efac; }
@@ -573,7 +614,7 @@
          ========================================================================= -->
     <div id="homeLauncherTab" class="tab-content active-tab">
       <div class="app-hero-banner">
-        <div class="countdown-title">⏳ Countdown to Departure (Oct 19, 2026 • 6:00 AM)</div>
+        <div class="countdown-title" id="countdownTitleBanner">⏳ Countdown to Catechism Tour (October 19, 2026)</div>
         <div class="countdown-timer" id="countdownClock">Loading timer...</div>
       </div>
 
@@ -951,12 +992,12 @@
           <h4 style="font-size:0.95rem; font-weight:800; color:var(--primary-deep); margin-bottom:14px;">🔐 Admin: Add Itinerary Stop</h4>
           <form onsubmit="addItineraryStop(event)" style="background:#f8fafc; padding:16px; border-radius:16px; border:1px solid var(--border);">
             <div class="form-group" style="margin-bottom:12px;">
-              <label>Time (e.g. 05:30 AM)</label>
-              <input type="text" id="newItineraryTime" placeholder="e.g. 05:30 AM" required>
+              <label>Time (e.g. 06:30 AM)</label>
+              <input type="text" id="newItineraryTime" placeholder="e.g. 06:30 AM" required>
             </div>
             <div class="form-group" style="margin-bottom:12px;">
               <label>Event Heading</label>
-              <input type="text" id="newItineraryHeading" placeholder="e.g. Assembly & Holy Mass" required>
+              <input type="text" id="newItineraryHeading" placeholder="e.g. Assembly & Departure Holy Mass" required>
             </div>
             <div class="form-group" style="margin-bottom:12px;">
               <label>Description</label>
@@ -1198,11 +1239,11 @@
       </div>
     </div>
 
-    <!-- PANEL 10: BUS LOST & FOUND NOTICE BOARD -->
+    <!-- PANEL 10: BUS LOST & FOUND NOTICE BOARD (PERMISSIONS FIXED) -->
     <div id="lostFoundTab" class="tab-content">
       <div class="card">
         <div class="card-title">🎒 Bus Lost & Found Notice Board</div>
-        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:14px;">Report any caps, water bottles, spectacles, or sweaters found or lost on Coach Maskara:</p>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:14px;">All registered pilgrims and teachers can report lost or found items. Admin only can resolve and delete notices.</p>
         <form onsubmit="addLostFoundItem(event)" style="background:#f8fafc; padding:16px; border-radius:16px; border:1px solid var(--border); margin-bottom:18px;">
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
             <div>
@@ -1218,10 +1259,10 @@
             </div>
           </div>
           <div class="form-group" style="margin-bottom:10px;">
-            <label>Item Description & Contact</label>
-            <input type="text" id="lfItemDesc" placeholder="e.g. Blue Milton bottle found on seat rack" required>
+            <label>Item Description & Contact Info</label>
+            <input type="text" id="lfItemDesc" placeholder="e.g. Blue Milton bottle found on rack" required>
           </div>
-          <button type="submit" class="btn btn-primary" style="padding:10px; font-size:0.78rem;">Post Lost & Found Notice</button>
+          <button type="submit" class="btn btn-primary" style="padding:10px; font-size:0.78rem;">Post Notice</button>
         </form>
         <div id="lostFoundListContainer">Loading notices...</div>
       </div>
@@ -1464,8 +1505,8 @@
               <div class="id-cell-val" style="font-size:0.72rem;">MIDALAM ➔ KERALA</div>
             </div>
             <div class="id-data-cell">
-              <div class="id-cell-lbl">Status / Assembly</div>
-              <div class="id-cell-val" id="tPassBoardingTime" style="font-size:0.72rem; color:var(--success);">05:30 AM, OCT 19</div>
+              <div class="id-cell-lbl">Tour Date / Departure</div>
+              <div class="id-cell-val" id="tPassBoardingTime" style="font-size:0.72rem; color:var(--success);">OCT 19, 2026</div>
             </div>
           </div>
 
@@ -1671,11 +1712,11 @@
     let galleryList = [];
     let lostFoundList = [];
     let itineraryList = [
-      { time: "05:30 AM", heading: "Assembly & Holy Mass", desc: "Gathering at St. Joseph's Church campus, Midalam. Morning blessing and departure prayer." },
-      { time: "08:00 AM", heading: "Breakfast Stop", desc: "Traditional breakfast and refreshments along the scenic transit route." },
-      { time: "11:30 AM", heading: "Arrival & Sightseeing", desc: "Exploring primary pilgrimage and educational landmarks with parish group leaders." },
-      { time: "01:30 PM", heading: "Parish Lunch Fellowship", desc: "Group lunch session and relaxation at designated scenic spots." },
-      { time: "05:00 PM", heading: "Evening Prayer & Return Journey", desc: "Boarding Coach Maskara for the comfortable evening return trip to Midalam." }
+      { time: "Departure Time", heading: "Assembly & Holy Mass", desc: "Gathering at St. Joseph's Church campus, Midalam. Morning blessing and departure prayer." },
+      { time: "Breakfast Time", heading: "Breakfast Stop", desc: "Traditional breakfast and refreshments along the scenic transit route." },
+      { time: "Sightseeing", heading: "Arrival & Sightseeing", desc: "Exploring primary pilgrimage and educational landmarks with parish group leaders." },
+      { time: "Lunch Time", heading: "Parish Lunch Fellowship", desc: "Group lunch session and relaxation at designated scenic spots." },
+      { time: "Return Leg", heading: "Evening Prayer & Return Journey", desc: "Boarding Coach Maskara for the comfortable evening return trip to Midalam." }
     ];
     let busGps = { lat: null, lng: null, time: null };
     let busParkingGps = { lat: null, lng: null, time: null, bay: "" };
@@ -1717,6 +1758,25 @@
       if (!val) return [];
       if (Array.isArray(val)) return val.filter(Boolean);
       return Object.values(val).filter(Boolean);
+    }
+
+    // --- DYNAMIC ITINERARY DEPARTURE TIME PARSER ---
+    function getDepartureTargetTime() {
+      if (itineraryList && itineraryList.length > 0 && itineraryList[0].time) {
+        const timeStr = itineraryList[0].time.trim();
+        const match = timeStr.match(/(\d+):(\d+)\s*(AM|PM)?/i);
+        if (match) {
+          let hours = parseInt(match[1], 10);
+          const mins = parseInt(match[2], 10);
+          const meridian = match[3] ? match[3].toUpperCase() : '';
+          if (meridian === 'PM' && hours < 12) hours += 12;
+          if (meridian === 'AM' && hours === 12) hours = 0;
+          const target = new Date("October 19, 2026 00:00:00");
+          target.setHours(hours, mins, 0, 0);
+          return { targetMs: target.getTime(), labelTime: timeStr, isSet: true };
+        }
+      }
+      return { targetMs: new Date("October 19, 2026 06:00:00").getTime(), labelTime: "", isSet: false };
     }
 
     // --- 4 DISTINCT BOARDING PASS ROLES & THEMES ---
@@ -1777,10 +1837,36 @@
       };
     }
 
+    // --- CLASS CHRONOLOGICAL ORDER (TEACHERS & LEADERSHIP AT VERY END) ---
+    function getClassSortOrder(std) {
+      const s = (std || '').trim();
+      if (s.startsWith('Class ')) {
+        const num = parseInt(s.replace('Class ', ''), 10);
+        return isNaN(num) ? 50 : num; // Class 1 = 1, Class 12 = 12
+      }
+      if (s.includes('College')) return 20;
+      if (s.includes('Parents')) return 30;
+      if (s.includes('Teacher')) return 80; // Teachers near end
+      if (s.includes('Digital Coordinator') || s.includes('App In-Charge')) return 85;
+      if (s.includes('Tour Co-Ordinator')) return 90;
+      if (s.includes('Tour Head')) return 95;
+      return 40; // Other general pilgrims
+    }
+
     function updateCountdown() {
-      const departureDate = new Date("October 19, 2026 06:00:00").getTime();
-      const distance = departureDate - Date.now();
+      const depInfo = getDepartureTargetTime();
+      const distance = depInfo.targetMs - Date.now();
       const clockEl = document.getElementById('countdownClock');
+      const titleBanner = document.getElementById('countdownTitleBanner');
+
+      if (titleBanner) {
+        if (depInfo.isSet) {
+          titleBanner.innerText = `⏳ Countdown to Departure (Oct 19, 2026 • ${depInfo.labelTime})`;
+        } else {
+          titleBanner.innerText = `⏳ Countdown to Catechism Tour (October 19, 2026)`;
+        }
+      }
+
       if (!clockEl) return;
       if (distance < 0) {
         clockEl.innerText = "🚀 Tour is Underway!";
@@ -2069,7 +2155,7 @@
       }
     }
 
-    // --- BUS LOST & FOUND NOTICE BOARD ---
+    // --- BUS LOST & FOUND (PERMISSIONS: PUBLIC SEES STATUS, ADMIN RESOLVES/DELETES) ---
     function addLostFoundItem(e) {
       e.preventDefault();
       const type = document.getElementById('lfItemType').value;
@@ -2092,12 +2178,16 @@
     }
 
     function toggleLostFoundResolve(idx) {
+      const isAdminLoggedIn = document.getElementById('adminPanel') && document.getElementById('adminPanel').style.display === 'block';
+      if (!isAdminLoggedIn) return showToast("Only coordinators can mark notices resolved.");
       lostFoundList[idx].resolved = !lostFoundList[idx].resolved;
       db.ref('tripData/lostFoundList').set(lostFoundList);
       showToast("Notice status updated!");
     }
 
     function deleteLostFoundItem(idx) {
+      const isAdminLoggedIn = document.getElementById('adminPanel') && document.getElementById('adminPanel').style.display === 'block';
+      if (!isAdminLoggedIn) return showToast("Only coordinators can delete notices.");
       if (confirm("Delete this Lost & Found notice?")) {
         lostFoundList.splice(idx, 1);
         db.ref('tripData/lostFoundList').set(lostFoundList);
@@ -2111,19 +2201,28 @@
         container.innerHTML = `<div style="text-align:center; padding:18px; color:var(--text-muted); font-size:0.75rem;">No lost or found items reported yet.</div>`;
         return;
       }
+      const isAdminLoggedIn = document.getElementById('adminPanel') && document.getElementById('adminPanel').style.display === 'block';
+
       container.innerHTML = lostFoundList.map((item, idx) => {
         const isFound = item.type === 'FOUND';
+        const statusBadge = item.resolved 
+          ? `<span style="background:#dcfce7; color:#15803d; font-size:0.68rem; font-weight:800; padding:3px 8px; border-radius:8px;">✅ Completed / Returned</span>`
+          : `<span style="background:#fef3c7; color:#b45309; font-size:0.68rem; font-weight:800; padding:3px 8px; border-radius:8px;">⏳ Pending</span>`;
+
         return `
-          <div style="background:${item.resolved ? '#f1f5f9' : (isFound ? '#ecfdf5' : '#fef2f2')}; border:1px solid ${item.resolved ? '#cbd5e1' : (isFound ? '#86efac' : '#fca5a5')}; border-radius:14px; padding:12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
-            <div style="flex:1;">
+          <div style="background:${item.resolved ? '#f8fafc' : (isFound ? '#ecfdf5' : '#fef2f2')}; border:1px solid ${item.resolved ? '#cbd5e1' : (isFound ? '#86efac' : '#fca5a5')}; border-radius:14px; padding:12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div style="flex:1; min-width:200px;">
               <span style="font-size:0.65rem; font-weight:800; padding:2px 8px; border-radius:8px; background:${isFound ? '#15803d' : '#b91c1c'}; color:white;">${isFound ? '🟢 FOUND' : '🔴 LOST'}</span>
               <span style="font-size:0.68rem; color:var(--text-muted); margin-left:6px;">📍 ${item.location} • 🕒 ${item.time}</span>
-              <div style="font-size:0.82rem; font-weight:700; color:var(--primary-deep); margin-top:4px; ${item.resolved ? 'text-decoration:line-through; opacity:0.6;' : ''}">${item.desc}</div>
+              <div style="font-size:0.82rem; font-weight:700; color:var(--primary-deep); margin-top:4px; ${item.resolved ? 'text-decoration:line-through; opacity:0.65;' : ''}">${item.desc}</div>
+              <div style="margin-top:4px;">${statusBadge}</div>
             </div>
-            <div style="display:flex; gap:6px;">
-              <button type="button" onclick="toggleLostFoundResolve(${idx})" style="border:none; background:${item.resolved ? '#475569' : '#15803d'}; color:white; font-size:0.68rem; font-weight:700; padding:6px 10px; border-radius:8px; cursor:pointer;">${item.resolved ? 'Reopen' : '✓ Done'}</button>
-              <button type="button" onclick="deleteLostFoundItem(${idx})" style="border:none; background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:700; width:28px; height:28px; border-radius:50%; cursor:pointer;">✕</button>
-            </div>
+            ${isAdminLoggedIn ? `
+              <div style="display:flex; gap:6px; align-items:center;">
+                <button type="button" onclick="toggleLostFoundResolve(${idx})" style="border:none; background:${item.resolved ? '#475569' : '#15803d'}; color:white; font-size:0.68rem; font-weight:700; padding:6px 10px; border-radius:8px; cursor:pointer;">${item.resolved ? 'Reopen' : '✓ Mark Done'}</button>
+                <button type="button" onclick="deleteLostFoundItem(${idx})" style="border:none; background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:700; width:28px; height:28px; border-radius:50%; cursor:pointer;">✕</button>
+              </div>
+            ` : ''}
           </div>
         `;
       }).join('');
@@ -2132,7 +2231,6 @@
     // --- SILENT NIGHT WALK ROLL-CALL (PITCH-BLACK DIM OLED VIEW) ---
     function toggleSilentNightWalk() {
       isSilentNightActive = !isSilentNightActive;
-      const card = document.getElementById('scannerMainCard');
       const normalWrapper = document.getElementById('normalHeadcountWrapper');
       const silentBox = document.getElementById('silentNightWalkBox');
       const btn = document.getElementById('silentNightToggleBtn');
@@ -2320,6 +2418,105 @@
       `;
       printWin.document.write(html);
       printWin.document.close();
+    }
+
+    // --- SEAT MANIFEST WITH LOGO, WATERMARK & CLASS CHRONOLOGICAL ORDER (TEACHERS AT LAST) ---
+    function printSeatManifest() {
+      // Sort: Class 1 to 12 -> College Students -> Parents -> Teachers & Leadership at the very end
+      const sortedManifest = [...registrations]
+        .filter(r => r.status === 'CONFIRMED')
+        .sort((a, b) => {
+          const ordA = getClassSortOrder(a.standard);
+          const ordB = getClassSortOrder(b.standard);
+          if (ordA !== ordB) return ordA - ordB;
+          return Number(a.seatNum || 999) - Number(b.seatNum || 999);
+        });
+
+      if (sortedManifest.length === 0) return showToast("No confirmed bookings to print yet.");
+      const reportLogo = cachedBase64Portrait || DIRECT_PORTRAIT_URL;
+      const depInfo = getDepartureTargetTime();
+      const depLabel = depInfo.isSet ? `Departure: ${depInfo.labelTime}` : "Departure: Time as per Itinerary";
+
+      let printWindow = window.open('', '_blank');
+      let html = `
+        <html><head><title>St. Joseph's Catechism Midalam - Seat Manifest</title>
+        <style>
+          @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+          body { font-family: 'Plus Jakarta Sans', sans-serif; padding: 25px; color: #0f172a; position: relative; }
+          .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 440px; height: 440px; opacity: 0.05; z-index: -1; pointer-events: none; border-radius: 50%; object-fit: cover; }
+          .header { text-align: center; border-bottom: 3px solid #0f172a; padding-bottom: 12px; margin-bottom: 18px; }
+          .report-seal { width: 72px; height: 72px; margin: 0 auto 8px; border-radius: 50%; border: 2.5px solid #d4af37; padding: 2px; background: #0f172a; display: block; }
+          .report-seal img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+          h2 { font-family: 'Cinzel', serif; font-size: 1.35rem; margin: 0 0 4px; color: #0f172a; }
+          p { margin: 2px 0 0; font-size: 0.8rem; color: #475569; font-weight: 700; }
+          table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 14px; }
+          th, td { border: 1px solid #cbd5e1; padding: 8px 10px; text-align: left; }
+          th { background: #0f172a !important; color: white !important; font-weight: 700; }
+          .class-head-row td { background: #f1f5f9 !important; font-weight: 800; color: #a16207; font-size: 0.82rem; }
+          .boarded-tag { color: #15803d; font-weight: 800; }
+        </style></head><body onload="window.print()">
+        <img class="watermark" src="${reportLogo}" alt="Watermark Seal">
+        <div class="header">
+          <div class="report-seal"><img src="${reportLogo}" alt="St. Joseph Parish Seal"></div>
+          <h2>St. Joseph's Catechism Midalam</h2>
+          <p>Official Coach Seat Manifest • Catechism Tour (October 19, 2026)</p>
+          <p style="font-size:0.72rem; color:#a16207;">Coach Maskara (Seats 01 to 60) • ${depLabel}</p>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:50px;">S.No</th>
+              <th style="width:70px;">Seat #</th>
+              <th style="width:90px;">Pass ID</th>
+              <th>Passenger Name</th>
+              <th>Gender</th>
+              <th>Class / Designation</th>
+              <th>Parent / Guardian</th>
+              <th>Mobile</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      let currentGroup = "";
+      sortedManifest.forEach((r, idx) => {
+        const isBoarded = !!r.boarded || !!headcountChecked[r.id];
+        const desig = getOfficialDesignation(r);
+        const groupTitle = (r.standard === 'Teacher' || desig.isVip) ? '⭐️ Teachers & Parish Tour Leadership' : (r.standard || 'General Pilgrims');
+
+        if (groupTitle !== currentGroup) {
+          currentGroup = groupTitle;
+          html += `<tr class="class-head-row"><td colspan="9">📁 ${currentGroup}</td></tr>`;
+        }
+
+        html += `
+          <tr>
+            <td>${idx + 1}</td>
+            <td><strong>#${r.seatNum}</strong></td>
+            <td style="font-family:'JetBrains Mono',monospace;">${r.id}</td>
+            <td><strong style="text-transform:uppercase;">${r.name}</strong></td>
+            <td>${r.gender || '-'}</td>
+            <td><strong>${desig.plainRole}</strong></td>
+            <td>${r.parent || '-'}</td>
+            <td>${r.phone || '-'}</td>
+            <td class="${isBoarded ? 'boarded-tag' : ''}">${isBoarded ? '✓ BOARDED' : 'CONFIRMED'}</td>
+          </tr>
+        `;
+      });
+
+      html += `
+          </tbody>
+        </table>
+        <div style="display:flex; justify-content:space-around; margin-top:60px; font-size:0.8rem; font-weight:700; text-align:center;">
+          <div>___________________________<br><strong>Fr. Vijin Bright</strong><br>Tour Head / Parish Priest</div>
+          <div>___________________________<br><strong>Denson & Bensigar</strong><br>Tour Co-Ordinators</div>
+          <div>___________________________<br><strong>Sharjin Alexander (Sha Shyjan)</strong><br>Digital Coordinator</div>
+        </div>
+        </body></html>
+      `;
+      printWindow.document.write(html);
+      printWindow.document.close();
     }
 
     function uploadCustomSealLogo(event) {
@@ -3574,7 +3771,8 @@
       document.getElementById('tPassStandard').innerText = desig.subLine;
       document.getElementById('tPassSeat').innerText = `#${data.seatNum} (${data.seatType || 'Deck'})`;
       const isCurrentlyBoarded = data.boarded || headcountChecked[data.id];
-      document.getElementById('tPassBoardingTime').innerText = isCurrentlyBoarded ? "✓ BOARDED ON COACH" : "05:30 AM, OCT 19";
+      const depInfo = getDepartureTargetTime();
+      document.getElementById('tPassBoardingTime').innerText = isCurrentlyBoarded ? "✓ BOARDED ON COACH" : (depInfo.isSet ? `${depInfo.labelTime}, OCT 19` : "OCT 19, 2026");
       const uniquePayload = generateUniquePassPayload(data.id, data.seatNum, data.phone);
       const qrContainer = document.getElementById('qrcode');
       qrContainer.innerHTML = '';
@@ -3639,40 +3837,15 @@
       }, 300);
     }
 
-    function printSeatManifest() {
-      const confirmedList = registrations.filter(r => r.status === 'CONFIRMED').sort((a,b) => Number(a.seatNum) - Number(b.seatNum));
-      if (confirmedList.length === 0) return showToast("No confirmed bookings to print yet.");
-      let printWindow = window.open('', '_blank');
-      let html = `
-        <html><head><title>St. Joseph's Catechism Midalam - Seat Manifest</title>
-        <style>
-          body { font-family: sans-serif; padding: 20px; }
-          h2 { text-align: center; color: #0f172a; margin-bottom: 4px; }
-          p { text-align: center; font-size: 0.8rem; color: #555; margin-bottom: 18px; }
-          table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-          th, td { border: 1px solid #cbd5e1; padding: 8px 10px; text-align: left; }
-          th { background: #0f172a !important; color: white !important; }
-        </style></head><body onload="window.print()">
-        <h2>St. Joseph's Catechism Midalam - Bus Seat Manifest</h2>
-        <p>Catechism Tour 2026 • Coach Maskara (Seats 01 to 60)</p>
-        <table><thead><tr><th>Seat #</th><th>Pass ID</th><th>Name</th><th>Gender</th><th>Designation / Class</th><th>Phone</th><th>Status</th></tr></thead><tbody>
-      `;
-      confirmedList.forEach(r => {
-        const isBoarded = !!r.boarded || !!headcountChecked[r.id];
-        const desig = getOfficialDesignation(r);
-        html += `<tr><td><strong>#${r.seatNum}</strong></td><td>${r.id}</td><td><strong>${r.name}</strong></td><td>${r.gender || '-'}</td><td><strong>${desig.plainRole}</strong></td><td>${r.phone || '-'}</td><td>${isBoarded ? '✓ BOARDED' : 'LOCKED'}</td></tr>`;
-      });
-      html += `</tbody></table></body></html>`;
-      printWindow.document.write(html);
-      printWindow.document.close();
-    }
-
     // --- BATCH PRINT ALL ID CARDS WITH 4 THEMES & COMMON SEAL ---
     function printAllBoardingPasses() {
       const confirmedList = registrations.filter(r => r.status === 'CONFIRMED').sort((a,b) => Number(a.seatNum) - Number(b.seatNum));
       if (confirmedList.length === 0) return showToast("No confirmed ID Passes to print yet.");
       const sealSvgMarkup = document.querySelector('svg').outerHTML;
       const imgSrcToUse = cachedBase64Portrait || DIRECT_PORTRAIT_URL;
+      const depInfo = getDepartureTargetTime();
+      const depLabel = depInfo.isSet ? `Departure: ${depInfo.labelTime}` : "Departure: Time as per Itinerary";
+
       let printWindow = window.open('', '_blank');
       let html = `
         <html><head><title>St. Joseph's Catechism Midalam - All ID Cards</title>
@@ -3865,6 +4038,7 @@
         document.getElementById('adminAuthBox').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
         renderRoster();
+        renderLostFound(); // Refreshes Lost & Found to unlock admin actions
         document.getElementById('adminInfoManager').style.display = 'block';
         document.getElementById('adminGalleryUploader').style.display = 'block';
         document.getElementById('adminItineraryManager').style.display = 'block';
@@ -3888,6 +4062,7 @@
       renderTransparencyLedger();
       renderGallery();
       renderItinerary();
+      renderLostFound(); // Re-locks Lost & Found to viewer mode
     }
 
     function setFilterCategory(cat, el) {
@@ -3907,10 +4082,11 @@
                           (activeFilter === 'CONFIRMED' && status === 'CONFIRMED') || 
                           (activeFilter === 'PENDING' && status === 'PENDING') || 
                           (activeFilter === 'BOARDED' && isBoarded);
-        card.style.display = (matchesQuery && matchesPill) ? 'block' : 'none';
+        card.style.display = (matchesQuery && matchesPill) ? 'flex' : 'none';
       });
     }
 
+    // --- MOBILE ROSTER RENDERING (CLEAN ALIGNMENT & PADDING) ---
     function renderRoster() {
       const container = document.getElementById('rosterCardsList');
       if (!container) return;
@@ -3927,37 +4103,40 @@
         const isBoarded = !!r.boarded || !!headcountChecked[r.id];
         const hasBalance = Number(r.balance) > 0;
         const desig = getOfficialDesignation(r);
-        const statusText = !isConfirmed ? '⏳ Waiting Approval' : (hasBalance ? `🔒 Locked • Adv (₹${r.balance} due)` : '🔒 Locked • Full Paid');
+        const statusText = !isConfirmed ? '⏳ Waiting Approval' : (hasBalance ? `🔒 Adv (₹${r.balance} due)` : '🔒 Fully Paid');
         const card = document.createElement('div');
         card.className = `student-roster-card ${!isConfirmed ? 'is-pending-card' : ''}`;
         card.setAttribute('data-status', r.status);
         card.setAttribute('data-boarded', isBoarded);
         card.innerHTML = `
           <div class="src-header">
-            <div>
-              <div class="src-name">${r.name} ${desig.isVip ? `<span style="font-size:0.7rem; background:#fef08a; color:#0f172a; padding:2px 8px; border-radius:8px; margin-left:4px; border:1px solid #d4af37;">${desig.roleTitle}</span>` : ''}</div>
+            <div class="src-name-wrap">
+              <div class="src-name">
+                <span>${r.name}</span>
+                ${desig.isVip ? `<span style="font-size:0.65rem; background:#fef08a; color:#0f172a; padding:2px 8px; border-radius:8px; border:1px solid #d4af37;">${desig.roleTitle}</span>` : ''}
+              </div>
               <div class="src-meta">${desig.plainRole} • ${r.gender || 'N/A'} • Parent: ${r.parent || '-'} • 📞 ${r.phone || '-'}</div>
-              <div style="font-size:0.72rem; color:var(--primary-light); font-weight:700; margin-top:3px;">💳 ${r.mode || 'Cash'}: "${r.refId || '-'}" (Paid: ₹${r.paid || 0})</div>
+              <div style="font-size:0.7rem; color:var(--primary-light); font-weight:700; margin-top:2px;">💳 ${r.mode || 'Cash'}: "${r.refId || '-'}" (Paid: ₹${r.paid || 0})</div>
             </div>
             <div class="src-tid-badge">Seat #${r.seatNum} • ${r.id}</div>
           </div>
           <div class="src-details-grid">
-            <div class="src-detail-box"><div class="src-detail-lbl">Seat #</div><div class="src-detail-val">#${r.seatNum}</div></div>
-            <div class="src-detail-box"><div class="src-detail-lbl">Status</div><div class="src-detail-val" style="font-size:0.75rem; color:${isConfirmed?(hasBalance?'#0369a1':'var(--success)'):'var(--warning)'};">${statusText}</div></div>
-            <div class="src-detail-box" onclick="toggleBoardingManual(${originalIdx})" style="cursor:pointer; background:${isBoarded?'#dcfce7':'#f8fafc'};" title="Click to change boarding status (with confirmation)">
-              <div class="src-detail-lbl">Boarding (Tap)</div>
+            <div class="src-detail-box"><div class="src-detail-lbl">Seat</div><div class="src-detail-val">#${r.seatNum}</div></div>
+            <div class="src-detail-box"><div class="src-detail-lbl">Status</div><div class="src-detail-val" style="color:${isConfirmed?(hasBalance?'#0369a1':'var(--success)'):'var(--warning)'};">${statusText}</div></div>
+            <div class="src-detail-box" onclick="toggleBoardingManual(${originalIdx})" style="cursor:pointer; background:${isBoarded?'#dcfce7':'#f8fafc'};" title="Tap to toggle boarding">
+              <div class="src-detail-lbl">Boarding</div>
               <div class="src-detail-val" style="color:${isBoarded?'var(--success)':'var(--text-muted)'};">${isBoarded?'✓ Boarded':'Pending'}</div>
             </div>
           </div>
           <div class="action-boxes-grid">
-            <button class="act-card-btn btn-box-confirm" onclick="openConfirmModal(${originalIdx})"><span>✏️</span><span>${isConfirmed ? 'Edit ID' : 'Approve'}</span></button>
+            <button class="act-card-btn btn-box-confirm" onclick="openConfirmModal(${originalIdx})"><span>✏️</span><span>${isConfirmed ? 'Edit' : 'Approve'}</span></button>
             <button class="act-card-btn btn-box-due" onclick="openDueModal(${originalIdx})"><span>💵</span><span>Due</span></button>
-            <button class="act-card-btn btn-box-pass" onclick="adminGenerateTicket(${originalIdx})"><span>🪪</span><span>ID Card</span></button>
+            <button class="act-card-btn btn-box-pass" onclick="adminGenerateTicket(${originalIdx})"><span>🪪</span><span>Pass</span></button>
             <button class="act-card-btn btn-box-dl" onclick="downloadAdminTicketDirect(${originalIdx})"><span>📥</span><span>Save</span></button>
-            <button class="act-card-btn btn-box-wa" onclick="sendWhatsAppApprovalConfirmation(registrations[${originalIdx}])"><span>📲</span><span>WA Lock</span></button>
+            <button class="act-card-btn btn-box-wa" onclick="sendWhatsAppApprovalConfirmation(registrations[${originalIdx}])"><span>📲</span><span>Lock WA</span></button>
             <button class="act-card-btn btn-box-del" onclick="cancelRegistration(${originalIdx})"><span>🗑</span><span>Delete</span></button>
           </div>
-          ${hasBalance ? `<button class="btn btn-accent" style="margin-top:12px; padding:11px; font-size:0.78rem;" onclick="sendWhatsAppDueReminder(${originalIdx})">💬 Send Due Balance Reminder via WhatsApp</button>` : ''}
+          ${hasBalance ? `<button class="btn btn-accent" style="margin-top:6px; padding:9px; font-size:0.75rem;" onclick="sendWhatsAppDueReminder(${originalIdx})">💬 Send Due Balance Reminder via WhatsApp</button>` : ''}
         `;
         container.appendChild(card);
       });
