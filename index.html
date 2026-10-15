@@ -755,6 +755,13 @@
         <div style="background:#fffdf5; border:1px solid var(--accent-gold); border-radius:14px; padding:12px 14px; margin-bottom:16px; font-size:0.75rem; color:#0f172a; font-weight:600;">
           ⚡ <strong>Instant Seat Hold:</strong> Tap any open seat below to lock it live for 3 minutes. Submit your details & payment reference. Once the Coordinator verifies payment and approves, your seat is permanently locked and your official ID Card Pass unlocks!
         </div>
+
+        <!-- MASTER BOOKING CLOSED BANNER (SHOWS WHEN ADMIN LOCKS BOOKINGS) -->
+        <div id="bookingClosedBanner" style="display:none; background:linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border:2px solid #dc2626; border-radius:18px; padding:24px 16px; text-align:center; margin-bottom:16px;">
+          <div style="font-size:2.4rem; margin-bottom:8px;">🔒</div>
+          <h3 style="font-size:1.1rem; font-weight:800; color:#991b1b; font-family:'Cinzel',serif; margin-bottom:6px;">Seat Bookings Are Currently Closed</h3>
+          <p style="font-size:0.8rem; color:#7f1d1d; font-weight:600;">New registrations have been locked by the Tour Coordinator. Please contact Denson (+91 94864 72814) or Bensigar (+91 94862 70230) for assistance.</p>
+        </div>
         
         <form id="regForm" onsubmit="handleRegistration(event)">
           <div class="form-group">
@@ -1070,7 +1077,7 @@
         </div>
         <div id="boardingUnlockedContent" style="display:none;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-            <span style="font-size:0.78rem; font-weight:800; color:var(--success);">⚡ Zero-Delay Continuous Scanner Ready</span>
+            <span style="font-size:0.78rem; font-weight:800; color:var(--success);">⚡ 60 FPS Lightning-Fast Continuous Scanner Ready</span>
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
               <button type="button" id="voiceToggleBtn" onclick="toggleVoiceReadout()" style="border:1px solid var(--primary-light); background:#eff6ff; color:var(--primary-light); font-size:0.7rem; font-weight:800; padding:6px 10px; border-radius:10px; cursor:pointer;">🔊 Voice: ON</button>
               <button type="button" onclick="resetHeadcount()" style="border:1px solid #ef4444; background:#fee2e2; color:#b91c1c; font-size:0.7rem; font-weight:800; padding:6px 10px; border-radius:10px; cursor:pointer;">🔄 New Stop Roll-Call</button>
@@ -1213,12 +1220,31 @@
             </div>
           </div>
 
+          <!-- MASTER BOARDING SWITCH -->
           <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center;">
             <div>
               <label style="color: var(--primary-deep); margin-bottom: 3px;">📷 Master Boarding Switch</label>
               <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600;" id="boardingSwitchStatusDesc">Status: Locked for public</span>
             </div>
             <button class="btn btn-accent" style="width: auto; padding: 10px 18px; font-size: 0.78rem;" id="boardingSwitchBtn" onclick="toggleBoardingMasterSwitch()">Enable Boarding</button>
+          </div>
+
+          <!-- MASTER BOOKING LOCK SWITCH -->
+          <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <label style="color: var(--primary-deep); margin-bottom: 3px;">🚫 Master Booking Lock Switch</label>
+              <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600;" id="bookingLockStatusDesc">Status: Open for Registration</span>
+            </div>
+            <button class="btn btn-danger" style="width: auto; padding: 10px 18px; font-size: 0.78rem;" id="bookingLockBtn" onclick="toggleBookingMasterLock()">Lock Bookings</button>
+          </div>
+
+          <!-- ONE-CLICK OFFICIAL PARISH REPORT -->
+          <div style="background:linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); border:2px solid var(--accent-gold); border-radius:16px; padding:16px; margin-bottom:18px; color:white; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+              <div style="font-size:0.65rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:1px;">📄 Official Parish Financial Audit</div>
+              <div style="font-size:0.95rem; font-weight:800; font-family:'Cinzel',serif; margin-top:2px;">Income, Sponsors & Expenses Report</div>
+            </div>
+            <button type="button" class="btn btn-accent" style="width:auto; padding:10px 18px; font-size:0.78rem;" onclick="generateOfficialParishReport()">🖨️ 1-Click Report</button>
           </div>
 
           <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 18px;">
@@ -1530,8 +1556,7 @@
   </div>
 
   <div id="toast"></div>
-
-  <script>
+<script>
     // --- Firebase Cloud Configuration (kerala-trip-2026-8a0f1) ---
     const firebaseConfig = {
       apiKey: "AIzaSyCb-UG0nIjjPYTQt025JfbIXOHOxhd143Q",
@@ -1599,6 +1624,7 @@
     ];
     let busGps = { lat: null, lng: null, time: null };
     let isBoardingActive = false;
+    let isBookingLocked = false;
     let pitStopEndTime = null;
     let pitStopAlerted = false;
     let selectedPhotoDataUrl = "";
@@ -1779,6 +1805,7 @@
       }
       busGps = serverData.busGps || { lat: null, lng: null, time: null };
       isBoardingActive = !!serverData.isBoardingActive;
+      isBookingLocked = !!serverData.isBookingLocked;
 
       if (serverData.pitStopEndTime) {
         pitStopEndTime = Number(serverData.pitStopEndTime);
@@ -1806,6 +1833,7 @@
         renderItinerary();
         updateQuickCountBreakdown();
         updateBoardingSwitchUI();
+        updateBookingLockUI();
         populateEveryoneLocator();
         populateSwapSeatsDropdowns();
 
@@ -1822,6 +1850,135 @@
         }
       });
     });
+
+    function toggleBookingMasterLock() {
+      isBookingLocked = !isBookingLocked;
+      db.ref('tripData/isBookingLocked').set(isBookingLocked);
+      updateBookingLockUI();
+      showToast(isBookingLocked ? "🔒 Public Seat Bookings LOCKED!" : "🟢 Public Seat Bookings OPENED!");
+    }
+
+    function updateBookingLockUI() {
+      const btn = document.getElementById('bookingLockBtn');
+      const desc = document.getElementById('bookingLockStatusDesc');
+      const regForm = document.getElementById('regForm');
+      const closedBanner = document.getElementById('bookingClosedBanner');
+
+      if (btn && desc) {
+        btn.innerText = isBookingLocked ? "Unlock Bookings" : "Lock Bookings";
+        btn.style.background = isBookingLocked ? "var(--success)" : "var(--danger)";
+        btn.style.color = "#ffffff";
+        desc.innerText = isBookingLocked ? "Status: LOCKED (Public cannot book)" : "Status: Open for Registration";
+      }
+      if (regForm && closedBanner) {
+        if (isBookingLocked) {
+          regForm.style.display = 'none';
+          closedBanner.style.display = 'block';
+        } else {
+          closedBanner.style.display = 'none';
+          if (document.getElementById('bookingSuccessCard')?.style.display !== 'block') {
+            regForm.style.display = 'block';
+          }
+        }
+      }
+    }
+
+    function generateOfficialParishReport() {
+      const confirmed = registrations.filter(r => r.status === 'CONFIRMED');
+      const ticketIncome = confirmed.reduce((sum, r) => sum + (Number(r.paid) || 0), 0);
+      const totalSponsors = sponsorsList.reduce((sum, s) => sum + (Number(s.amount) || 0), 0);
+      const totalExpenses = expensesList.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+      const totalRevenue = ticketIncome + totalSponsors;
+      const netBalance = totalRevenue - totalExpenses;
+
+      const juniorPax = confirmed.filter(r => ['Class 1', 'Class 2', 'Class 3'].includes(r.standard));
+      const seniorPax = confirmed.filter(r => !['Class 1', 'Class 2', 'Class 3'].includes(r.standard));
+      const juniorIncome = juniorPax.reduce((sum, r) => sum + (Number(r.paid) || 0), 0);
+      const seniorIncome = seniorPax.reduce((sum, r) => sum + (Number(r.paid) || 0), 0);
+
+      let printWin = window.open('', '_blank');
+      let html = `
+        <html><head><title>Official Tour Financial Report - St. Joseph's Catechism Midalam</title>
+        <style>
+          @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+          body { font-family: 'Plus Jakarta Sans', sans-serif; padding: 30px; color: #0f172a; max-width: 820px; margin: 0 auto; }
+          .header { text-align: center; border-bottom: 3px solid #0f172a; padding-bottom: 14px; margin-bottom: 22px; }
+          h1 { font-family: 'Cinzel', serif; font-size: 1.5rem; margin: 0 0 4px 0; color: #0f172a; }
+          .sub { font-size: 0.85rem; color: #475569; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+          .summary-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+          .s-card { border: 1.5px solid #cbd5e1; border-radius: 12px; padding: 12px; text-align: center; background: #f8fafc; }
+          .s-card h4 { margin: 0; font-size: 1.2rem; color: #0f172a; }
+          .s-card p { margin: 4px 0 0; font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; }
+          h3 { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; color: #0f172a; border-left: 4px solid #d4af37; padding-left: 8px; margin: 22px 0 10px; }
+          table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin-bottom: 18px; }
+          th, td { border: 1px solid #cbd5e1; padding: 9px 12px; text-align: left; }
+          th { background: #0f172a !important; color: #ffffff !important; font-weight: 700; }
+          .amt { text-align: right; font-weight: 700; }
+          .total-row td { background: #f1f5f9 !important; font-weight: 800; font-size: 0.9rem; }
+          .net-box { background: #ecfdf5; border: 2px solid #15803d; border-radius: 12px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem; font-weight: 800; color: #064e3b; margin-top: 20px; }
+          .signs { display: flex; justify-content: flex-end; margin-top: 75px; text-align: center; font-size: 0.85rem; font-weight: 700; }
+        </style></head><body onload="window.print()">
+        <div class="header">
+          <h1>St. Joseph's Catechism Midalam</h1>
+          <div class="sub">Catechism Tour 2026 (Oct 19, 2026) • Official Income & Expense Statement</div>
+        </div>
+
+        <div class="summary-cards">
+          <div class="s-card"><h4>₹${ticketIncome.toLocaleString()}</h4><p>Ticket Income (${confirmed.length} Pax)</p></div>
+          <div class="s-card"><h4>₹${totalSponsors.toLocaleString()}</h4><p>Total Sponsorships</p></div>
+          <div class="s-card"><h4>₹${totalExpenses.toLocaleString()}</h4><p>Total Expenses</p></div>
+          <div class="s-card"><h4 style="color:${netBalance >= 0 ? '#15803d' : '#b91c1c'};">₹${netBalance.toLocaleString()}</h4><p>Net Balance</p></div>
+        </div>
+
+        <h3>1. Ticket Collection Summary</h3>
+        <table>
+          <thead><tr><th>Category</th><th>Confirmed Count</th><th class="amt">Amount Received (₹)</th></tr></thead>
+          <tbody>
+            <tr><td>Junior Catechism (Classes 1 - 3)</td><td>${juniorPax.length}</td><td class="amt">₹${juniorIncome.toLocaleString()}</td></tr>
+            <tr><td>Seniors, College, Parents & Teachers</td><td>${seniorPax.length}</td><td class="amt">₹${seniorIncome.toLocaleString()}</td></tr>
+            <tr class="total-row"><td colspan="2">Total Amount Received Through Tickets</td><td class="amt">₹${ticketIncome.toLocaleString()}</td></tr>
+          </tbody>
+        </table>
+
+        <h3>2. Sponsors & Benefactors Details</h3>
+        <table>
+          <thead><tr><th>#</th><th>Sponsor Name / Family</th><th class="amt">Contribution (₹)</th></tr></thead>
+          <tbody>
+            ${sponsorsList.length === 0 
+              ? `<tr><td colspan="3" style="text-align:center; color:#64748b;">No sponsorships recorded.</td></tr>` 
+              : sponsorsList.map((s, idx) => `<tr><td>${idx + 1}</td><td><strong>${s.name}</strong></td><td class="amt">₹${Number(s.amount).toLocaleString()}</td></tr>`).join('')}
+            <tr class="total-row"><td colspan="2">Total Amount Received From Sponsors</td><td class="amt">₹${totalSponsors.toLocaleString()}</td></tr>
+          </tbody>
+        </table>
+
+        <h3>3. Tour Expenses Breakdown (Bus, Tea, Entrance Fee, etc.)</h3>
+        <table>
+          <thead><tr><th>#</th><th>Expense Particulars</th><th class="amt">Cost (₹)</th></tr></thead>
+          <tbody>
+            ${expensesList.length === 0 
+              ? `<tr><td colspan="3" style="text-align:center; color:#64748b;">No expenses recorded.</td></tr>` 
+              : expensesList.map((e, idx) => `<tr><td>${idx + 1}</td><td><strong>${e.desc}</strong></td><td class="amt">₹${Number(e.amount).toLocaleString()}</td></tr>`).join('')}
+            <tr class="total-row"><td colspan="2">Total Tour Expenses</td><td class="amt">₹${totalExpenses.toLocaleString()}</td></tr>
+          </tbody>
+        </table>
+
+        <div class="net-box">
+          <span>FINAL NET BALANCE (Total Income ₹${totalRevenue.toLocaleString()} − Total Expenses ₹${totalExpenses.toLocaleString()})</span>
+          <span>₹${netBalance.toLocaleString()}</span>
+        </div>
+
+        <div class="signs">
+          <div>
+            ___________________________<br>
+            <strong>Denson & Bensigar</strong><br>
+            Tour Co-Ordinators
+          </div>
+        </div>
+        </body></html>
+      `;
+      printWin.document.write(html);
+      printWin.document.close();
+    }
 
     function uploadCustomSealLogo(event) {
       const file = event.target.files[0];
@@ -1905,7 +2062,8 @@
         galleryList: galleryList,
         itineraryList: itineraryList,
         busGps: busGps,
-        isBoardingActive: isBoardingActive
+        isBoardingActive: isBoardingActive,
+        isBookingLocked: isBookingLocked
       });
     }
 
@@ -2470,19 +2628,31 @@
       }
     }
 
+    const ULTRA_FAST_SCAN_CONFIG = {
+      fps: 60,
+      qrbox: (vw, vh) => {
+        const minEdge = Math.min(vw, vh);
+        const boxSize = Math.floor(minEdge * 0.78);
+        return { width: boxSize, height: boxSize };
+      },
+      aspectRatio: 1.0,
+      disableFlip: false,
+      experimentalFeatures: { useBarCodeDetectorIfSupported: true }
+    };
+
     function startInlineScanner() {
       document.getElementById('inlineScannerBox').style.display = 'block';
       document.getElementById('startScanBtn').style.display = 'none';
       document.getElementById('stopScanBtn').style.display = 'flex';
       document.getElementById('inlineTorchBtn').style.display = 'flex';
       const resultBox = document.getElementById('inlineScanResult');
-      resultBox.innerText = "⚡ High-Speed Scanner Active — Point at ID Card QR";
+      resultBox.innerText = "⚡ 60 FPS Lightning Scanner Active — Point at any QR Pass";
       resultBox.style.background = "#f8fafc";
       resultBox.style.color = "var(--primary-deep)";
       if (!inlineScanner) inlineScanner = new Html5Qrcode("inlineScannerTarget");
       inlineScanner.start(
         { facingMode: "environment" },
-        { fps: 30, qrbox: { width: 250, height: 250 }, disableFlip: false },
+        ULTRA_FAST_SCAN_CONFIG,
         (decodedText) => processScanCode(decodedText, resultBox),
         () => {}
       ).catch(() => {
@@ -2507,11 +2677,11 @@
     function openScannerModal() {
       document.getElementById('scannerModal').style.display = 'flex';
       const resultBox = document.getElementById('scannerResult');
-      resultBox.innerText = "⚡ Instant Scanner Active...";
+      resultBox.innerText = "⚡ 60 FPS Instant Scanner Active...";
       if (!modalScanner) modalScanner = new Html5Qrcode("scannerTarget");
       modalScanner.start(
         { facingMode: "environment" },
-        { fps: 30, qrbox: { width: 230, height: 230 }, disableFlip: false },
+        ULTRA_FAST_SCAN_CONFIG,
         (decodedText) => processScanCode(decodedText, resultBox),
         () => {}
       ).catch(() => {
@@ -2889,6 +3059,8 @@
         
         if (isBooked) {
           seatWrapper.onclick = () => showSeatInfo(occupant);
+        } else if (isBookingLocked) {
+          seatWrapper.onclick = () => showToast("🔒 Seat bookings are currently locked by the Coordinator.");
         } else if (isHeldByOther) {
           seatWrapper.onclick = () => showToast(`Seat #${seatNo} is currently being selected by another user!`);
         } else {
@@ -2905,6 +3077,7 @@
     }
 
     function selectSeat(seatNo, seatType) {
+      if (isBookingLocked) return showToast("🔒 Seat bookings are currently locked!");
       const prevSeat = document.getElementById('selectedSeat').value;
       if (prevSeat && prevSeat !== seatNo) {
         db.ref(`tripData/seatHolds/${prevSeat}`).remove();
@@ -2934,6 +3107,7 @@
 
     async function handleRegistration(e) {
       e.preventDefault();
+      if (isBookingLocked) return showToast("🔒 Seat bookings are locked by the Coordinator!");
       const submitBtn = document.getElementById('submitBtn');
       const selectedSeat = document.getElementById('selectedSeat').value;
       if (!selectedSeat) return showToast("Please tap an available 3D seat on the coach map");
@@ -2991,10 +3165,10 @@
 
     function resetBookingFormToDefault() {
       document.getElementById('regForm').reset();
-      document.getElementById('regForm').style.display = 'block';
       document.getElementById('bookingSuccessCard').style.display = 'none';
       document.querySelectorAll('.seat-3d').forEach(s => s.classList.remove('selected'));
       document.getElementById('selectedSeat').value = '';
+      updateBookingLockUI();
       togglePaymentType();
       toggleUpiBox();
     }
