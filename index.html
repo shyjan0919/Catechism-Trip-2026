@@ -1111,13 +1111,24 @@
     </div>
   </header>
 
+  <!-- ROLE ACCESS BAR -->
+  <div id="roleAccessBar" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:8px 16px;background:#f8f3e4;border-bottom:1px solid #e5b83f;font-size:12px;">
+    <div style="font-weight:800;color:#063b27;">🔐 Portal Access: <span id="currentRoleLabel">PUBLIC VIEW</span></div>
+    <div style="display:flex;gap:7px;flex-wrap:wrap;">
+      <button type="button" onclick="setPublicAccess()" style="border:1px solid #063b27;border-radius:8px;padding:7px 11px;background:#fff;color:#063b27;font-weight:800;">🌐 Public</button>
+      <button type="button" onclick="requestTeacherAccess()" style="border:1px solid #b45309;border-radius:8px;padding:7px 11px;background:#fff8e5;color:#805d00;font-weight:800;">👩‍🏫 Teacher Login</button>
+      <button type="button" onclick="openAdminLogin()" style="border:1px solid #063b27;border-radius:8px;padding:7px 11px;background:#063b27;color:#f8e4a0;font-weight:800;">🔑 Admin Login</button>
+      <button type="button" id="roleLogoutBtn" onclick="setPublicAccess()" style="display:none;border:1px solid #b91c1c;border-radius:8px;padding:7px 11px;background:#fff;color:#b91c1c;font-weight:800;">Logout</button>
+    </div>
+  </div>
+
   <!-- STICKY NAVIGATION BAR -->
   <nav class="nav" id="stickyNavBar">
     <button id="navBtn_home" class="active-nav" onclick="openAppHome()">⌂ Home</button>
     <button id="navBtn_bookingTab" onclick="switchTab('bookingTab')">🎟 Bookings</button>
     <button id="navBtn_manifestTab" onclick="switchTab('manifestTab')">▣ Digital Passes</button>
     <button id="navBtn_itineraryTab" onclick="switchTab('itineraryTab')">🗺 Itinerary</button>
-    <button id="navBtn_infoTab" onclick="switchTab('infoTab')">📢 Live Updates</button>
+    <button id="navBtn_infoTab" class="admin-only" onclick="switchTab('infoTab')" style="display:none;">📢 Live Updates & Finance</button>
     <button id="navBtn_memoryWallTab" onclick="switchTab('memoryWallTab')">📸 Memory Wall</button>
     <button id="navBtn_galleryTab" onclick="switchTab('galleryTab')">🖼 Gallery</button>
     <button id="navBtn_dashboardTab" onclick="switchTab('dashboardTab')">⌖ Travel Info</button>
@@ -1156,8 +1167,8 @@
             </div>
           </div>
 
-          <!-- ROW 2: 5 STATS CARDS ROW -->
-          <section class="stats">
+          <!-- Home dashboard statistic cards removed: use the navigation bar for portal sections. -->
+          <section class="stats" style="display:none !important;">
             <article class="stat dark-green-stat" onclick="switchTab('bookingTab')">
               <div class="label">👥 Total Bookings</div>
               <div class="value" id="homeStatBookings">0</div>
@@ -1168,25 +1179,25 @@
               <div class="value" id="homeStatBoarded">0 / 60</div>
               <div class="sub">Passengers</div>
             </article>
-            <article class="stat gold" onclick="switchTab('infoTab')">
+            <article class="stat financial-only gold" onclick="switchTab('infoTab')">
               <div class="label">₹ Total Collection</div>
               <div class="value" id="homeStatCollection">₹0</div>
               <div class="sub">Amount Collected</div>
             </article>
-            <article class="stat red" onclick="switchTab('infoTab')">
+            <article class="stat financial-only red" onclick="switchTab('infoTab')">
               <div class="label">👛 Total Expenses</div>
               <div class="value" id="homeStatExpenses">₹0</div>
               <div class="sub">Amount Spent</div>
             </article>
-            <article class="stat green" onclick="switchTab('infoTab')">
+            <article class="stat financial-only green" onclick="switchTab('infoTab')">
               <div class="label">💚 Balance</div>
               <div class="value" id="homeStatBalance">₹0</div>
               <div class="sub">Remaining Amount</div>
             </article>
           </section>
 
-          <!-- ROW 3: 8 FEATURE TILES WITH GOLD CHEVRONS -->
-          <section class="features">
+          <!-- Home shortcut panels removed: the navigation bar is the primary navigation. -->
+          <section class="features" style="display:none !important;">
             <button class="feature" onclick="switchTab('manifestTab')">
               <span class="ico">🎟️</span>
               <span class="feature-txt"><b>Digital Passes</b><small>View or download your boarding pass</small></span>
@@ -1232,7 +1243,7 @@
           <!-- FLIGHT-MAP LIVE DIGITAL TOUR TIMELINE -->
           <div class="flight-timeline-strip">
             <div class="fts-head">
-              <div class="fts-title"><span>✈️ Flight-Map Live Route Progress</span></div>
+              <div class="fts-title"><span>🗺️ Route Progress</span></div>
               <button type="button" onclick="switchTab('itineraryTab')" style="border:1px solid var(--gold); background:#fff8e5; color:#805d00; padding:4px 10px; border-radius:8px; font-size:11.5px; font-weight:800;">Update Stops →</button>
             </div>
             <div class="htc-stepper" id="homeTimelineStepper"></div>
@@ -1242,7 +1253,7 @@
           <section class="panel ann">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
               <h3 style="margin:0;">📣 Latest Announcements</h3>
-              <button type="button" onclick="switchTab('infoTab')" style="border:0; background:#edf8ee; color:var(--g); padding:5px 10px; border-radius:8px; font-size:11.5px; font-weight:800;">Post / View All</button>
+              <button type="button" onclick="switchTab('infoTab')" class="admin-only" style="display:none;border:0; background:#edf8ee; color:var(--g); padding:5px 10px; border-radius:8px; font-size:11.5px; font-weight:800;">Manage Updates</button>
             </div>
             <div id="homeAnnouncementsContainer">
               <div class="notice">
@@ -1258,6 +1269,14 @@
                 <span class="tag" style="background:#dcfce7;color:#15803d;">New</span>
               </div>
             </div>
+            <form id="homeAdminUpdateForm" onsubmit="postHomeUpdate(event)" class="admin-only" style="display:none; margin-top:14px; padding:14px; background:#fbf8ee; border:1px solid var(--gold); border-radius:12px;">
+              <label for="homeAdminUpdateText">🔐 Admin: Post a Home Page Update</label>
+              <textarea id="homeAdminUpdateText" rows="2" placeholder="Share an important tour update with everyone..." required></textarea>
+              <label for="homeAdminUpdatePhoto" style="margin-top:8px;">Optional: Attach a photo to this homepage update</label>
+              <input type="file" id="homeAdminUpdatePhoto" accept="image/*" onchange="handleHomeUpdatePhotoSelect(event)" style="padding:8px;background:#fff;">
+              <small id="homeAdminPhotoStatus" style="display:block;color:var(--text-muted);margin-top:4px;">Photo is optional.</small>
+              <button type="submit" class="btn btn-primary" style="margin-top:8px;">📣 Publish Home Update</button>
+            </form>
           </section>
         </div>
 
@@ -1383,7 +1402,10 @@
     <div id="dashboardTab" class="tab-content">
       <div class="card">
         <div class="card-title">📊 Travel Info & Executive Trip Dashboard</div>
-        
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px;">
+          <button type="button" class="btn btn-accent" style="width:auto;padding:10px 14px;" id="travelPettyCashBtn" onclick="openStaffExpenseModal()">🧾 Petty Cash / Upload Bill</button>
+          <button type="button" class="btn btn-secondary" style="width:auto;padding:10px 14px;" onclick="switchTab('infoTab')">📋 View Vouchers & Status</button>
+        </div>
         <div class="bento-dashboard-grid">
           <div class="bento-card bento-seats">
             <div class="bento-lbl"><span>Confirmed & Locked Seats</span> <span>Coach Maskara</span></div>
@@ -1397,12 +1419,12 @@
             <div class="bento-sub"><span id="kpiAbsentSub" style="color:var(--danger); font-weight:700;">Absent/No-Show: 0</span> <span id="kpiBoardedPct">0%</span></div>
             <div class="progress-bar-bg"><div class="progress-bar-fill bg-success" id="barBoarded" style="width:0%;"></div></div>
           </div>
-          <div class="bento-card bento-funds">
+          <div class="bento-card bento-funds financial-only">
             <div class="bento-lbl"><span>Total Funds Realized</span></div>
             <div class="bento-val" id="kpiPaid">₹0</div>
             <div class="bento-sub"><span>Verified Tickets + Sponsors</span> <span id="kpiRealizedPct">0 / 60 Seats</span></div>
           </div>
-          <div class="bento-card bento-status">
+          <div class="bento-card bento-status financial-only">
             <div class="bento-lbl"><span>Payment & Approval Status</span></div>
             <div class="bento-val" style="font-size:18px; color:var(--g);" id="kpiPayBreakdown">Full: 0 | Adv: 0</div>
             <div class="bento-sub"><span id="kpiPendingCount" style="color: var(--warning); font-weight: 700;">0 Waiting Approval</span> <span>Hold</span></div>
@@ -1412,7 +1434,7 @@
         <div class="chips-grid">
           <div class="chip-box"><span>BOYS & GIRLS CONFIRMED</span><div id="chipGenderSplit" style="margin-top:4px;">Boys: 0 | Girls: 0</div></div>
           <div class="chip-box"><span>JUNIORS (1-3) & SENIORS</span><div id="chipJunior" style="margin-top:4px;">Jr: 0 | Sr: 0</div></div>
-          <div class="chip-box"><span>COLLECTION CHANNEL</span><div id="chipPayChannels" style="margin-top:4px;">UPI: ₹0 | Cash: ₹0</div></div>
+          <div class="chip-box financial-only"><span>COLLECTION CHANNEL</span><div id="chipPayChannels" style="margin-top:4px;">UPI: ₹0 | Cash: ₹0</div></div>
           <div class="chip-box"><span>TOTAL PASSENGERS</span><div id="chipTotalPax" style="margin-top:4px;">0 Total</div></div>
         </div>
         <div class="guidelines-box">
@@ -1682,6 +1704,11 @@
             <label>Your Memory or Blessing</label>
             <textarea id="memMessageText" rows="2" placeholder="Write your tour memory, blessing, or thank you message..." required></textarea>
           </div>
+          <div class="form-group" style="margin-bottom:10px;">
+            <label>Optional: Upload a Memory Photo</label>
+            <input type="file" id="memPhotoFile" accept="image/*" onchange="handleMemoryPhotoSelect(event)" style="padding:8px;background:#fff;">
+            <small style="color:var(--text-muted);">You can post a memory without a photo.</small>
+          </div>
           <button type="submit" class="btn btn-accent">✨ Post to Digital Memory Wall</button>
         </form>
         <div class="memory-wall-grid" id="memoryWallContainer">Loading memories...</div>
@@ -1730,6 +1757,7 @@
           <button type="button" class="btn btn-accent" style="width:auto; margin:0 auto; padding:8px 16px; font-size:12px;" onclick="shareParentSafeLink()">📲 Share Parent Tracking Link via WhatsApp</button>
         </div>
 
+        <section class="financial-only" id="financialLedgerSection">
         <label>Automatic Financial Ledger</label>
         <div class="ledger-summary-grid">
           <div class="ledger-box"><div class="ledger-lbl">Ticket Income</div><div class="ledger-val" id="ledgerIncome">₹0</div></div>
@@ -1741,7 +1769,10 @@
         <div style="margin-top: 20px; background: #fffdf5; border: 1.5px solid var(--gold); border-radius: 16px; padding: 16px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
             <h4 style="font-size: 14.5px; font-weight: 800; color: #805d00;">🧾 Petty Cash Expenses & Official Vouchers</h4>
-            <button type="button" onclick="openStaffExpenseModal()" class="btn btn-accent" style="width:auto; padding:6px 12px; font-size:11.5px;">+ Staff Log Voucher</button>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button type="button" onclick="printAllExpenseVouchers()" class="btn btn-secondary" style="width:auto; padding:6px 10px; font-size:11.5px;">🖨️ Print Vouchers (Compact)</button>
+              <button type="button" onclick="openStaffExpenseModal()" class="btn btn-accent" style="width:auto; padding:6px 12px; font-size:11.5px;">+ Staff Log Voucher</button>
+            </div>
           </div>
           <div id="publicExpensesList" style="font-size:13px; color:var(--text-muted);">Loading expense vouchers...</div>
         </div>
@@ -1750,6 +1781,7 @@
           <label style="margin-bottom: 10px;">Sponsors & Benefactors</label>
           <div id="publicSponsorsList" style="font-size:13px; color:var(--text-muted); margin-bottom:18px;">Loading sponsors...</div>
         </div>
+        </section>
         <div style="margin-top: 20px;">
           <label style="margin-bottom: 10px;">Live Tour Timeline & Announcements</label>
           <div id="publicFeedList">Loading live updates...</div>
@@ -1988,10 +2020,16 @@
             <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
               <div>
                 <div style="font-size:14.5px; font-weight:800; color:#805d00;">🔔 <span id="pendingBannerCount">0</span> Item(s) Awaiting Your Verification!</div>
-                <div style="font-size:12px; color:#92400e; font-weight:600; margin-top:2px;">Click "View Pending Queue" to approve seats or check Live Updates for expense vouchers.</div>
+                <div style="font-size:12px; color:#92400e; font-weight:600; margin-top:2px;">Teacher posts and petty cash vouchers appear here as live alerts. Use the Live Updates & Finance tab to review and approve submissions.</div>
               </div>
               <button class="btn btn-accent" style="width:auto; padding:8px 14px; font-size:12px;" onclick="openAdminGroupView('PENDING')">View Pending Queue</button>
             </div>
+          </div>
+
+          <div class="admin-panel-section" style="margin-bottom:16px;">
+            <div class="aps-header"><span>🔔 Teacher Submissions & Notifications</span><span id="adminNotificationStatus" style="font-size:11px;">Live</span></div>
+            <p style="font-size:12px;color:var(--text-muted);padding:10px 12px;">New teacher memory posts and petty cash submissions trigger live alerts while the Admin portal is open. Pending petty cash vouchers are available in Live Updates & Finance for approval.</p>
+            <button type="button" class="btn btn-primary" onclick="switchTab('infoTab')">Review Updates & Petty Cash →</button>
           </div>
 
           <!-- ADMIN PANEL 1: 3 DEDICATED GROUP PANELS -->
@@ -2142,9 +2180,9 @@
         <h3 style="font: bold 18px Georgia, serif; color: var(--g);">🧾 Staff Petty Cash Voucher</h3>
         <button onclick="closeStaffExpenseModal()" style="border:none;background:none;font-size:20px;color:var(--text-muted);">✕</button>
       </div>
-      <p style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">Authorized Coordinators & Teachers only. Enter your secret Staff PIN to generate a petty cash voucher and notify the Admin.</p>
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">Teacher access is required. Enter your name, expense details and optional bill photo; your submission goes to Admin for approval.</p>
       <form onsubmit="submitStaffExpense(event)">
-        <div class="form-group"><label>Authorized Staff Passkey</label><input type="password" id="staffPinInput" placeholder="Enter Secret Staff PIN" autocomplete="off" required maxlength="12"></div>
+        <div class="form-group" id="staffPinGroup" style="display:none;"><label>Authorized Staff Passkey</label><input type="password" id="staffPinInput" placeholder="Teacher access verified" autocomplete="off" maxlength="12"></div>
         <div class="form-group"><label>Logged By (Teacher / Coordinator Name)</label><input type="text" id="staffSubmitterName" placeholder="e.g. Denson / Teacher Mary" required></div>
         <div class="form-group"><label>Expense Particulars</label><input type="text" id="staffExpDesc" placeholder="e.g. Mineral water cans / Tea & Snacks" required></div>
         <div class="form-group"><label>Amount Spent (₹)</label><input type="number" id="staffExpAmount" placeholder="e.g. 350" required min="1"></div>
@@ -2182,8 +2220,8 @@
           <img id="vchAttachedPhotoImg" src="" alt="Attached Receipt" style="max-height:150px; max-width:100%; border-radius:10px; border:1.5px solid #cbd5e1; object-fit:contain;">
         </div>
         <div style="display:flex; justify-content:space-between; margin-top:18px; padding-top:10px; font-size:11px; font-weight:700; color:#475569; text-align:center;">
-          <div>_____________________<br><strong>Denson</strong><br>Tour Co-Ordinator</div>
-          <div>_____________________<br><strong>Bensigar</strong><br>Tour Co-Ordinator</div>
+          <div>_____________________<br><strong>Signature</strong></div>
+          <div>_____________________<br><strong>Verified By</strong></div>
         </div>
       </div>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
@@ -2397,6 +2435,91 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
+    // UI access layers. IMPORTANT: Firebase Realtime Database Rules must also enforce
+    // authorization; client-side role checks alone are not a security boundary.
+    let currentAccessRole = 'public';
+    const TEACHER_PASSKEY = '2026';
+    const ROLE_SESSION_KEY = 'midalam_tour_access_role';
+
+    function saveRoleSession(role) {
+      try {
+        if (role === 'teacher' || role === 'admin') sessionStorage.setItem(ROLE_SESSION_KEY, role);
+        else sessionStorage.removeItem(ROLE_SESSION_KEY);
+      } catch (e) { /* sessionStorage may be unavailable in restricted browser contexts */ }
+    }
+
+    function restoreRoleSession() {
+      try {
+        const savedRole = sessionStorage.getItem(ROLE_SESSION_KEY);
+        if (savedRole === 'teacher' || savedRole === 'admin') currentAccessRole = savedRole;
+      } catch (e) { currentAccessRole = 'public'; }
+    }
+
+    function updateRoleUI() {
+      document.body.classList.remove('role-public','role-teacher','role-admin');
+      document.body.classList.add('role-' + currentAccessRole);
+      const label = document.getElementById('currentRoleLabel');
+      const logout = document.getElementById('roleLogoutBtn');
+      if (label) label.textContent = currentAccessRole === 'admin' ? 'ADMIN — FULL ACCESS' : currentAccessRole === 'teacher' ? 'TEACHER — LIMITED ACCESS' : 'PUBLIC VIEW';
+      if (logout) logout.style.display = currentAccessRole === 'public' ? 'none' : 'inline-block';
+      const liveNav = document.getElementById('navBtn_infoTab');
+      if (liveNav) liveNav.style.display = currentAccessRole === 'admin' ? 'inline-block' : 'none';
+      document.querySelectorAll('.financial-only').forEach(el => { el.style.display = currentAccessRole === 'public' ? 'none' : ''; });
+      document.querySelectorAll('.admin-only').forEach(el => { el.style.display = currentAccessRole === 'admin' ? '' : 'none'; });
+      document.querySelectorAll('button[onclick="openStaffExpenseModal()"]').forEach(pettyBtn => { pettyBtn.style.display = currentAccessRole === 'public' ? 'none' : 'inline-flex'; });
+      const adminManager = document.getElementById('adminInfoManager');
+      if (adminManager) adminManager.style.display = currentAccessRole === 'admin' ? 'block' : 'none';
+      const adminGallery = document.getElementById('adminGalleryUploader');
+      if (adminGallery) adminGallery.style.display = currentAccessRole === 'admin' ? 'block' : 'none';
+      const adminItinerary = document.getElementById('adminItineraryManager');
+      if (adminItinerary) adminItinerary.style.display = currentAccessRole === 'admin' ? 'block' : 'none';
+      renderTransparencyLedger();
+      renderGallery();
+      renderItinerary();
+      renderMemoryWall();
+      renderLostFound();
+    }
+
+    function setPublicAccess() {
+      currentAccessRole = 'public';
+      saveRoleSession('public');
+      const panel = document.getElementById('adminPanel');
+      const auth = document.getElementById('adminAuthBox');
+      if (panel) panel.style.display = 'none';
+      if (auth) auth.style.display = 'block';
+      ['adminInfoManager','adminGalleryUploader','adminItineraryManager'].forEach(id => { const el=document.getElementById(id); if(el) el.style.display='none'; });
+      updateRoleUI();
+      if (activeCurrentTab === 'scannerTab' || activeCurrentTab === 'rosterTab' || activeCurrentTab === 'adminGroupSubPage') openAppHome(true);
+      showToast('🌐 Public view enabled');
+    }
+
+    function requestTeacherAccess() {
+      const entered = window.prompt('Enter Teacher Passkey');
+      if (entered === null) return;
+      if (entered.trim() !== TEACHER_PASSKEY) { showToast('❌ Incorrect teacher passkey'); return; }
+      if (currentAccessRole === 'admin') adminLogout();
+      currentAccessRole = 'teacher';
+      saveRoleSession('teacher');
+      updateRoleUI();
+      showToast('✓ Teacher access enabled: view finance, scan QR roll-call and submit petty cash only.');
+    }
+
+    function openAdminLogin() {
+      switchTab('rosterTab');
+      const auth = document.getElementById('adminAuthBox');
+      if (auth) auth.style.display = 'block';
+      const panel = document.getElementById('adminPanel');
+      if (panel) panel.style.display = 'none';
+    }
+
+    function requireRole(allowed, actionLabel) {
+      if (!allowed.includes(currentAccessRole)) {
+        showToast('🔒 ' + (actionLabel || 'This feature') + ' requires Teacher or Admin access.');
+        return false;
+      }
+      return true;
+    }
+
     const CORS_PROXY_PORTRAIT_URL = "https://wsrv.nl/?url=i.pinimg.com/736x/c1/9f/8e/c19f8e6b1b49f07b9904e38da3b50ecd.jpg&w=300&h=300&fit=cover&a=top";
     const DIRECT_PORTRAIT_URL = "https://i.pinimg.com/736x/c1/9f/8e/c19f8e6b1b49f07b9904e38da3b50ecd.jpg";
     let currentPortraitUrl = CORS_PROXY_PORTRAIT_URL;
@@ -2576,6 +2699,32 @@
           });
         } catch (e) {}
       }
+    }
+
+
+    let adminNotificationListenerStarted = false;
+    function startAdminNotificationListener() {
+      if (adminNotificationListenerStarted || !db) return;
+      adminNotificationListenerStarted = true;
+      db.ref('tripData/adminNotifications').limitToLast(30).on('child_added', snap => {
+        const note = snap.val();
+        if (!note) return;
+        if (currentAccessRole === 'admin' && !note.read) {
+          triggerLiveNotification(note.title || 'Teacher update', note.message || 'A teacher submitted new information.');
+          snap.ref.update({ read: true, seenAt: Date.now() });
+        }
+      });
+    }
+    function checkPendingAdminNotifications() {
+      if (currentAccessRole !== 'admin') return;
+      db.ref('tripData/adminNotifications').orderByChild('read').equalTo(false).once('value').then(snapshot => {
+        const pending = [];
+        snapshot.forEach(child => { const n = child.val(); if (n && n.createdAt && Date.now() - n.createdAt < 30 * 24 * 60 * 60 * 1000) pending.push({ key: child.key, ...n }); });
+        if (!pending.length) return;
+        const newest = pending[pending.length - 1];
+        triggerLiveNotification(`${pending.length} Teacher Update(s)`, newest.message || newest.title || 'New teacher submissions need review.');
+        pending.forEach(n => db.ref(`tripData/adminNotifications/${n.key}`).update({ read: true, seenAt: Date.now() }));
+      }).catch(err => console.warn('Could not check admin notifications', err));
     }
 
     function getDepartureTargetTime() {
@@ -3046,6 +3195,7 @@
     }
 
     function deleteLostFoundItem(idx) {
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required: Lost & found editing.');
       const isAdminLoggedIn = document.getElementById('adminPanel') && document.getElementById('adminPanel').style.display === 'block';
       if (!isAdminLoggedIn) return showToast("Only coordinators can delete notices.");
       if (confirm("Delete this Lost & Found notice?")) {
@@ -3088,6 +3238,43 @@
       }).join('');
     }
 
+    let selectedMemoryPhotoDataUrl = '';
+    function readCompressedImage(file, maxWidth=1000, quality=0.78) {
+      return new Promise((resolve, reject) => {
+        if (!file) return resolve('');
+        if (!file.type || !file.type.startsWith('image/')) return reject(new Error('Please select an image file.'));
+        const reader = new FileReader();
+        reader.onerror = () => reject(new Error('Could not read image.'));
+        reader.onload = ev => {
+          const img = new Image();
+          img.onerror = () => reject(new Error('Could not load image.'));
+          img.onload = () => {
+            const scale = Math.min(1, maxWidth / img.width);
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.max(1, Math.round(img.width * scale));
+            canvas.height = Math.max(1, Math.round(img.height * scale));
+            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+    async function handleMemoryPhotoSelect(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) { selectedMemoryPhotoDataUrl = ''; return; }
+      try { selectedMemoryPhotoDataUrl = await readCompressedImage(file, 900, 0.72); showToast('📸 Optional memory photo attached.'); }
+      catch (err) { selectedMemoryPhotoDataUrl = ''; showToast(err.message || 'Unable to attach photo.'); }
+    }
+    function notifyAdminOfTeacherPost(title, message) {
+      if (currentAccessRole !== 'teacher') return;
+      try {
+        const ref = db.ref('tripData/adminNotifications').push();
+        ref.set({ title, message, role: 'teacher', createdAt: Date.now(), read: false });
+      } catch (err) { console.warn('Admin notification could not be queued', err); }
+      triggerLiveNotification('Submitted to Admin', message);
+    }
     function addMemoryWallPost(e) {
       e.preventDefault();
       const author = document.getElementById('memAuthorName').value.trim();
@@ -3095,21 +3282,20 @@
       const text = document.getElementById('memMessageText').value.trim();
       if (!author || !text) return;
       const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' • ' + new Date().toLocaleDateString();
-      memoryWallList.unshift({
-        id: 'MEM_' + Date.now(),
-        author: author,
-        tag: tag,
-        text: text,
-        time: timeStr
-      });
+      memoryWallList.unshift({ id: 'MEM_' + Date.now(), author, tag, text, time: timeStr, photoUrl: selectedMemoryPhotoDataUrl || '' });
       db.ref('tripData/memoryWallList').set(memoryWallList);
+      if (currentAccessRole === 'teacher') notifyAdminOfTeacherPost('Teacher Memory Wall Post', `${author} posted a memory on the Memory Wall.`);
       document.getElementById('memAuthorName').value = '';
       document.getElementById('memMessageText').value = '';
+      const photoInput = document.getElementById('memPhotoFile'); if (photoInput) photoInput.value = '';
+      selectedMemoryPhotoDataUrl = '';
       triggerNativeConfetti();
+      renderMemoryWall();
       showToast("💌 Memory posted to Parish Digital Wall!");
     }
 
     function deleteMemoryWallPost(idx) {
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required: Memory wall editing.');
       const isAdminLoggedIn = document.getElementById('adminPanel') && document.getElementById('adminPanel').style.display === 'block';
       if (!isAdminLoggedIn) return showToast("Only coordinators can remove memory wall posts.");
       if (confirm("Remove this post from the Digital Memory Wall?")) {
@@ -3132,6 +3318,7 @@
             <span class="mem-tag">${m.tag || '🌟 Memory'}</span>
             ${isAdminLoggedIn ? `<button type="button" onclick="deleteMemoryWallPost(${idx})" style="border:none; background:#fee2e2; color:#b91c1c; width:22px; height:22px; border-radius:50%; font-weight:800; font-size:11px;">✕</button>` : ''}
           </div>
+          ${m.photoUrl ? `<img src="${m.photoUrl}" alt="Memory photo from ${m.author || 'tour participant'}" loading="lazy" style="width:100%;max-height:220px;object-fit:cover;border-radius:10px;margin:4px 0 10px;border:1px solid var(--line);">` : ''}
           <div class="mem-text">"${m.text}"</div>
           <div class="mem-author">
             <span>✍️ ${m.author}</span>
@@ -3244,7 +3431,11 @@
       reader.readAsDataURL(file);
     }
 
-    function openStaffExpenseModal() { document.getElementById('staffExpenseModal').style.display = 'flex'; }
+    function openStaffExpenseModal() {
+      if (!requireRole(['teacher','admin'], 'Petty cash submission')) return;
+      const pin = document.getElementById('staffPinInput'); if (pin) pin.value = '';
+      document.getElementById('staffExpenseModal').style.display = 'flex';
+    }
     function closeStaffExpenseModal() { document.getElementById('staffExpenseModal').style.display = 'none'; }
 
     function generateVoucherNumber() {
@@ -3254,18 +3445,10 @@
 
     function submitStaffExpense(e) {
       e.preventDefault();
-      const rawPin = (document.getElementById('staffPinInput').value || '').trim();
+      if (!requireRole(['teacher','admin'], 'Petty cash submission')) return;
       const submitter = document.getElementById('staffSubmitterName').value.trim();
       const desc = document.getElementById('staffExpDesc').value.trim();
       const amount = Number(document.getElementById('staffExpAmount').value);
-
-      let encodedPin = "";
-      try { encodedPin = btoa(rawPin); } catch (err) {}
-
-      if (encodedPin !== "MjAyNg==" && encodedPin !== "MTIzNA==" && encodedPin !== "Nzc3Nw==") {
-        document.getElementById('staffPinInput').value = '';
-        return showToast("❌ Unauthorized Staff Passkey!");
-      }
       if (!submitter || !desc || !amount) return;
 
       const vchNo = generateVoucherNumber();
@@ -3283,6 +3466,7 @@
 
       pendingExpensesList.push(newVoucher);
       db.ref('tripData/pendingExpensesList').set(pendingExpensesList);
+      notifyAdminOfTeacherPost('Petty Cash Voucher Submitted', `${submitter} submitted ${vchNo} for ₹${amount} — ${desc}. Approval required.`);
 
       document.getElementById('staffPinInput').value = '';
       document.getElementById('staffSubmitterName').value = '';
@@ -3298,6 +3482,7 @@
     }
 
     function approvePendingExpense(idx) {
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required: Expense approval.');
       const exp = pendingExpensesList[idx];
       if (!exp) return;
       expensesList.push({
@@ -3317,6 +3502,7 @@
     }
 
     function rejectPendingExpense(idx) {
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required: Expense rejection.');
       if (confirm("Reject and discard this submitted expense voucher?")) {
         pendingExpensesList.splice(idx, 1);
         db.ref('tripData/pendingExpensesList').set(pendingExpensesList);
@@ -3393,14 +3579,44 @@
             <div class="v-amt"><span>TOTAL AMOUNT</span><span>₹${Number(vch.amount || 0).toLocaleString()}</span></div>
             ${vch.billUrl ? `<div style="text-align:center; margin:12px 0;"><img src="${vch.billUrl}" style="max-height:180px; max-width:100%; border-radius:8px; border:1px solid #cbd5e1;"></div>` : ''}
             <div class="v-signs">
-              <div>_______________________<br><strong>Denson</strong><br>Tour Co-Ordinator</div>
-              <div>_______________________<br><strong>Bensigar</strong><br>Tour Co-Ordinator</div>
+              <div>_______________________<br><strong>Signature</strong></div>
+              <div>_______________________<br><strong>Verified By</strong></div>
             </div>
           </div>
         </body></html>
       `;
       printWin.document.write(html);
       printWin.document.close();
+    }
+
+    function printAllExpenseVouchers() {
+      if (!requireRole(['teacher','admin'], 'Voucher printing')) return;
+      const rows = [
+        ...(Array.isArray(expensesList) ? expensesList.map(v => ({ ...v, isPending: false })) : []),
+        ...(Array.isArray(pendingExpensesList) ? pendingExpensesList.map(v => ({ ...v, isPending: true })) : [])
+      ];
+      if (!rows.length) return showToast('No expense vouchers available to print yet.');
+      const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+      const slips = rows.map((v, i) => `
+        <article class="voucher-slip">
+          <header><img class="voucher-logo" src="${(cachedBase64Portrait || DIRECT_PORTRAIT_URL)}" alt="St. Joseph's logo"><div class="voucher-brand"><strong>St. Joseph's Catechism Midalam</strong><small>KERALA TOUR 2026 • PETTY CASH VOUCHER</small></div><b>${esc(v.voucherNo || ('VCH-' + (101+i)))}</b></header>
+          <div class="row"><span>Date / Time</span><strong>${esc(v.time || '19 Oct 2026')}</strong></div>
+          <div class="row"><span>Logged by</span><strong>${esc(v.submitter || 'Coordinator')}</strong></div>
+          <div class="row"><span>Particulars</span><strong>${esc(v.rawDesc || v.desc || '-')}</strong></div>
+          <div class="amount"><span>AMOUNT</span><strong>₹${Number(v.amount || 0).toLocaleString('en-IN')}</strong></div>
+          <div class="status">Status: <strong>${v.isPending ? 'PENDING APPROVAL' : 'APPROVED'}</strong></div>
+          <footer><span>__________________<br>Signature</span><span>__________________<br>Verified By</span></footer>
+        </article>`).join('');
+      const win = window.open('', '_blank');
+      if (!win) return showToast('Please allow pop-ups to print vouchers.');
+      win.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Petty Cash Vouchers - Kerala Tour 2026</title><style>
+        @page{size:A4;margin:9mm}*{box-sizing:border-box}body{font-family:Arial,sans-serif;color:#063b27;margin:0;font-size:10px}
+        .sheet{display:grid;grid-template-columns:1fr 1fr;gap:7mm;align-content:start}.voucher-slip{border:1.5px solid #063b27;border-top:4px solid #e5b83f;border-radius:7px;padding:8px 9px;break-inside:avoid;min-height:65mm;display:flex;flex-direction:column}
+        header{display:flex;justify-content:space-between;gap:7px;align-items:center;border-bottom:1px dashed #b45309;padding-bottom:5px;margin-bottom:5px}header .voucher-logo{width:30px;height:30px;border-radius:50%;border:1px solid #e5b83f;object-fit:cover;flex-shrink:0}header .voucher-brand{flex:1;min-width:0}header strong{display:block;font-size:11px}header small{display:block;font-size:8px;color:#805d00;font-weight:bold;margin-top:2px}header>b{white-space:nowrap;font-size:10px}
+        .row{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #e2e8f0;padding:4px 0}.row span{color:#52685c}.row strong{text-align:right;max-width:68%;overflow-wrap:anywhere}.amount{display:flex;justify-content:space-between;align-items:center;background:#fff8e5;border:1px solid #e5b83f;border-radius:5px;padding:6px 8px;margin:7px 0;font-weight:bold;color:#805d00}.amount strong{font-size:15px}.status{font-size:9px;color:#52685c}.status strong{color:#063b27}footer{display:flex;justify-content:space-between;gap:8px;text-align:center;font-size:8px;font-weight:bold;margin-top:auto;padding-top:12px}footer span{width:48%}
+        @media print{.voucher-slip{break-inside:avoid}body{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+      </style></head><body><div class="sheet">${slips}</div><script>window.onload=()=>setTimeout(()=>window.print(),250);<\/script></body></html>`);
+      win.document.close();
     }
 
     // --- OFFICIAL AUDIT REPORT (SHOWING TICKET FARES ₹250 & ₹500 AFTER COUNT) ---
@@ -3775,7 +3991,7 @@
           <div class="notice">
             <span class="dot" style="background:${idx === 0 ? '#dc2626' : '#16834a'}"></span>
             <span style="color:#65776d; font-size:12px; min-width:85px;">${f.time}</span>
-            <span><b>${f.text}</b></span>
+            <span style="flex:1;min-width:0;"><b>${f.text}</b>${f.imageUrl ? `<img src="${f.imageUrl}" alt="Tour update photo" loading="lazy" style="display:block;max-width:100%;max-height:210px;object-fit:contain;border-radius:10px;margin-top:8px;border:1px solid var(--line);">` : ''}</span>
             <span class="tag" style="${idx === 0 ? 'background:#fee2e2;color:#b91c1c;' : 'background:#dcfce7;color:#15803d;'}">${idx === 0 ? 'Important' : 'New'}</span>
           </div>
         `).join('');
@@ -3833,6 +4049,7 @@
       showToast("✓ Smart Itinerary stop added!");
     }
     function deleteItineraryStop(idx) {
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required: Itinerary editing.');
       if (confirm("Delete this itinerary stop?")) {
         itineraryList.splice(idx, 1);
         db.ref('tripData/itineraryList').set(itineraryList);
@@ -3864,6 +4081,7 @@
       showToast("✓ Photo added to gallery!");
     }
     function deleteGalleryPhoto(idx) {
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required: Gallery editing.');
       if (confirm("Delete this photo?")) {
         galleryList.splice(idx, 1);
         db.ref('tripData/galleryList').set(galleryList);
@@ -4049,6 +4267,9 @@
     }
 
     function renderTransparencyLedger() {
+      if (currentAccessRole === 'public') {
+        document.querySelectorAll('.financial-only').forEach(el => { el.style.display = 'none'; });
+      }
       const confirmed = registrations.filter(r => r.status === 'CONFIRMED');
       const ticketIncome = confirmed.reduce((sum, r) => sum + (Number(r.paid) || 0), 0);
       const totalSponsors = sponsorsList.reduce((sum, s) => sum + (Number(s.amount) || 0), 0);
@@ -4143,6 +4364,7 @@
             <div class="feed-item">
               <div class="feed-time">🕒 ${f.time}</div>
               <div class="feed-text">${f.text}</div>
+              ${f.imageUrl ? `<img src="${f.imageUrl}" alt="Tour update photo" loading="lazy" style="max-width:100%;max-height:240px;object-fit:contain;border-radius:10px;margin-top:8px;border:1px solid var(--line);">` : ''}
               ${isAdminLoggedIn ? `<button type="button" onclick="deleteFeed(${i})" style="position:absolute; top:14px; right:14px; border:none; background:#fee2e2; color:#ef4444; width:24px; height:24px; border-radius:50%; font-weight:700;">✕</button>` : ''}
             </div>
           `).join('');
@@ -4151,6 +4373,7 @@
 
     function addSponsor(e) {
       e.preventDefault();
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required: Sponsor editing.');
       const name = document.getElementById('newSponsorName').value.trim();
       const amount = Number(document.getElementById('newSponsorAmount').value);
       if (!name || !amount) return;
@@ -4161,6 +4384,7 @@
       showToast("✓ Sponsor added!");
     }
     function deleteSponsor(i) {
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required: Sponsor deletion.');
       if (confirm("Delete this sponsor?")) {
         sponsorsList.splice(i, 1);
         db.ref('tripData/sponsorsList').set(sponsorsList);
@@ -4168,6 +4392,7 @@
     }
     function addExpenseDirect(e) {
       e.preventDefault();
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required: Direct expense entry.');
       const desc = document.getElementById('newExpenseDesc').value.trim();
       const amount = Number(document.getElementById('newExpenseAmount').value);
       if (!desc || !amount) return;
@@ -4194,6 +4419,7 @@
       showToast(`✓ Official Voucher ${vchNo} generated & approved!`);
     }
     function deleteExpense(i) {
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required: Expense deletion.');
       if (confirm("Delete this expense voucher?")) {
         expensesList.splice(i, 1);
         db.ref('tripData/expensesList').set(expensesList);
@@ -4201,6 +4427,7 @@
     }
     function addFeedUpdate(e) {
       e.preventDefault();
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required: Announcement editing.');
       const text = document.getElementById('newFeedText').value.trim();
       if (!text) return;
       const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' ' + new Date().toLocaleDateString();
@@ -4209,7 +4436,36 @@
       document.getElementById('newFeedText').value = '';
       showToast("✓ Announcement posted!");
     }
+    let selectedHomeUpdatePhotoDataUrl = '';
+    async function handleHomeUpdatePhotoSelect(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) { selectedHomeUpdatePhotoDataUrl = ''; return; }
+      try {
+        selectedHomeUpdatePhotoDataUrl = await readCompressedImage(file, 1000, 0.75);
+        const status = document.getElementById('homeAdminPhotoStatus');
+        if (status) status.textContent = 'Photo attached and ready to publish.';
+      } catch (err) { selectedHomeUpdatePhotoDataUrl = ''; showToast(err.message || 'Unable to attach photo.'); }
+    }
+    function postHomeUpdate(e) {
+      e.preventDefault();
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required: Home page updates.');
+      const field = document.getElementById('homeAdminUpdateText');
+      const text = (field?.value || '').trim();
+      if (!text) return;
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' ' + now.toLocaleDateString();
+      feedList.unshift({ id: 'UPD_' + Date.now(), time: timeStr, text, imageUrl: selectedHomeUpdatePhotoDataUrl || '', authorRole: 'admin' });
+      db.ref('tripData/feedList').set(feedList);
+      if (field) field.value = '';
+      const photoInput = document.getElementById('homeAdminUpdatePhoto'); if (photoInput) photoInput.value = '';
+      selectedHomeUpdatePhotoDataUrl = '';
+      const photoStatus = document.getElementById('homeAdminPhotoStatus'); if (photoStatus) photoStatus.textContent = 'Photo is optional.';
+      renderHomeDigitalTimeline();
+      showToast('✓ Home page update published for everyone!');
+    }
+
     function deleteFeed(i) {
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required: Announcement deletion.');
       if (confirm("Delete this announcement?")) {
         feedList.splice(i, 1);
         db.ref('tripData/feedList').set(feedList);
@@ -4317,6 +4573,12 @@
     }
 
     function switchTab(tabId, evt, skipHistory) {
+      if (tabId === 'scannerTab' && !requireRole(['teacher','admin'], 'QR roll-call')) return;
+      if ((tabId === 'rosterTab' || tabId === 'adminGroupSubPage') && currentAccessRole !== 'admin') {
+        if (tabId === 'rosterTab' && currentAccessRole === 'public') {
+          // Allow the admin login page to open, but keep controls locked until authenticated.
+        } else { showToast('🔒 Admin access required.'); return; }
+      }
       if (!tabId || tabId === 'homeLauncherTab') {
         openAppHome(skipHistory);
         return;
@@ -5550,6 +5812,10 @@
         pinInput.value = '';
         document.getElementById('adminAuthBox').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
+        currentAccessRole = 'admin';
+        saveRoleSession('admin');
+        updateRoleUI();
+        checkPendingAdminNotifications();
         updateDashboard();
         renderLostFound();
         renderTransparencyLedger();
@@ -5570,6 +5836,8 @@
       pinInput.type = pinInput.type === 'password' ? 'text' : 'password';
     }
     function adminLogout() {
+      currentAccessRole = 'public';
+      saveRoleSession('public');
       document.getElementById('adminPanel').style.display = 'none';
       document.getElementById('adminAuthBox').style.display = 'block';
       document.getElementById('adminInfoManager').style.display = 'none';
@@ -5580,6 +5848,7 @@
       renderItinerary();
       renderMemoryWall();
       renderLostFound();
+      updateRoleUI();
     }
 
     function setFilterCategory(cat, el) {
@@ -5882,6 +6151,17 @@
     });
 
     window.onload = function() {
+      restoreRoleSession();
+      startAdminNotificationListener();
+      if (currentAccessRole === 'admin') {
+        checkPendingAdminNotifications();
+        const authBox = document.getElementById('adminAuthBox');
+        const adminPanel = document.getElementById('adminPanel');
+        if (authBox) authBox.style.display = 'none';
+        if (adminPanel) adminPanel.style.display = 'block';
+        ['adminInfoManager','adminGalleryUploader','adminItineraryManager'].forEach(id => { const el=document.getElementById(id); if (el) el.style.display='block'; });
+      }
+      updateRoleUI();
       preloadSealAsBase64();
       updateCountdown();
       updateFare();
