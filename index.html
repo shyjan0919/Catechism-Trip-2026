@@ -67,6 +67,11 @@
     button { font: inherit; cursor: pointer; }
     input, textarea, select { user-select: text; -webkit-user-select: text; }
 
+    /* HIDE BIG HERO TITLE CARD ON SUB-PAGES SO SUB-PAGES OPEN DIRECTLY AT THE TOP */
+    body.subpage-active .hero {
+      display: none !important;
+    }
+
     /* =========================================================================
        PANORAMIC ROYAL GREEN & GOLD HERO HEADER (ST. JOSEPH + KERALA + COACH)
        ========================================================================= */
@@ -320,7 +325,7 @@
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
     }
 
-    .wrap { max-width: 1450px; margin: auto; padding: 20px clamp(12px, 2.5vw, 34px); }
+    .wrap { max-width: 1450px; margin: auto; padding: 18px clamp(12px, 2.5vw, 34px); }
 
     /* =========================================================================
        HOMEPAGE 2-COLUMN BENTO LAYOUT (EXACT SCREENSHOT ORDER)
@@ -332,7 +337,6 @@
       align-items: start;
     }
 
-    /* ROW 1 LEFT: SCENIC WELCOME BANNER + BLESSING QUOTE CARD */
     .top-welcome-row {
       display: grid;
       grid-template-columns: 1.55fr 1fr;
@@ -385,7 +389,6 @@
       letter-spacing: 3px;
     }
 
-    /* ROW 2 LEFT: 5 STATS CARDS ROW */
     .stats {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -424,7 +427,6 @@
     .red { background: #fff5f5; border-color: #fecaca; }
     .red .value { color: #c81e1e; }
 
-    /* ROW 3 LEFT: 8 FEATURE TILES WITH CHEVRONS */
     .features {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -459,7 +461,6 @@
     .feature small { display: block; font-size: 11px; line-height: 1.3; color: #65776d; }
     .feat-chevron { color: #b45309; font-size: 18px; font-weight: 800; margin-left: 2px; }
 
-    /* COMPACT FLIGHT-MAP ROUTE BAR */
     .flight-timeline-strip {
       background: #ffffff;
       border: 1.5px solid var(--line);
@@ -486,7 +487,6 @@
     .htc-step-name { font-size: 12px; font-weight: 800; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .htc-step-time { font-size: 10.5px; font-weight: 700; color: #805d00; margin-top: 2px; }
 
-    /* RIGHT SIDEBAR CARDS */
     .panel { padding: 16px; margin-bottom: 13px; }
     .panel h3 { font: bold 17px Georgia, serif; color: var(--g); margin: 0 0 12px; display: flex; align-items: center; gap: 7px; }
     .live {
@@ -553,7 +553,6 @@
     .action:active { transform: scale(0.98); }
     .line { display: flex; gap: 9px; margin: 9px 0; font-size: 12.5px; line-height: 1.45; color: #334155; font-weight: 600; }
 
-    /* TOUR DEPARTURE IN (WHITE CARD WITH 4 DARK GREEN BOXES) */
     .countdown {
       background: #ffffff;
       color: var(--ink);
@@ -573,7 +572,7 @@
       box-shadow: 0 4px 10px rgba(6, 59, 39, 0.15);
     }
     .boxes strong { font-size: 22px; display: block; color: #ffffff; font-family: 'JetBrains Mono', monospace; line-height: 1.1; }
-    .boxes small { font-size: 10.5px; color: #52685c; font-weight: 700; display: block; margin-top: 5px; }
+    .boxes small { font-size: 10.5px; color: #c9dfd1; font-weight: 700; display: block; margin-top: 5px; }
 
     .ann { margin-bottom: 14px; }
     .notice { display: flex; gap: 12px; padding: 11px 0; border-bottom: 1px solid #eee8da; font-size: 13px; line-height: 1.45; align-items: center; }
@@ -594,10 +593,10 @@
     /* =========================================================================
        SUB-PANELS, FORMS, 3D COACH, ROSTER & ID CARDS
        ========================================================================= */
-    .tab-content { display: none; animation: appFadeIn 0.2s ease-out; }
+    .tab-content { display: none; animation: appFadeIn 0.18s ease-out; }
     .tab-content.active-tab { display: block; }
     @keyframes appFadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
     .confetti-piece {
@@ -618,9 +617,6 @@
       grid-column: 2; grid-row: 1 / span 10;
     }
     body.tablet-widescreen-mode #bookingTab .card form button[type="submit"] { grid-column: span 2; }
-    body.tablet-widescreen-mode #scannerTab #boardingUnlockedContent {
-      display: grid !important; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start;
-    }
     body.tablet-widescreen-mode .roster-cards-container {
       display: grid !important; grid-template-columns: repeat(2, 1fr); gap: 14px;
     }
@@ -942,6 +938,9 @@
       width: 84px; height: 84px; border-radius: 50%; background: var(--d); border: 2.5px solid var(--gold);
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
     }
+    .seal-photo-container { position: relative; width: 100%; height: 100%; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--d); }
+    .seal-photo-img { width: 68%; height: 68%; border-radius: 50%; object-fit: cover; object-position: center 15%; border: 2px solid var(--gold); position: relative; z-index: 2; background: #063b27; display: block; }
+    .seal-ring-svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }
     .id-tour-pill {
       display: inline-block; background: var(--gold); color: #173321;
       font-size: 10.5px; font-weight: 800; padding: 3px 14px; border-radius: 16px;
@@ -995,7 +994,7 @@
     .sheet-handle { width: 44px; height: 5px; background: #cbd5e1; border-radius: 4px; margin: -10px auto 14px; }
     .success-card { text-align: center; padding: 24px 14px; display: none; }
     .success-card .icon-circle { width: 68px; height: 68px; background: #fff8e5; color: #b45309; font-size: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; border: 2px solid var(--gold); }
-    .headcount-list { max-height: 360px; overflow-y: auto; margin: 14px 0; border: 1px solid var(--line); border-radius: 14px; }
+    .headcount-list { max-height: 440px; overflow-y: auto; margin: 14px 0; border: 1px solid var(--line); border-radius: 14px; }
     .hc-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid #f1f5f9; background: white; gap: 8px; }
     .hc-item.checked { background: #dcfce7; }
     .hc-item.absent { background: #fee2e2; }
@@ -1072,9 +1071,8 @@
     </symbol>
   </svg>
 
-  <!-- PANORAMIC ROYAL GREEN & GOLD HERO HEADER (MATCHING REFERENCE IMAGE) -->
-  <header class="hero">
-    <!-- Left: Large Glowing St. Joseph with Child Jesus -->
+  <!-- PANORAMIC ROYAL GREEN & GOLD HERO HEADER (VISIBLE ONLY ON HOME TAB) -->
+  <header class="hero" id="mainHeroHeader">
     <div class="hero-saint-col" onclick="openAppHome()">
       <div class="hero-saint-glow">
         <img class="hero-saint-img st-joseph-live-photo"
@@ -1085,7 +1083,6 @@
       </div>
     </div>
 
-    <!-- Center: Golden Ornamental Title & Framed Plaque -->
     <div class="hero-center-col" onclick="openAppHome()">
       <div class="hero-main-title">ST. JOSEPH'S</div>
       <div class="hero-sub-line">CATECHISM MIDALAM</div>
@@ -1102,7 +1099,6 @@
       </div>
     </div>
 
-    <!-- Right: Real Luxury Coach & Kerala Backwater Scene -->
     <div class="hero-right-scene">
       <div class="hero-sky-quote">
         One Journey<br>One Family<br>Countless Memories...
@@ -1116,7 +1112,7 @@
   </header>
 
   <!-- STICKY NAVIGATION BAR -->
-  <nav class="nav">
+  <nav class="nav" id="stickyNavBar">
     <button id="navBtn_home" class="active-nav" onclick="openAppHome()">⌂ Home</button>
     <button id="navBtn_bookingTab" onclick="switchTab('bookingTab')">🎟 Bookings</button>
     <button id="navBtn_manifestTab" onclick="switchTab('manifestTab')">▣ Digital Passes</button>
@@ -1137,7 +1133,7 @@
     </div>
   </div>
 
-  <main class="wrap">
+  <main class="wrap" id="mainContentAnchor">
 
     <!-- =========================================================================
          MAIN HOMEPAGE PORTAL (EXACT SCREENSHOT LAYOUT & ORDER)
@@ -1353,7 +1349,7 @@
         <div class="sub-app-tile" onclick="switchTab('scannerTab')">
           <div class="sat-icon">⚡</div>
           <div class="sat-title">QR Scan</div>
-          <div class="sat-sub">Roll-Call & Absent</div>
+          <div class="sat-sub">Camera Scanner</div>
         </div>
         <div class="sub-app-tile" onclick="switchTab('manifestTab')">
           <div class="sat-icon">🪪</div>
@@ -1814,53 +1810,67 @@
       </div>
     </div>
 
-    <!-- PANEL 7: 60FPS QR SCANNER -->
+    <!-- =========================================================================
+         PANEL 7: 60FPS QR SCANNER (SEPARATE CAMERA SCREEN vs STUDENT DATA SCREEN)
+         ========================================================================= -->
     <div id="scannerTab" class="tab-content">
       <div class="card" id="scannerMainCard">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
-          <div class="card-title" style="margin-bottom:0;">📷 High-Speed QR Scanner & Roll-Call</div>
-          <button type="button" class="panel-back-btn" onclick="toggleSilentNightWalk()" id="silentNightToggleBtn">🌙 Silent Night Mode</button>
-        </div>
-
         <div id="boardingLockedMsg" style="text-align: center; padding: 24px 12px;">
           <div style="font-size: 38px; margin-bottom: 10px;">🔒</div>
           <h4 style="font-size: 16px; font-weight: 800; color: var(--g);">Boarding Scanner is Currently Locked</h4>
           <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">The coordinator must enable boarding mode from the Admin Panel before scanning can begin.</p>
         </div>
+
         <div id="boardingUnlockedContent" style="display:none;">
-          <div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-              <span style="font-size:12.5px; font-weight:800; color:var(--success);">⚡ 60 FPS Continuous Scanner Ready</span>
-              <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                <button type="button" id="voiceToggleBtn" onclick="toggleVoiceReadout()" style="border:1px solid var(--g); background:#edf8ee; color:var(--g); font-size:11.5px; font-weight:800; padding:6px 10px; border-radius:9px;">🔊 Voice: ON</button>
-                <button type="button" onclick="printBoardingReport()" style="border:1px solid var(--d); background:var(--d); color:#f8e4a0; font-size:11.5px; font-weight:800; padding:6px 10px; border-radius:9px;">🖨️ Boarding Report</button>
-                <button type="button" onclick="resetHeadcount()" style="border:1px solid #ef4444; background:#fee2e2; color:#b91c1c; font-size:11.5px; font-weight:800; padding:6px 10px; border-radius:9px;">🔄 New Stop Roll-Call</button>
+          
+          <!-- STAGE A: SOLELY QR CAMERA SCANNER (NO STUDENT DATA SHOWN BELOW) -->
+          <div id="scannerCameraOnlyStage">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; border-bottom: 1.5px solid var(--line); padding-bottom: 12px;">
+              <div>
+                <h3 style="font: bold 19px Georgia, serif; color: var(--g); margin:0;">📷 High-Speed 60FPS QR Scanner</h3>
+                <span style="font-size:12px; font-weight:700; color:var(--success);" id="cameraStageLiveCounter">Onboard: 0 / 60</span>
+              </div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button type="button" id="voiceToggleBtn" onclick="toggleVoiceReadout()" style="border:1px solid var(--g); background:#edf8ee; color:var(--g); font-size:12px; font-weight:800; padding:7px 12px; border-radius:9px;">🔊 Voice: ON</button>
+                <button type="button" class="panel-back-btn" onclick="switchToRollCallDataStage()">📋 Back to Student Data →</button>
               </div>
             </div>
-            
+
             <div style="display:flex; gap:8px; margin-bottom: 14px;">
               <button class="btn btn-primary" onclick="startInlineScanner()" id="startScanBtn" style="flex:1;">⚡ Launch Camera Scanner</button>
-              <button class="btn btn-accent" onclick="toggleCameraTorch()" id="inlineTorchBtn" style="display:none; width:auto; padding:12px 16px;">🔦 Torch</button>
-              <button class="btn btn-secondary" onclick="stopInlineScanner()" id="stopScanBtn" style="display:none; width:auto; padding:12px 16px;">⏹️ Stop</button>
+              <button class="btn btn-accent" onclick="toggleCameraTorch()" id="inlineTorchBtn" style="display:none; width:auto; padding:12px 18px;">🔦 Torch</button>
+              <button class="btn btn-secondary" onclick="switchToRollCallDataStage()" id="stopScanBtn" style="display:none; width:auto; padding:12px 18px;">⏹️ Stop & View Data</button>
             </div>
-            <div id="inlineScannerBox" style="display:none; width: 100%; border-radius: 16px; overflow: hidden; background: #000; position: relative; margin-bottom: 14px; border: 3px solid var(--gold);">
+
+            <div id="inlineScannerBox" style="display:none; width: 100%; max-width: 520px; margin: 0 auto 14px; border-radius: 18px; overflow: hidden; background: #000; position: relative; border: 3.5px solid var(--gold); box-shadow: 0 12px 30px rgba(0,0,0,0.25);">
               <div id="inlineScannerTarget" style="width: 100%;"></div>
             </div>
-            <div id="inlineScanResult" style="font-size: 14px; font-weight: 800; min-height: 44px; display:flex; align-items:center; justify-content:center; text-align: center; margin-bottom: 16px; color: var(--text-muted); padding: 10px 14px; border-radius: 14px; border: 1px dashed var(--line);">Scanner standby — Tap Launch above</div>
+
+            <div id="inlineScanResult" style="font-size: 14.5px; font-weight: 800; min-height: 52px; display:flex; align-items:center; justify-content:center; text-align: center; color: var(--text-muted); padding: 12px 16px; border-radius: 14px; border: 1.5px dashed var(--line); background:#fbf8ee; max-width:520px; margin:0 auto;">
+              Point camera at any Pilgrim QR ID Card Pass
+            </div>
           </div>
 
-          <div>
+          <!-- STAGE B: STUDENT ROLL-CALL & ATTENDANCE DATA (SHOWN WHEN CLICKING BACK FROM SCANNER) -->
+          <div id="scannerRollCallStage" style="display:none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; border-bottom: 1.5px solid var(--line); padding-bottom: 12px;">
+              <div>
+                <h3 style="font: bold 19px Georgia, serif; color: var(--g); margin:0;">📋 Student Roll-Call & Attendance Data</h3>
+                <span style="font-size: 12.5px; font-weight: 800; color: var(--success);" id="inlineHcCountDisplay">Onboard: 0 / 0</span>
+              </div>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" class="btn btn-primary" style="width:auto; padding:8px 14px; font-size:12px;" onclick="openScannerCameraOnlyStage()">📷 Open QR Camera Scanner</button>
+                <button type="button" class="panel-back-btn" onclick="toggleSilentNightWalk()" id="silentNightToggleBtn">🌙 Silent Night Mode</button>
+                <button type="button" onclick="printBoardingReport()" style="border:1px solid var(--d); background:var(--d); color:#f8e4a0; font-size:11.5px; font-weight:800; padding:7px 11px; border-radius:9px;">🖨️ Boarding Report</button>
+                <button type="button" onclick="resetHeadcount()" style="border:1px solid #ef4444; background:#fee2e2; color:#b91c1c; font-size:11.5px; font-weight:800; padding:7px 11px; border-radius:9px;">🔄 New Stop Roll-Call</button>
+              </div>
+            </div>
+
             <div id="normalHeadcountWrapper" style="background: #fbf8ee; border: 1px solid var(--line); border-radius: 16px; padding: 16px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap:wrap; gap:8px;">
-                <div>
-                  <h4 style="font-size: 14.5px; font-weight: 800; color: var(--g);">📋 Live Roll-Call, Missing & Absent Tracker</h4>
-                  <span style="font-size: 12.5px; font-weight: 800; color: var(--success);" id="inlineHcCountDisplay">Onboard: 0 / 0</span>
-                </div>
-                <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                  <button type="button" id="hcFilterAllBtn" onclick="setHeadcountFilter('ALL')" style="padding:5px 12px; border-radius:9px; border:1px solid var(--g); background:var(--g); color:white; font-size:11.5px; font-weight:800;">All</button>
-                  <button type="button" id="hcFilterMissingBtn" onclick="setHeadcountFilter('MISSING')" style="padding:5px 12px; border-radius:9px; border:1px solid #dc2626; background:#fff; color:#dc2626; font-size:11.5px; font-weight:800;">🚨 Missing</button>
-                  <button type="button" id="hcFilterAbsentBtn" onclick="setHeadcountFilter('ABSENT')" style="padding:5px 12px; border-radius:9px; border:1px solid #991b1b; background:#fff; color:#991b1b; font-size:11.5px; font-weight:800;">🚫 Absent</button>
-                </div>
+              <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
+                <button type="button" id="hcFilterAllBtn" onclick="setHeadcountFilter('ALL')" style="padding:6px 14px; border-radius:9px; border:1px solid var(--g); background:var(--g); color:white; font-size:12px; font-weight:800;">All Passengers</button>
+                <button type="button" id="hcFilterMissingBtn" onclick="setHeadcountFilter('MISSING')" style="padding:6px 14px; border-radius:9px; border:1px solid #dc2626; background:#fff; color:#dc2626; font-size:12px; font-weight:800;">🚨 Missing</button>
+                <button type="button" id="hcFilterAbsentBtn" onclick="setHeadcountFilter('ABSENT')" style="padding:6px 14px; border-radius:9px; border:1px solid #991b1b; background:#fff; color:#991b1b; font-size:12px; font-weight:800;">🚫 Absent / No-Show</button>
               </div>
               <div class="headcount-list" id="inlineHeadcountList"></div>
             </div>
@@ -1871,6 +1881,7 @@
               <div class="silent-seat-grid" id="silentSeatGridContainer"></div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -2468,6 +2479,7 @@
     let currentSeatFilter = 'ALL';
     let activeCurrentTab = 'homeLauncherTab';
     let currentAdminSubGroup = 'ALL';
+    let activeScannerStage = 'CAMERA_ONLY';
     let lastActivityTime = Date.now();
 
     let initialLoadComplete = false;
@@ -4268,9 +4280,11 @@
       if (btn) btn.classList.add('active-nav');
     }
 
+    // --- NAVIGATION WITHOUT UNWANTED SCROLLING BACK TO THE BIG TITLE CARD ---
     function openAppHome(skipHistory) {
       activeCurrentTab = 'homeLauncherTab';
       stopInlineScanner();
+      document.body.classList.remove('subpage-active');
       highlightNavButton('home');
       document.querySelectorAll('.tab-content').forEach(el => {
         el.style.display = 'none';
@@ -4284,13 +4298,17 @@
       const backBar = document.getElementById('activePanelBackBar');
       if (backBar) backBar.style.display = 'none';
       renderHomeDigitalTimeline();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'instant' });
       if (!skipHistory && window.location.hash) {
         history.pushState({ panel: 'home' }, '', window.location.pathname);
       }
     }
 
     function handlePanelBack() {
+      if (activeCurrentTab === 'scannerTab' && activeScannerStage === 'CAMERA_ONLY' && isBoardingActive) {
+        switchToRollCallDataStage();
+        return;
+      }
       if (activeCurrentTab === 'adminGroupSubPage') {
         switchTab('rosterTab');
         return;
@@ -4305,7 +4323,10 @@
       }
       activeCurrentTab = tabId;
       stopInlineScanner();
+      // Hide big Hero Title Card so the clicked page opens immediately at the very top
+      document.body.classList.add('subpage-active');
       highlightNavButton(tabId);
+
       document.querySelectorAll('.tab-content').forEach(el => {
         el.style.display = 'none';
         el.classList.remove('active-tab');
@@ -4329,7 +4350,9 @@
       if (tabId === 'scannerTab') {
         document.getElementById('boardingLockedMsg').style.display = isBoardingActive ? 'none' : 'block';
         document.getElementById('boardingUnlockedContent').style.display = isBoardingActive ? 'block' : 'none';
-        if (isBoardingActive) renderInlineHeadcount();
+        if (isBoardingActive) {
+          openScannerCameraOnlyStage();
+        }
       } else if (tabId === 'manifestTab') renderManifestTable();
       else if (tabId === 'rosterTab') renderRoster();
       else if (tabId === 'adminGroupSubPage') renderAdminSubPageCards();
@@ -4341,10 +4364,43 @@
       else if (tabId === 'parkingTab') renderParkingUI();
       else if (tabId === 'lostFoundTab') renderLostFound();
 
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Snap directly to the top of the sub-page (with Hero hidden, top:0 is right at the sticky nav bar!)
+      window.scrollTo({ top: 0, behavior: 'instant' });
       if (!skipHistory) {
         history.pushState({ panel: tabId }, '', '#' + tabId);
       }
+    }
+
+    // --- TWO-STAGE QR SCANNER (SOLELY CAMERA vs STUDENT ROLL-CALL DATA) ---
+    function openScannerCameraOnlyStage() {
+      activeScannerStage = 'CAMERA_ONLY';
+      const camStage = document.getElementById('scannerCameraOnlyStage');
+      const dataStage = document.getElementById('scannerRollCallStage');
+      const backBtn = document.getElementById('panelBackBtn');
+      const titleEl = document.getElementById('activePanelTitle');
+
+      if (camStage) camStage.style.display = 'block';
+      if (dataStage) dataStage.style.display = 'none';
+      if (backBtn) backBtn.innerText = "← Back to Student Data";
+      if (titleEl) titleEl.innerText = "📷 QR Camera Scanner";
+      renderInlineHeadcount();
+      startInlineScanner();
+    }
+
+    function switchToRollCallDataStage() {
+      stopInlineScanner();
+      activeScannerStage = 'ROLL_CALL_DATA';
+      const camStage = document.getElementById('scannerCameraOnlyStage');
+      const dataStage = document.getElementById('scannerRollCallStage');
+      const backBtn = document.getElementById('panelBackBtn');
+      const titleEl = document.getElementById('activePanelTitle');
+
+      if (camStage) camStage.style.display = 'none';
+      if (dataStage) dataStage.style.display = 'block';
+      if (backBtn) backBtn.innerText = "← Back to Home";
+      if (titleEl) titleEl.innerText = "📋 Student Roll-Call & Attendance Data";
+      renderInlineHeadcount();
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
     window.addEventListener('popstate', (e) => {
@@ -4528,14 +4584,18 @@
       resultBox.style.background = "#fbf8ee";
       resultBox.style.color = "var(--g)";
       if (!inlineScanner) inlineScanner = new Html5Qrcode("inlineScannerTarget");
+      if (inlineScanner.isScanning) return;
       inlineScanner.start(
         { facingMode: "environment" },
         ULTRA_FAST_SCAN_CONFIG,
         (decodedText) => processScanCode(decodedText, resultBox),
         () => {}
       ).catch(() => {
-        resultBox.innerText = "Camera access error. Please allow camera permissions.";
-        resultBox.style.color = "var(--danger)";
+        resultBox.innerText = "Camera standby — Tap Launch Camera Scanner above to start.";
+        resultBox.style.color = "var(--text-muted)";
+        document.getElementById('startScanBtn').style.display = 'flex';
+        document.getElementById('stopScanBtn').style.display = 'none';
+        document.getElementById('inlineTorchBtn').style.display = 'none';
       });
     }
     async function stopInlineScanner() {
@@ -4579,12 +4639,16 @@
     function renderInlineHeadcount() {
       const container = document.getElementById('inlineHeadcountList');
       const countDisplay = document.getElementById('inlineHcCountDisplay');
-      if (!container || !countDisplay) return;
+      const camCounter = document.getElementById('cameraStageLiveCounter');
       const confirmed = sortManifestChronologicalAndAlphabetical(registrations.filter(r => r.status === 'CONFIRMED'));
       const boardedCount = confirmed.filter(r => (r.boarded || headcountChecked[r.id]) && !r.absent).length;
       const absentCount = confirmed.filter(r => r.absent).length;
       const missingCount = Math.max(0, confirmed.length - boardedCount - absentCount);
-      countDisplay.innerText = `Onboard: ${boardedCount} / ${confirmed.length} (${missingCount} Missing, ${absentCount} Absent)`;
+      const summaryTxt = `Onboard: ${boardedCount} / ${confirmed.length} (${missingCount} Missing, ${absentCount} Absent)`;
+
+      if (countDisplay) countDisplay.innerText = summaryTxt;
+      if (camCounter) camCounter.innerText = summaryTxt;
+      if (!container) return;
 
       let filteredList = confirmed;
       if (headcountFilterMode === 'MISSING') {
