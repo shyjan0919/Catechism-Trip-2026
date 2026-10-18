@@ -574,11 +574,24 @@
     .boxes strong { font-size: 22px; display: block; color: #ffffff; font-family: 'JetBrains Mono', monospace; line-height: 1.1; }
     .boxes small { font-size: 10.5px; color: #c9dfd1; font-weight: 700; display: block; margin-top: 5px; }
 
+    .home-booking-summary { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:0 0 14px; }
+    .hbs-card { border:1px solid var(--line); border-radius:13px; padding:11px 13px; background:#fff; box-shadow:0 3px 10px rgba(6,59,39,.05); min-width:0; }
+    .hbs-card span { display:block; font-size:11px; font-weight:800; color:#52685c; }
+    .hbs-card strong { display:block; font-size:23px; line-height:1.2; color:var(--g); margin:3px 0 1px; }
+    .hbs-card small { display:block; font-size:10.5px; color:var(--text-muted); font-weight:700; }
+    .hbs-track { height:5px; background:#e8eee9; border-radius:99px; overflow:hidden; margin-top:8px; }
+    .hbs-track i { display:block; width:0%; height:100%; background:var(--g); border-radius:99px; transition:width .25s ease; }
+    .hbs-boarded .hbs-track i { background:#d5a72e; }
     .ann { margin-bottom: 14px; }
-    .notice { display: flex; gap: 12px; padding: 11px 0; border-bottom: 1px solid #eee8da; font-size: 13px; line-height: 1.45; align-items: center; }
-    .notice:last-child { border-bottom: 0; }
-    .dot { width: 9px; height: 9px; border-radius: 50%; background: #16834a; flex-shrink: 0; }
-    .tag { margin-left: auto; background: #fff1c9; color: #795700; border-radius: 20px; padding: 4px 10px; font-size: 10.5px; font-weight: 800; white-space: nowrap; }
+    .notice { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:7px 10px; padding:12px; margin:9px 0; border:1px solid #eee2c6; border-radius:12px; background:linear-gradient(135deg,#fffdf7,#ffffff); font-size:13px; line-height:1.5; align-items:start; box-shadow:0 2px 8px rgba(6,59,39,.04); }
+    .notice:last-child { border-bottom: 1px solid #eee2c6; }
+    .notice .notice-date { grid-column:1; grid-row:1; color:#65776d; font-size:11px; font-weight:800; letter-spacing:.2px; }
+    .notice .tag { grid-column:2; grid-row:1; justify-self:end; align-self:start; margin:0; }
+    .notice .notice-message { grid-column:1 / -1; grid-row:2; min-width:0; overflow-wrap:anywhere; color:#173b2a; font-weight:600; }
+    .notice .notice-message b { font-weight:750; }
+    .notice .notice-message img { display:block; max-width:100%; max-height:210px; object-fit:contain; border-radius:10px; margin-top:8px; border:1px solid var(--line); }
+    .dot { display:none; }
+    .tag { background: #fff1c9; color: #795700; border-radius: 20px; padding: 4px 10px; font-size: 10.5px; font-weight: 800; white-space: nowrap; }
 
     .footer {
       text-align: center;
@@ -1022,6 +1035,15 @@
       .hero-right-scene { align-items: center; height: auto; gap: 10px; }
       .hero-sky-quote { align-self: center; }
       .main { grid-template-columns: 1fr; }
+      .home-booking-summary { gap:7px; margin-bottom:10px; }
+      .hbs-card { padding:9px 10px; }
+      .hbs-card strong { font-size:20px; }
+      .top-welcome-row { gap:7px; margin-bottom:9px; }
+      .scenic-welcome-banner { min-height:0; padding:11px 10px; border-radius:12px; background-position:center; }
+      .swb-kicker { font-size:11px; }
+      .swb-main { font-size:clamp(15px,4.2vw,19px); line-height:1.15; margin:2px 0; }
+      .swb-tags { font-size:10px; margin-top:3px; letter-spacing:0; }
+      .blessing-quote-card { padding:7px 5px; font-size:12px; }
       .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
       .stat { padding: 12px; }
       .features { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
@@ -1167,6 +1189,11 @@
             </div>
           </div>
 
+          <section class="home-booking-summary" aria-label="Live booking and boarding summary">
+            <div class="hbs-card hbs-booked"><span>🎟️ Tickets Booked</span><strong id="homeBookedSeats">0 / 60</strong><small id="homeBookedPercent">0% of seats</small><div class="hbs-track"><i id="homeBookedBar"></i></div></div>
+            <div class="hbs-card hbs-boarded"><span>🚌 Boarding</span><strong id="homeBoardedSeats">0 / 60</strong><small id="homeBoardedPercent">0% boarded</small><div class="hbs-track"><i id="homeBoardedBar"></i></div></div>
+          </section>
+
           <!-- Home dashboard statistic cards removed: use the navigation bar for portal sections. -->
           <section class="stats" style="display:none !important;">
             <article class="stat dark-green-stat" onclick="switchTab('bookingTab')">
@@ -1243,7 +1270,7 @@
           <!-- FLIGHT-MAP LIVE DIGITAL TOUR TIMELINE -->
           <div class="flight-timeline-strip">
             <div class="fts-head">
-              <div class="fts-title"><span>🗺️ Route Progress</span></div>
+              <div class="fts-title"><span>🗺️ Flight Map Live Route</span></div>
               <button type="button" onclick="switchTab('itineraryTab')" style="border:1px solid var(--gold); background:#fff8e5; color:#805d00; padding:4px 10px; border-radius:8px; font-size:11.5px; font-weight:800;">Update Stops →</button>
             </div>
             <div class="htc-stepper" id="homeTimelineStepper"></div>
@@ -1257,16 +1284,14 @@
             </div>
             <div id="homeAnnouncementsContainer">
               <div class="notice">
-                <span class="dot" style="background:#dc2626"></span>
-                <span style="color:#65776d; font-size:12px; min-width:85px;">17 Oct 2026</span>
-                <span><b>பேருந்தில் ஏறும் நேரம்: காலை 6:00 மணி – 6:15 மணி (புனித யோசேப்பு ஆலயம் அருகில்)</b></span>
+                <span class="notice-date">17 Oct 2026</span>
                 <span class="tag" style="background:#fee2e2;color:#b91c1c;">Important</span>
+                <div class="notice-message">பேருந்தில் ஏறும் நேரம்: காலை 6:00 மணி – 6:15 மணி (புனித யோசேப்பு ஆலயம் அருகில்)</div>
               </div>
               <div class="notice">
-                <span class="dot"></span>
-                <span style="color:#65776d; font-size:12px; min-width:85px;">16 Oct 2026</span>
-                <span><b>எல்லா பயணிகளும் தங்கள் டிஜிட்டல் பாஸை தயாராக வைத்திருக்கவும்.</b></span>
+                <span class="notice-date">16 Oct 2026</span>
                 <span class="tag" style="background:#dcfce7;color:#15803d;">New</span>
+                <div class="notice-message">எல்லா பயணிகளும் தங்கள் டிஜிட்டல் பாஸை தயாராக வைத்திருக்கவும்.</div>
               </div>
             </div>
             <form id="homeAdminUpdateForm" onsubmit="postHomeUpdate(event)" class="admin-only" style="display:none; margin-top:14px; padding:14px; background:#fbf8ee; border:1px solid var(--gold); border-radius:12px;">
@@ -1934,8 +1959,8 @@
               <tr style="background: #fbf8ee; border-bottom: 2px solid var(--line); color: var(--g);">
                 <th style="padding: 13px 10px;">Seat / Ticket</th>
                 <th style="padding: 13px 10px;">Name & Designation</th>
-                <th style="padding: 13px 10px;">Payment & Status</th>
-                <th style="padding: 13px 10px;">ID Card Pass</th>
+                <th style="padding: 13px 10px;">Payment & Amount Paid</th>
+                <th style="padding: 13px 10px;">Actions</th>
               </tr>
             </thead>
             <tbody id="manifestTableBody"></tbody>
@@ -3605,6 +3630,7 @@
           <div class="row"><span>Particulars</span><strong>${esc(v.rawDesc || v.desc || '-')}</strong></div>
           <div class="amount"><span>AMOUNT</span><strong>₹${Number(v.amount || 0).toLocaleString('en-IN')}</strong></div>
           <div class="status">Status: <strong>${v.isPending ? 'PENDING APPROVAL' : 'APPROVED'}</strong></div>
+          ${v.billUrl ? `<div class="bill-attachment"><div>Attached Bill / Voucher</div><img src="${v.billUrl}" alt="Uploaded bill for ${esc(v.voucherNo || 'voucher')}"></div>` : ''}
           <footer><span>__________________<br>Signature</span><span>__________________<br>Verified By</span></footer>
         </article>`).join('');
       const win = window.open('', '_blank');
@@ -3613,7 +3639,7 @@
         @page{size:A4;margin:9mm}*{box-sizing:border-box}body{font-family:Arial,sans-serif;color:#063b27;margin:0;font-size:10px}
         .sheet{display:grid;grid-template-columns:1fr 1fr;gap:7mm;align-content:start}.voucher-slip{border:1.5px solid #063b27;border-top:4px solid #e5b83f;border-radius:7px;padding:8px 9px;break-inside:avoid;min-height:65mm;display:flex;flex-direction:column}
         header{display:flex;justify-content:space-between;gap:7px;align-items:center;border-bottom:1px dashed #b45309;padding-bottom:5px;margin-bottom:5px}header .voucher-logo{width:30px;height:30px;border-radius:50%;border:1px solid #e5b83f;object-fit:cover;flex-shrink:0}header .voucher-brand{flex:1;min-width:0}header strong{display:block;font-size:11px}header small{display:block;font-size:8px;color:#805d00;font-weight:bold;margin-top:2px}header>b{white-space:nowrap;font-size:10px}
-        .row{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #e2e8f0;padding:4px 0}.row span{color:#52685c}.row strong{text-align:right;max-width:68%;overflow-wrap:anywhere}.amount{display:flex;justify-content:space-between;align-items:center;background:#fff8e5;border:1px solid #e5b83f;border-radius:5px;padding:6px 8px;margin:7px 0;font-weight:bold;color:#805d00}.amount strong{font-size:15px}.status{font-size:9px;color:#52685c}.status strong{color:#063b27}footer{display:flex;justify-content:space-between;gap:8px;text-align:center;font-size:8px;font-weight:bold;margin-top:auto;padding-top:12px}footer span{width:48%}
+        .row{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #e2e8f0;padding:4px 0}.row span{color:#52685c}.row strong{text-align:right;max-width:68%;overflow-wrap:anywhere}.amount{display:flex;justify-content:space-between;align-items:center;background:#fff8e5;border:1px solid #e5b83f;border-radius:5px;padding:6px 8px;margin:7px 0;font-weight:bold;color:#805d00}.amount strong{font-size:15px}.status{font-size:9px;color:#52685c}.status strong{color:#063b27}.bill-attachment{margin-top:5px;text-align:center;font-size:8px;font-weight:bold;color:#52685c}.bill-attachment img{display:block;max-width:100%;max-height:65px;object-fit:contain;margin:3px auto 0;border:1px solid #cbd5e1;border-radius:4px}footer{display:flex;justify-content:space-between;gap:8px;text-align:center;font-size:8px;font-weight:bold;margin-top:auto;padding-top:8px}footer span{width:48%}
         @media print{.voucher-slip{break-inside:avoid}body{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
       </style></head><body><div class="sheet">${slips}</div><script>window.onload=()=>setTimeout(()=>window.print(),250);<\/script></body></html>`);
       win.document.close();
@@ -3989,10 +4015,9 @@
       if (annBox && feedList && feedList.length > 0) {
         annBox.innerHTML = feedList.slice(0, 4).map((f, idx) => `
           <div class="notice">
-            <span class="dot" style="background:${idx === 0 ? '#dc2626' : '#16834a'}"></span>
-            <span style="color:#65776d; font-size:12px; min-width:85px;">${f.time}</span>
-            <span style="flex:1;min-width:0;"><b>${f.text}</b>${f.imageUrl ? `<img src="${f.imageUrl}" alt="Tour update photo" loading="lazy" style="display:block;max-width:100%;max-height:210px;object-fit:contain;border-radius:10px;margin-top:8px;border:1px solid var(--line);">` : ''}</span>
+            <span class="notice-date">${f.date || f.time || ''}</span>
             <span class="tag" style="${idx === 0 ? 'background:#fee2e2;color:#b91c1c;' : 'background:#dcfce7;color:#15803d;'}">${idx === 0 ? 'Important' : 'New'}</span>
+            <div class="notice-message">${f.text || ''}${f.imageUrl ? `<img src="${f.imageUrl}" alt="Tour update photo" loading="lazy">` : ''}</div>
           </div>
         `).join('');
       }
@@ -4454,7 +4479,7 @@
       if (!text) return;
       const now = new Date();
       const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' ' + now.toLocaleDateString();
-      feedList.unshift({ id: 'UPD_' + Date.now(), time: timeStr, text, imageUrl: selectedHomeUpdatePhotoDataUrl || '', authorRole: 'admin' });
+      feedList.unshift({ id: 'UPD_' + Date.now(), time: timeStr, date: now.toLocaleDateString(), text, imageUrl: selectedHomeUpdatePhotoDataUrl || '', authorRole: 'admin' });
       db.ref('tripData/feedList').set(feedList);
       if (field) field.value = '';
       const photoInput = document.getElementById('homeAdminUpdatePhoto'); if (photoInput) photoInput.value = '';
@@ -4777,20 +4802,44 @@
             <strong style="text-transform:capitalize;">${r.name}</strong> (${r.gender || 'N/A'})<br>
             <span style="font-size:11.5px; color:${desig.isVip ? '#805d00' : 'var(--text-muted)'}; font-weight:${desig.isVip ? '800' : '600'};">${desig.roleTitle}</span>
           </td>
-          <td style="padding: 13px 10px;">
-            <span style="font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:10px; background:${paymentBg}; color:${paymentColor}; display:inline-block;">
-              ${paymentLabel}
-            </span>
+          <td style="padding: 13px 10px; min-width:145px;">
+            <span style="font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:10px; background:${paymentBg}; color:${paymentColor}; display:inline-block;">${paymentLabel}</span>
+            <div style="font-size:12px;line-height:1.55;margin-top:7px;color:#334155;">
+              <div>Fare: <strong>₹${Number(r.totalFare || 0).toLocaleString('en-IN')}</strong></div>
+              <div>Paid: <strong style="color:${Number(r.paid || 0)>0?'#15803d':'#b91c1c'}">${Number(r.paid || 0)>0?'₹'+Number(r.paid).toLocaleString('en-IN'):'Not Paid / ₹0'}</strong></div>
+              <div>Due: <strong>₹${Math.max(0, Number(r.balance ?? (Number(r.totalFare||0)-Number(r.paid||0))) || 0).toLocaleString('en-IN')}</strong></div>
+            </div>
           </td>
           <td style="padding: 13px 10px;">
-            ${isConf
-              ? `<button onclick="adminGenerateTicket(${origIdx})" style="border:1.5px solid var(--gold); background:var(--g); color:#fff; font-size:11.5px; font-weight:800; padding:6px 12px; border-radius:10px;">🪪 ID Pass</button>`
-              : `<span style="font-size:11px; color:#94a3b8; font-weight:600;">Locked until approved</span>`
-            }
+            ${isConf ? `<button onclick="adminGenerateTicket(${origIdx})" style="border:1.5px solid var(--gold); background:var(--g); color:#fff; font-size:11.5px; font-weight:800; padding:6px 12px; border-radius:10px; margin-bottom:5px;">🪪 ID Pass</button>` : `<span style="font-size:11px; color:#94a3b8; font-weight:600;display:block;margin-bottom:5px;">Awaiting approval</span>`}
+            ${currentAccessRole === 'admin' ? `<button onclick="editPassengerAmounts(${origIdx})" style="border:1px solid #0f766e;background:#ecfdf5;color:#065f46;font-size:11px;font-weight:800;padding:6px 9px;border-radius:8px;white-space:nowrap;">✏️ Edit Amount</button>` : ''}
           </td>
         `;
         tbody.appendChild(tr);
       });
+    }
+
+    function editPassengerAmounts(idx) {
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required to edit passenger amounts.');
+      const r = registrations[idx];
+      if (!r) return;
+      const fareInput = prompt(`Edit total ticket fare for ${r.name} (${r.id})`, String(Number(r.totalFare || 0)));
+      if (fareInput === null) return;
+      const fare = Number(fareInput);
+      if (!Number.isFinite(fare) || fare < 0) return showToast('Enter a valid fare amount (0 or above).');
+      const paidInput = prompt(`Edit amount PAID by ${r.name}. Enter 0 if not paid.`, String(Number(r.paid || 0)));
+      if (paidInput === null) return;
+      const paid = Number(paidInput);
+      if (!Number.isFinite(paid) || paid < 0) return showToast('Enter a valid paid amount (0 or above).');
+      r.totalFare = fare;
+      r.paid = paid;
+      r.balance = Math.max(0, fare - paid);
+      r.paymentUpdatedAt = new Date().toISOString();
+      db.ref('tripData/registrations').set(registrations).then(() => {
+        renderManifestTable();
+        updateDashboard();
+        showToast(`✓ Amount updated for ${r.name}. Paid: ₹${paid.toLocaleString('en-IN')}`);
+      }).catch(err => showToast('Could not save amount: ' + (err.message || 'Please try again.')));
     }
 
     function toggleVoiceReadout() {
@@ -5148,6 +5197,19 @@
       if (hsColl) hsColl.innerText = `₹${totalFundsRealized.toLocaleString()}`;
       if (hsExp) hsExp.innerText = `₹${totalExpenses.toLocaleString()}`;
       if (hsBal) hsBal.innerText = `₹${netBalance.toLocaleString()}`;
+
+      const homeBooked = document.getElementById('homeBookedSeats');
+      const homeBookedPct = document.getElementById('homeBookedPercent');
+      const homeBookedBar = document.getElementById('homeBookedBar');
+      const homeBoarded = document.getElementById('homeBoardedSeats');
+      const homeBoardedPct = document.getElementById('homeBoardedPercent');
+      const homeBoardedBar = document.getElementById('homeBoardedBar');
+      if (homeBooked) homeBooked.textContent = `${seatsCount} / 60`;
+      if (homeBookedPct) homeBookedPct.textContent = `${seatPct}% of seats booked`;
+      if (homeBookedBar) homeBookedBar.style.width = `${Math.min(100, seatPct)}%`;
+      if (homeBoarded) homeBoarded.textContent = `${boarded.length} / 60`;
+      if (homeBoardedPct) homeBoardedPct.textContent = `${boardedPct}% boarded`;
+      if (homeBoardedBar) homeBoardedBar.style.width = `${Math.min(100, boardedPct)}%`;
 
       const homeSeatCard = document.getElementById('homeKpiSeats');
       if (homeSeatCard) homeSeatCard.innerText = `${seatsCount} / 60 Confirmed`;
