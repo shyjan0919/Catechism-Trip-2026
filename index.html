@@ -67,10 +67,21 @@
     button { font: inherit; cursor: pointer; }
     input, textarea, select { user-select: text; -webkit-user-select: text; }
 
-    /* HIDE BIG HERO TITLE CARD ON SUB-PAGES SO SUB-PAGES OPEN DIRECTLY AT THE TOP */
-    body.subpage-active .hero {
-      display: none !important;
+    /* KEEP THE TITLE CARD, ACCESS BAR AND NAVIGATION FIXED WHILE THE PAGE SCROLLS */
+    body.subpage-active .hero { display: grid !important; }
+    #mainHeroHeader {
+      position: fixed !important; top: 0; left: 0; right: 0; width: 100%;
+      z-index: 1000; background: var(--d); box-shadow: 0 4px 14px rgba(2,43,29,.22);
     }
+    #roleAccessBar {
+      position: fixed !important; top: var(--tour-hero-height, 245px); left: 0; right: 0;
+      z-index: 1001;
+    }
+    #stickyNavBar {
+      position: fixed !important; top: calc(var(--tour-hero-height, 245px) + var(--tour-access-height, 52px));
+      left: 0; right: 0; width: 100%; z-index: 1002;
+    }
+    #tourFixedHeaderSpacer { display: block; width: 100%; height: var(--tour-header-stack-height, 350px); }
 
     /* =========================================================================
        PANORAMIC ROYAL GREEN & GOLD HERO HEADER (ST. JOSEPH + KERALA + COACH)
@@ -286,6 +297,23 @@
       background: var(--gold);
       color: #173321;
       font-weight: 800;
+    }
+    .nav-more-wrap { position: relative; display: flex; align-items: center; margin-left: auto; }
+    .nav-more-wrap > #navMoreToggle { border: 1px solid rgba(229,184,63,.75); color: #f8e4a0; }
+    .nav-more-menu {
+      position: fixed; top: 0; right: auto; left: 0; z-index: 99999;
+      min-width: 205px; width: max-content; max-width: min(280px, calc(100vw - 24px));
+      display: flex; flex-direction: column; gap: 3px; padding: 7px;
+      background: #fff; border: 1px solid #e7e1d2; border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(2,43,29,.22); max-height: 65vh; overflow-y: auto;
+    }
+    .nav-more-menu[hidden] { display: none !important; }
+    .nav-more-menu button { width: 100%; text-align: left; color: #123528; border-radius: 8px; padding: 10px 12px; font-size: 13px; }
+    .nav-more-menu button:hover, .nav-more-menu button.active-nav { background: #fef3c7; color: #123528; }
+    @media (max-width: 520px) {
+      .nav { gap: 3px; padding: 6px 7px; justify-content: space-between; }
+      .nav > button, .nav-more-wrap > button { padding: 9px 8px; font-size: 11px; }
+      .nav-more-wrap { margin-left: 0; }
     }
     .nav-badge {
       background: #dc2626;
@@ -1102,8 +1130,34 @@
       #manifestTab .manifest-filter-bar {grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
       #manifestTab .manifest-filter-bar > div {min-width:0;}
     }
-    @media (max-width:420px) { .help-leader-grid {grid-template-columns:1fr !important;} #tourTaskForm {grid-template-columns:1fr !important;} #tourTaskForm > div {grid-column:1/-1 !important;} #tasksTab .card > div[style*="grid-template-columns:repeat(2"] {grid-template-columns:1fr !important;} }
+    @media (max-width:420px) { #liveTourControlDashboard .card-title {font-size:17px;} .help-leader-grid {grid-template-columns:1fr !important;} #tourTaskForm {grid-template-columns:1fr !important;} #tourTaskForm > div {grid-column:1/-1 !important;} #tasksTab .card > div[style*="grid-template-columns:repeat(2"] {grid-template-columns:1fr !important;} }
 
+
+    /* RESTORED: glowing royal-green & gold title card header */
+    @keyframes tourHeaderGoldGlow {
+      0%, 100% { box-shadow: 0 0 0 rgba(255,215,105,0), inset 0 0 0 rgba(255,215,105,0); }
+      50% { box-shadow: 0 0 28px rgba(255,215,105,.42), inset 0 0 24px rgba(255,215,105,.10); }
+    }
+    @keyframes tourTitleGlow {
+      0%, 100% { text-shadow: 0 2px 7px rgba(0,0,0,.65), 0 0 7px rgba(248,228,160,.28); }
+      50% { text-shadow: 0 2px 8px rgba(0,0,0,.7), 0 0 13px rgba(255,215,105,.95), 0 0 25px rgba(255,215,105,.55); }
+    }
+    #mainHeroHeader .hero {
+      border-bottom: 3.5px solid #e5b83f !important;
+      animation: tourHeaderGoldGlow 4s ease-in-out infinite;
+      isolation: isolate;
+    }
+    #mainHeroHeader .hero::after {
+      content: ""; position: absolute; inset: 5px; border: 1px solid rgba(255,226,137,.42);
+      border-radius: 12px; pointer-events: none; z-index: 1;
+      box-shadow: inset 0 0 18px rgba(255,215,105,.10), 0 0 13px rgba(255,215,105,.12);
+    }
+    #mainHeroHeader .hero-main-title { animation: tourTitleGlow 3.2s ease-in-out infinite; }
+    #mainHeroHeader .hero-tour-plaque { box-shadow: 0 0 14px rgba(229,184,63,.30), inset 0 0 8px rgba(255,245,190,.12); }
+    #mainHeroHeader .hero-saint-glow { box-shadow: 0 0 18px rgba(229,184,63,.62), 0 0 34px rgba(229,184,63,.24); }
+    @media (prefers-reduced-motion: reduce) {
+      #mainHeroHeader .hero, #mainHeroHeader .hero-main-title { animation: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -1180,23 +1234,51 @@
     </div>
   </div>
 
-  <!-- STICKY NAVIGATION BAR -->
-  <nav class="nav" id="stickyNavBar">
-    <button id="navBtn_home" class="active-nav" onclick="openAppHome()">⌂ Home</button>
-    <button id="navBtn_helpTab" onclick="switchTab('helpTab')">☎ Help</button>
-    <button id="navBtn_tasksTab" onclick="switchTab('tasksTab')">☑ Tasks</button>
-    <button id="navBtn_bookingTab" onclick="switchTab('bookingTab')">🎟 Bookings</button>
-    <button id="navBtn_manifestTab" onclick="switchTab('manifestTab')">▣ Digital Passes</button>
-    <button id="navBtn_itineraryTab" onclick="switchTab('itineraryTab')">🗺 Itinerary</button>
-    <button id="navBtn_infoTab" class="admin-only" onclick="switchTab('infoTab')" style="display:none;">📢 Live Updates & Finance</button>
-    <button id="navBtn_memoryWallTab" onclick="switchTab('memoryWallTab')">📸 Memory Wall</button>
-    <button id="navBtn_galleryTab" onclick="switchTab('galleryTab')">🖼 Gallery</button>
-    <button id="navBtn_dashboardTab" onclick="switchTab('dashboardTab')">⌖ Travel Info</button>
-    <button id="navBtn_appsHubTab" onclick="switchTab('appsHubTab')">▦ Apps Hub</button>
-    <button id="navBtn_rosterTab" onclick="switchTab('rosterTab')">⚙ Admin <span id="navPendingBadge" class="nav-badge">0</span></button>
-    <button id="headerRotateToggleBtn" onclick="toggleTabletWidescreenMode()" style="margin-left:auto; border:1px solid var(--gold); color:#f8e4a0;">💻 Tablet View</button>
+  <!-- SIMPLIFIED STICKY NAVIGATION: PRIMARY PAGES + SECONDARY PAGES UNDER MORE -->
+  <nav class="nav" id="stickyNavBar" aria-label="Main navigation">
+    <button id="navBtn_home" class="active-nav" onclick="closeMoreMenu();openAppHome()">⌂ Home</button>
+    <button id="navBtn_bookingTab" onclick="closeMoreMenu();switchTab('bookingTab')">🎟 Bookings</button>
+    <button id="navBtn_manifestTab" onclick="closeMoreMenu();switchTab('manifestTab')">▣ Passes</button>
+    <button id="navBtn_infoTab" class="admin-only" onclick="closeMoreMenu();switchTab('infoTab')" style="display:none;">💰 Finance</button>
+    <div class="nav-more-wrap">
+      <button id="navMoreToggle" type="button" aria-expanded="false" aria-controls="navMoreMenu" onclick="toggleMoreMenu(event)">☰ More <span aria-hidden="true">▾</span></button>
+      <div id="navMoreMenu" class="nav-more-menu" hidden>
+        <button id="navBtn_helpTab" onclick="closeMoreMenu();switchTab('helpTab')">☎ Help</button>
+        <button id="navBtn_tasksTab" onclick="closeMoreMenu();switchTab('tasksTab')">☑ Tasks</button>
+        <button id="navBtn_itineraryTab" onclick="closeMoreMenu();switchTab('itineraryTab')">🗺 Itinerary</button>
+        <button id="navBtn_memoryWallTab" onclick="closeMoreMenu();switchTab('memoryWallTab')">📸 Memory Wall</button>
+        <button id="navBtn_galleryTab" onclick="closeMoreMenu();switchTab('galleryTab')">🖼 Gallery</button>
+        <button id="navBtn_dashboardTab" onclick="closeMoreMenu();switchTab('dashboardTab')">⌖ Travel Info</button>
+        <button id="navBtn_appsHubTab" onclick="closeMoreMenu();switchTab('appsHubTab')">▦ Apps Hub</button>
+        <button id="navBtn_rosterTab" onclick="closeMoreMenu();switchTab('rosterTab')">⚙ Admin <span id="navPendingBadge" class="nav-badge">0</span></button>
+        <button id="headerRotateToggleBtn" onclick="closeMoreMenu();toggleTabletWidescreenMode()">💻 Tablet View</button>
+      </div>
+    </div>
   </nav>
 
+  <!-- Space reserved for the fixed title card + access controls + navigation -->
+  <div id="tourFixedHeaderSpacer" aria-hidden="true"></div>
+  <script>
+    (function keepTourHeaderFixed(){
+      function sizeFixedTourHeader(){
+        var hero=document.getElementById('mainHeroHeader');
+        var access=document.getElementById('roleAccessBar');
+        var nav=document.getElementById('stickyNavBar');
+        var spacer=document.getElementById('tourFixedHeaderSpacer');
+        if(!hero||!access||!nav||!spacer) return;
+        var heroHeight=Math.ceil(hero.getBoundingClientRect().height);
+        document.documentElement.style.setProperty('--tour-hero-height',heroHeight+'px');
+        var accessHeight=Math.ceil(access.getBoundingClientRect().height);
+        document.documentElement.style.setProperty('--tour-access-height',accessHeight+'px');
+        spacer.style.height=(heroHeight+accessHeight+Math.ceil(nav.getBoundingClientRect().height))+'px';
+      }
+      window.addEventListener('load',sizeFixedTourHeader);
+      window.addEventListener('resize',sizeFixedTourHeader);
+      window.addEventListener('orientationchange',function(){setTimeout(sizeFixedTourHeader,150);});
+      if(document.fonts&&document.fonts.ready) document.fonts.ready.then(sizeFixedTourHeader);
+      setTimeout(sizeFixedTourHeader,0);
+    })();
+  </script>
 
   <div class="sync-strip">
     <div class="sync-strip-inner">
@@ -1231,6 +1313,24 @@
           <section class="home-booking-summary" aria-label="Live booking and boarding summary">
             <div class="hbs-card hbs-booked"><span>🎟️ Tickets Booked</span><strong id="homeBookedSeats">0 / 60</strong><small id="homeBookedPercent">0% of seats</small><div class="hbs-track"><i id="homeBookedBar"></i></div></div>
             <div class="hbs-card hbs-boarded"><span>🚌 Boarding</span><strong id="homeBoardedSeats">0 / 60</strong><small id="homeBoardedPercent">0% boarded</small><div class="hbs-track"><i id="homeBoardedBar"></i></div></div>
+          </section>
+
+          <section class="card" id="liveTourControlDashboard" style="margin:14px 0 18px;">
+            <div class="card-title">🧭 Live Tour Control Dashboard</div>
+            <p style="font-size:12px;color:var(--text-muted);margin:-4px 0 12px;">Quick overview for the tour team. Figures refresh from the portal’s current booking and boarding data.</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;">
+              <div style="background:#eef8f0;border:1px solid #cce7d1;border-radius:12px;padding:12px;"><small>Confirmed</small><strong id="tourDashConfirmed" style="display:block;font-size:24px;color:#075b35;">0</strong></div>
+              <div style="background:#eef5ff;border:1px solid #cfe0ff;border-radius:12px;padding:12px;"><small>Boarded</small><strong id="tourDashBoarded" style="display:block;font-size:24px;color:#1d4ed8;">0</strong></div>
+              <div style="background:#fff7e8;border:1px solid #f3dfb2;border-radius:12px;padding:12px;"><small>Not yet boarded</small><strong id="tourDashNotBoarded" style="display:block;font-size:24px;color:#92400e;">0</strong></div>
+              <div style="background:#fff1f2;border:1px solid #fecdd3;border-radius:12px;padding:12px;"><small>Payment pending</small><strong id="tourDashPaymentPending" style="display:block;font-size:24px;color:#be123c;">0</strong></div>
+            </div>
+            <div id="tourDashDelayBanner" style="display:none;margin-top:12px;padding:12px;border-radius:12px;background:#fff1f2;border:1px solid #fda4af;color:#9f1239;font-weight:700;white-space:pre-wrap;"></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
+              <button type="button" class="btn btn-primary" onclick="switchTab('scannerTab')">📷 Boarding Scanner</button>
+              <button type="button" class="btn btn-secondary" onclick="switchTab('manifestTab')">🪪 Passenger List</button>
+              <button type="button" class="btn btn-secondary" onclick="switchTab('itineraryTab')">🗺 Live Schedule</button>
+              <button type="button" class="btn btn-secondary" onclick="switchTab('helpTab')">☎ Emergency Contacts</button>
+            </div>
           </section>
 
           <!-- Home dashboard statistic cards removed: use the navigation bar for portal sections. -->
@@ -1712,8 +1812,18 @@
       <div class="card">
         <div class="card-title">🧭 Smart Itinerary & Live Tour Status (October 19, 2026)</div>
         <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:10px;">Live status updates automatically sync to everyone's homepage timeline (`⏳ Upcoming`, `📍 Arrived / Live`, `✅ Completed`).</p>
+        <div id="publicTourDelayNotice" style="display:none;margin:0 0 14px;padding:13px 14px;border-radius:12px;background:#fff1f2;border:1px solid #fda4af;color:#9f1239;font-weight:700;white-space:pre-wrap;"></div>
         <div class="timeline-container" id="publicItineraryList">Loading itinerary...</div>
         <div id="adminItineraryManager" style="display:none; margin-top:24px; border-top:2px dashed var(--line); padding-top:20px;">
+          <h4 style="font-size:15px; font-weight:800; color:var(--g); margin-bottom:14px;">📣 Admin: Live Delay / Schedule Notice</h4>
+          <form onsubmit="publishTourDelayNotice(event)" style="background:#fff7ed;padding:14px;border-radius:14px;border:1px solid #fed7aa;margin-bottom:18px;">
+            <label for="tourDelayNoticeText">Notice for all visitors</label>
+            <textarea id="tourDelayNoticeText" rows="2" maxlength="500" placeholder="e.g. Departure delayed by 15 minutes. Please remain near the bus." required></textarea>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+              <button type="submit" class="btn btn-primary">📣 Publish Live Notice</button>
+              <button type="button" class="btn btn-secondary" onclick="clearTourDelayNotice()">Clear Notice</button>
+            </div>
+          </form>
           <h4 style="font-size:15px; font-weight:800; color:var(--g); margin-bottom:14px;">🔐 Admin: Add Smart Itinerary Stop</h4>
           <form onsubmit="addItineraryStop(event)" style="background:#fbf8ee; padding:16px; border-radius:15px; border:1px solid var(--line);">
             <div class="form-group"><label>Time (e.g. 06:30 AM)</label><input type="text" id="newItineraryTime" placeholder="e.g. 06:30 AM" required></div>
@@ -1759,6 +1869,20 @@
           <button type="submit" class="btn btn-accent">✨ Post to Digital Memory Wall</button>
         </form>
         <div class="memory-wall-grid" id="memoryWallContainer">Loading memories...</div>
+        <section style="margin-top:22px;padding:16px;background:#f4faf5;border:1px solid #cce7d1;border-radius:16px;">
+          <div class="card-title" style="margin-bottom:6px;">💬 Tour Feedback & Suggestions</div>
+          <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Share what went well and what we can improve for the next catechism tour.</p>
+          <form onsubmit="submitTourFeedback(event)" style="display:grid;gap:10px;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;">
+              <div><label for="tourFeedbackName">Your name (optional)</label><input id="tourFeedbackName" maxlength="80" placeholder="Name"></div>
+              <div><label for="tourFeedbackRating">Overall experience</label><select id="tourFeedbackRating" required><option value="5">⭐⭐⭐⭐⭐ Excellent</option><option value="4">⭐⭐⭐⭐ Very good</option><option value="3">⭐⭐⭐ Good</option><option value="2">⭐⭐ Needs improvement</option><option value="1">⭐ Poor</option></select></div>
+            </div>
+            <div><label for="tourFeedbackText">Feedback</label><textarea id="tourFeedbackText" rows="3" maxlength="1000" placeholder="Your comments or suggestions…" required></textarea></div>
+            <button type="submit" class="btn btn-primary">Send Feedback</button>
+          </form>
+          <div id="tourFeedbackThanks" style="display:none;margin-top:10px;color:#166534;font-weight:700;">Thank you! Your feedback has been recorded on this device / portal connection.</div>
+          <div id="tourFeedbackList" style="margin-top:12px;"></div>
+        </section>
       </div>
     </div>
 
@@ -2768,6 +2892,10 @@
     let financeOpeningBalances = { cashAtHand: 0, cashAtAccount: 0, baselineAt: null };
     let financeReconciliation = { cashIncome: 0, onlineIncome: 0, cashDeposited: 0, cashWithdrawn: 0, actualCash: null, actualAccount: null };
     let feedList = [];
+    let tourDelayNotice = null;
+    let tourFeedbackList = [];
+    let tourFeedbackListenerAttached = false;
+    let tourDelayListenerAttached = false;
     let galleryList = [];
     let lostFoundList = [];
     let memoryWallList = [
@@ -2884,37 +3012,7 @@
       list.innerHTML=rows.map(t=>{const overdue=isTourTaskOverdue(t);const canUpdate=role==='admin'||(role==='teacher'&&String(t.assignee||'').trim().toLowerCase()===myName);return `<article style="border:1px solid var(--line);border-left:4px solid ${overdue?'#dc2626':t.priority==='Urgent'?'#dc2626':t.priority==='High'?'#d97706':'var(--gold)'};border-radius:12px;padding:12px;background:#fff;min-width:0;"><div style="display:flex;gap:8px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;"><strong style="color:var(--g);overflow-wrap:anywhere;">${esc(t.title)}</strong><span style="font-size:10px;font-weight:800;padding:4px 7px;border-radius:20px;background:${t.status==='Completed'?'#dcfce7':t.status==='In progress'?'#dbeafe':'#fef3c7'};">${esc(t.status)}</span></div><div style="font-size:12px;color:var(--text-muted);margin:7px 0;overflow-wrap:anywhere;">👤 Assigned: ${esc(t.assignee||'Unassigned')} · 📅 ${esc(t.due||'No due date')} · Priority: ${esc(t.priority||'Normal')} ${overdue?'· <strong style="color:#b91c1c;">OVERDUE</strong>':''}</div>${t.notes?`<p style="font-size:12px;margin:0 0 10px;overflow-wrap:anywhere;">${esc(t.notes)}</p>`:''}<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">${canUpdate?`<label style="font-size:11px;margin:0;">Update status <select aria-label="Task status" onchange="updateTourTask('${esc(t.id)}','status',this.value)" style="width:auto;padding:7px;"><option ${t.status==='Pending'?'selected':''}>Pending</option><option ${t.status==='In progress'?'selected':''}>In progress</option><option ${t.status==='Completed'?'selected':''}>Completed</option></select></label>`:''}${role==='admin'?`<button type="button" class="btn btn-secondary" style="width:auto;padding:7px 10px;font-size:11px;" onclick="deleteTourTask('${esc(t.id)}')">Delete</button>`:''}</div></article>`;}).join('');
     }
 
-    // Swipe left/right to move between visible navigation pages. Ignore form controls and horizontal nav drags.
-    (function enableSwipeNavigation(){
-      let sx=0, sy=0, started=false;
-      const navOrder = () => Array.from(document.querySelectorAll('#stickyNavBar button[id^="navBtn_"]')).filter(b => {
-        if (!b || b.offsetParent === null || b.disabled) return false;
-        if (b.classList.contains('admin-only') && b.style.display === 'none') return false;
-        return true;
-      }).map(b => b.id.replace('navBtn_',''));
-      const go = dir => {
-        const order=navOrder(); if(!order.length) return;
-        const current = activeCurrentTab === 'homeLauncherTab' ? 'home' : activeCurrentTab;
-        let idx=order.indexOf(current); if(idx<0) idx=0;
-        const next=order[(idx+dir+order.length)%order.length];
-        if(next==='home') openAppHome(); else switchTab(next);
-      };
-      document.addEventListener('touchstart', e => {
-        const t=e.target;
-        if(t.closest('input,textarea,select,button,a,[contenteditable="true"],#stickyNavBar')) { started=false; return; }
-        const touch=e.changedTouches[0]; sx=touch.clientX; sy=touch.clientY; started=true;
-      }, {passive:true});
-      document.addEventListener('touchend', e => {
-        if(!started) return; started=false;
-        const t=e.changedTouches[0], dx=t.clientX-sx, dy=t.clientY-sy;
-        if(Math.abs(dx)>85 && Math.abs(dx)>Math.abs(dy)*1.35){ go(dx<0?1:-1); }
-      }, {passive:true});
-      document.addEventListener('keydown', e => {
-        if(e.altKey && e.key==='ArrowRight') go(1);
-        if(e.altKey && e.key==='ArrowLeft') go(-1);
-      });
-    })();
-
+    // Swipe navigation disabled as requested; page changes only through navigation controls.
     window.addEventListener('touchstart', () => { lastActivityTime = Date.now(); });
     window.addEventListener('keydown', () => { lastActivityTime = Date.now(); });
 
@@ -5035,6 +5133,41 @@
       lostFoundTab: "🎒 Lost & Found Notice Board"
     };
 
+    function toggleMoreMenu(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById('navMoreMenu');
+      const toggle = document.getElementById('navMoreToggle');
+      if (!menu || !toggle) return;
+      const willOpen = menu.hidden;
+      menu.hidden = !willOpen;
+      toggle.setAttribute('aria-expanded', String(willOpen));
+      if (willOpen) {
+        // Fixed positioning prevents the dropdown being clipped by the nav's horizontal scroller.
+        const rect = toggle.getBoundingClientRect();
+        menu.style.top = Math.min(rect.bottom + 8, window.innerHeight - 180) + 'px';
+        menu.style.left = Math.max(8, Math.min(rect.right - Math.min(menu.offsetWidth || 240, 280), window.innerWidth - Math.min(menu.offsetWidth || 240, 280) - 8)) + 'px';
+      }
+    }
+    function closeMoreMenu() {
+      const menu = document.getElementById('navMoreMenu');
+      const toggle = document.getElementById('navMoreToggle');
+      if (menu) menu.hidden = true;
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    }
+    document.addEventListener('click', function(event) {
+      const wrap = document.querySelector('.nav-more-wrap');
+      if (wrap && !wrap.contains(event.target)) closeMoreMenu();
+    });
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') closeMoreMenu();
+    });
+    window.addEventListener('resize', function() {
+      const menu = document.getElementById('navMoreMenu');
+      if (menu && !menu.hidden) {
+        closeMoreMenu();
+      }
+    });
+
     function highlightNavButton(tabId) {
       document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active-nav'));
       const btn = document.getElementById('navBtn_' + tabId);
@@ -5078,6 +5211,7 @@
     }
 
     function switchTab(tabId, evt, skipHistory) {
+      closeMoreMenu();
       if (tabId === 'scannerTab' && !requireRole(['teacher','admin'], 'QR roll-call')) return;
       if ((tabId === 'rosterTab' || tabId === 'adminGroupSubPage') && currentAccessRole !== 'admin') {
         if (tabId === 'rosterTab' && currentAccessRole === 'public') {
@@ -5127,8 +5261,8 @@
       else if (tabId === 'infoTab') renderTransparencyLedger();
       else if (tabId === 'visualTab') render3dDarkGreenBus();
       else if (tabId === 'galleryTab') renderGallery();
-      else if (tabId === 'itineraryTab') renderItinerary();
-      else if (tabId === 'memoryWallTab') renderMemoryWall();
+      else if (tabId === 'memoryWallTab') { renderMemoryWall(); startTourEnhancementSync(); }
+      else if (tabId === 'itineraryTab') { renderItinerary(); startTourEnhancementSync(); }
       else if (tabId === 'parkingTab') renderParkingUI();
       else if (tabId === 'lostFoundTab') renderLostFound();
 
@@ -5764,6 +5898,66 @@
       new QRCode(qrBox, { text: upiUri, width: 125, height: 125, colorDark: "#063b27", colorLight: "#ffffff" });
     }
 
+    function renderTourDelayNotice() {
+      const text = (tourDelayNotice && (tourDelayNotice.text || tourDelayNotice.message)) || '';
+      const home = document.getElementById('tourDashDelayBanner');
+      const publicNotice = document.getElementById('publicTourDelayNotice');
+      [home, publicNotice].forEach(el => { if (!el) return; el.textContent = text ? '📣 LIVE TOUR NOTICE: ' + text : ''; el.style.display = text ? 'block' : 'none'; });
+      const input = document.getElementById('tourDelayNoticeText');
+      if (input && document.activeElement !== input) input.value = text;
+    }
+    function startTourEnhancementSync() {
+      try {
+        if (typeof db !== 'undefined' && db && db.ref) {
+          if (!tourDelayListenerAttached) {
+            tourDelayListenerAttached = true;
+            db.ref('tripData/tourDelayNotice').on('value', snap => { tourDelayNotice = snap.val() || null; renderTourDelayNotice(); }, err => console.warn('Live notice sync unavailable', err));
+          }
+          if (!tourFeedbackListenerAttached) {
+            tourFeedbackListenerAttached = true;
+            db.ref('tripData/tourFeedback').on('value', snap => { const v=snap.val(); tourFeedbackList = v && typeof v === 'object' ? Object.values(v).filter(Boolean).sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')) : []; renderTourFeedback(); }, err => console.warn('Feedback sync unavailable', err));
+          }
+        }
+      } catch (err) { console.warn('Tour enhancement sync unavailable', err); }
+      try { const cached=localStorage.getItem('midalam_tour_feedback_2026'); if (!tourFeedbackList.length && cached) tourFeedbackList=JSON.parse(cached)||[]; } catch(e) {}
+      renderTourDelayNotice(); renderTourFeedback();
+    }
+    async function publishTourDelayNotice(e) {
+      if (e) e.preventDefault();
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required to publish a live notice.');
+      const input=document.getElementById('tourDelayNoticeText'); const text=(input?.value||'').trim();
+      if (!text) return showToast('Enter a notice first.');
+      const payload={text,updatedAt:new Date().toISOString(),updatedBy:'admin'};
+      try { await db.ref('tripData/tourDelayNotice').set(payload); tourDelayNotice=payload; renderTourDelayNotice(); showToast('📣 Live notice published.'); }
+      catch(err) { showToast('Could not sync the notice. Check Firebase connection/permissions.'); }
+    }
+    async function clearTourDelayNotice() {
+      if (currentAccessRole !== 'admin') return showToast('🔒 Admin access required.');
+      try { await db.ref('tripData/tourDelayNotice').remove(); tourDelayNotice=null; renderTourDelayNotice(); const input=document.getElementById('tourDelayNoticeText'); if(input) input.value=''; showToast('Live notice cleared.'); }
+      catch(err) { showToast('Could not clear the notice. Check Firebase connection/permissions.'); }
+    }
+    async function submitTourFeedback(e) {
+      e.preventDefault();
+      const name=(document.getElementById('tourFeedbackName')?.value||'').trim()||'Anonymous';
+      const rating=Number(document.getElementById('tourFeedbackRating')?.value||5);
+      const comment=(document.getElementById('tourFeedbackText')?.value||'').trim();
+      if(!comment) return showToast('Please enter your feedback.');
+      const item={id:'FDB_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),name,rating,comment,createdAt:new Date().toISOString()};
+      tourFeedbackList.unshift(item);
+      try { localStorage.setItem('midalam_tour_feedback_2026',JSON.stringify(tourFeedbackList.slice(0,100))); } catch(err) {}
+      try { if(typeof db!=='undefined' && db && db.ref) await db.ref('tripData/tourFeedback/'+item.id).set(item); }
+      catch(err) { showToast('Feedback saved on this device, but could not sync to Firebase.'); }
+      const form=e.target; if(form) form.reset();
+      const thanks=document.getElementById('tourFeedbackThanks'); if(thanks) {thanks.style.display='block'; setTimeout(()=>{thanks.style.display='none';},4500);}
+      renderTourFeedback(); showToast('Thank you for sharing your feedback!');
+    }
+    function renderTourFeedback() {
+      const box=document.getElementById('tourFeedbackList'); if(!box) return;
+      if(!tourFeedbackList.length) {box.innerHTML='<p style="font-size:12px;color:var(--text-muted);">No feedback submitted yet.</p>';return;}
+      box.innerHTML='<div style="font-weight:800;margin-bottom:8px;">Recent feedback ('+tourFeedbackList.length+')</div>'+tourFeedbackList.slice(0,10).map(f=>'<div style="padding:10px;margin:7px 0;background:#fff;border:1px solid #dbe7dc;border-radius:10px;"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;"><strong>'+escapeTourText(f.name||'Anonymous')+'</strong><span aria-label="'+Number(f.rating||0)+' out of 5 stars">'+('⭐'.repeat(Math.max(1,Math.min(5,Number(f.rating)||1))))+'</span></div><p style="margin:5px 0 0;white-space:pre-wrap;">'+escapeTourText(f.comment||'')+'</p><small style="color:var(--text-muted);">'+escapeTourText(f.createdAt?new Date(f.createdAt).toLocaleString():'')+'</small></div>').join('');
+    }
+    function escapeTourText(value) { return String(value??'').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
+
     function updateDashboard() {
       const confirmed = registrations.filter(r => r.status === 'CONFIRMED');
       const pendingList = registrations.filter(r => r.status === 'PENDING');
@@ -5805,6 +5999,12 @@
       if (homeBoarded) homeBoarded.textContent = `${boarded.length} / 60`;
       if (homeBoardedPct) homeBoardedPct.textContent = `${boardedPct}% boarded`;
       if (homeBoardedBar) homeBoardedBar.style.width = `${Math.min(100, boardedPct)}%`;
+      const dashSet = (id, value) => { const el=document.getElementById(id); if(el) el.textContent=String(value); };
+      dashSet('tourDashConfirmed', seatsCount);
+      dashSet('tourDashBoarded', boarded.length);
+      dashSet('tourDashNotBoarded', Math.max(0, seatsCount-boarded.length-absentList.length));
+      dashSet('tourDashPaymentPending', confirmed.filter(r => Number(r.balance)>0).length);
+      renderTourDelayNotice();
 
       const homeSeatCard = document.getElementById('homeKpiSeats');
       if (homeSeatCard) homeSeatCard.innerText = `${seatsCount} / 60 Confirmed`;
@@ -6879,6 +7079,8 @@
 
       openAppHome(true);
     };
-  </script>
+  
+    document.addEventListener('DOMContentLoaded', function(){ startTourEnhancementSync(); });
+</script>
 </body>
 </html>
